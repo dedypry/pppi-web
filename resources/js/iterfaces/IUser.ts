@@ -1,0 +1,89 @@
+export interface Province {
+    id: number;
+    name: string;
+    code: string;
+    created_at: string | null;
+    updated_at: string | null;
+}
+
+export interface City {
+    id: number;
+    province_id: number;
+    name: string;
+    code: string;
+    created_at: string | null;
+    updated_at: string | null;
+}
+
+export interface District {
+    id: number;
+    city_id: number;
+    name: string;
+    code: string | null;
+    created_at: string | null;
+    updated_at: string | null;
+}
+
+export interface UserProfile {
+    id: number;
+    user_id: number;
+    nik: string;
+    place_birth: string;
+    date_birth: string | null;
+    gender: string;
+    citizenship: string;
+    address: string;
+    province_id: number;
+    city_id: number;
+    district_id: number;
+    phone: string;
+    last_education_nursing: string;
+    last_education: string;
+    workplace: string;
+    hope_in: string | null;
+    contribution: string | null;
+    is_member_payment: boolean;
+    member_payment_file: string;
+    reason_reject: string | null;
+    photo: string;
+    created_at: string;
+    updated_at: string;
+    province: Province;
+    city: City;
+    district: District;
+}
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string | null;
+    created_at: string;
+    updated_at: string;
+    nia: string;
+    status: string | null;
+    sort: number;
+    join_year: number;
+    created_by: number;
+    profile: UserProfile;
+}
+
+export interface IUserResponse {
+    current_page: number;
+    data: User[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}
