@@ -51,6 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         Route::group(['prefix' => 'user-management'], function () {
             Route::get('', [UserManagementController::class, 'index'])->name('user.management.index');
+            Route::post('', [UserManagementController::class, 'store'])->name('user.management.store');
+            Route::post('member', [UserManagementController::class, 'member'])->name('user.management.member');
         });
 
     });

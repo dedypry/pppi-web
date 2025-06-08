@@ -1,57 +1,25 @@
 // OrgChart.tsx
-import { Avatar, Card, CardBody, CardHeader } from '@heroui/react';
-import { Tree, TreeNode } from 'react-organizational-chart';
-import styled from 'styled-components';
+import OrganizationCard from '@/components/organization-card';
+import { User } from '@/iterfaces/IUser';
+import { Card, CardHeader } from '@heroui/react';
+import { Tree } from 'react-organizational-chart';
+import Item from './item';
 
-// Styled component untuk node chart
-const StyledNode = styled.div`
-    padding: 10px 15px;
-    border-radius: 8px;
-    display: inline-block;
-    background-color: #f0f9f0;
-    color: #0e6308;
-    border: 2px solid #15980d;
-    font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-`;
-
-export default function Organization() {
+interface Props {
+    users: User[];
+}
+export default function Organization({ users }: Props) {
+    // console.log('USER', users);
     return (
         <Card>
             <CardHeader>Struktur Organisasi</CardHeader>
-            <div className="overflow-auto p-4">
-                <Tree
-                    label={
-                        <div className="inline-block">
-                            <Card className="min-w-[120px] border border-primary text-center">
-                                <CardBody className="flex flex-col items-center gap-2">
-                                    <Avatar size="lg" isBordered />
-                                    <p>CEO</p>
-                                </CardBody>
-                            </Card>
-                        </div>
-                    }
-                    lineWidth="1px"
-                    lineColor="#15980d"
-                    lineBorderRadius="10px"
-                >
-                    <TreeNode label={<StyledNode>Developer 1</StyledNode>} >
-                    <TreeNode label={<StyledNode>VP of Engineering</StyledNode>}>
-                        <TreeNode label={<StyledNode>Engineering Manager</StyledNode>}>
-                            <TreeNode label={<StyledNode>Developer 1</StyledNode>} />
-                            <TreeNode label={<StyledNode>Developer 2</StyledNode>} />
-                        </TreeNode>
-                    </TreeNode>
-                    <TreeNode label={<StyledNode>VP of Marketing</StyledNode>}>
-                        <TreeNode label={<StyledNode>Marketing Lead</StyledNode>}>
-                            <TreeNode label={<StyledNode>Content Specialist</StyledNode>} />
-                            <TreeNode label={<StyledNode>SEO Expert</StyledNode>} />
-                        </TreeNode>
-                    </TreeNode>
-                    <TreeNode label={<StyledNode>VP of Sales</StyledNode>} />
-                    </TreeNode>
-                </Tree>
-            </div>
+            {users?.map((user) => (
+                <div className="overflow-auto p-4" key={user.id}>
+                    <Tree label={<OrganizationCard user={user} />} lineWidth="1px" lineColor="#15980d" lineBorderRadius="10px">
+                        {user?.children?.map((child) => <Item key={child.id} user={child} />)}
+                    </Tree>
+                </div>
+            ))}
         </Card>
     );
 }

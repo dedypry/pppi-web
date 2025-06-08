@@ -1,10 +1,9 @@
 import CustomInput from '@/components/custom-input';
 import CustomSelect from '@/components/custom-select';
-import InputPassword from '@/components/input-password';
 import { Department } from '@/iterfaces/IDepartment';
 import { Role } from '@/iterfaces/IRoles';
 import { User } from '@/iterfaces/IUser';
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, SelectItem } from '@heroui/react';
+import { Avatar, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, SelectItem } from '@heroui/react';
 import { useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
 
@@ -15,29 +14,30 @@ interface Props {
     isOpen: boolean;
     setOpen: CallableFunction;
     user?: User;
+    members: User[];
 }
-export default function Create({ superiors, department, roles, isOpen, setOpen, user }: Props) {
+export default function CreateForMember({ superiors, department, roles, isOpen, setOpen, user, members }: Props) {
     const { data, setData, errors, post, processing } = useForm({
         id: '',
-        name: '',
-        email: '',
+        user_ids: [] as string[],
         job_title: '',
         parent_id: '',
         role_id: [] as string[],
         department_id: '',
-        password: '',
     });
 
     useEffect(() => {
         if (user) {
             setData('id', String(user.id));
-            setData('name', user.name);
-            setData('email', user.email);
             setData('job_title', user.job_title);
             setData('parent_id', user.parent_id?.toString());
             setData(
                 'role_id',
                 user.roles.map((item) => item.id.toString()),
+            );
+            setData(
+                'user_ids',
+                members.map((item) => item.id.toString()),
             );
             setData('department_id', user.department_id?.toString());
         }
@@ -45,24 +45,26 @@ export default function Create({ superiors, department, roles, isOpen, setOpen, 
     return (
         <Modal isOpen={isOpen} onOpenChange={() => setOpen(!isOpen)}>
             <ModalContent>
-                <ModalHeader>Tambah Anggota</ModalHeader>
+                <ModalHeader>Tambah Anggota Dari Member</ModalHeader>
                 <ModalBody className="flex flex-col gap-4">
-                    <CustomInput
-                        isInvalid={!!errors.name}
-                        errorMessage={errors.name}
-                        label="Nama"
-                        placeholder="Masukan Nama"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                    />
-                    <CustomInput
-                        label="Email"
-                        isInvalid={!!errors.email}
-                        errorMessage={errors.email}
-                        placeholder="Masukan Email"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
+                    <CustomSelect
+                        selectionMode="multiple"
+                        isInvalid={!!errors.user_ids}
+                        errorMessage={errors.user_ids}
+                        selectedKeys={new Set(data.user_ids.map(String))}
+                        label="Anggota"
+                        placeholder="Pilih Anggota"
+                        onSelectionChange={(keys) => {
+                            const stringKeys = Array.from(keys).map(String); // konversi ke string[]
+                            setData('user_ids', stringKeys);
+                        }}
+                    >
+                        {members.map((item) => (
+                            <SelectItem key={item.id} startContent={<Avatar src={item.profile.photo} />}>
+                                {`${item.name} - ${item.nia}`}
+                            </SelectItem>
+                        ))}
+                    </CustomSelect>
                     <CustomInput
                         isInvalid={!!errors.job_title}
                         errorMessage={errors.job_title}
@@ -79,9 +81,11 @@ export default function Create({ superiors, department, roles, isOpen, setOpen, 
                         placeholder="Pilih Atasan"
                         onChange={(e) => setData('parent_id', e.target.value)}
                     >
-                        {superiors.filter((e)=> e.id !== user?.id).map((item) => (
-                            <SelectItem key={item.id}>{item.name}</SelectItem>
-                        ))}
+                        {superiors
+                            .filter((e) => e.id !== user?.id)
+                            .map((item) => (
+                                <SelectItem key={item.id}>{item.name}</SelectItem>
+                            ))}
                     </CustomSelect>
                     <CustomSelect
                         selectedKeys={[data.department_id]}
@@ -111,13 +115,8 @@ export default function Create({ superiors, department, roles, isOpen, setOpen, 
                             <SelectItem key={item.id}>{item.name}</SelectItem>
                         ))}
                     </CustomSelect>
-                    <InputPassword
-                        isInvalid={!!errors.password}
-                        errorMessage={errors.password}
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
                 </ModalBody>
+
                 <ModalFooter>
                     <Button variant="bordered" onPress={() => setOpen(false)}>
                         Batal
@@ -126,7 +125,7 @@ export default function Create({ superiors, department, roles, isOpen, setOpen, 
                         color="primary"
                         isLoading={processing}
                         onPress={() =>
-                            post(route('user.management.store'), {
+                            post(route('user.management.member'), {
                                 onSuccess: () => {
                                     setOpen(false);
                                 },

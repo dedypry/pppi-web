@@ -1,3 +1,5 @@
+import { Department } from './IDepartment';
+
 interface IPivot {
     model_type: string;
     model_id: number;
@@ -91,7 +93,10 @@ export interface User {
     job_title: string;
     department_id: number;
     roles: IRole[];
-    superior:User | null;
+    superior: User | null;
+    department: Department | null;
+    role_id: number;
+    children: User[] | null;
 }
 
 export interface IUserResponse {

@@ -1,4 +1,7 @@
 import CustomInput from '@/components/custom-input';
+import ToggleCheck from '@/components/toggle-check';
+import { Department } from '@/iterfaces/IDepartment';
+import { Role } from '@/iterfaces/IRoles';
 import { IUserResponse, User } from '@/iterfaces/IUser';
 import {
     Button,
@@ -12,7 +15,6 @@ import {
     DropdownMenu,
     DropdownTrigger,
     Pagination,
-    Switch,
     Table,
     TableBody,
     TableCell,
@@ -21,21 +23,23 @@ import {
     TableRow,
 } from '@heroui/react';
 import { router } from '@inertiajs/react';
-import { CheckCircle, CircleXIcon, EditIcon, EllipsisVerticalIcon, EyeIcon, LogOutIcon, SearchIcon } from 'lucide-react';
+import { EditIcon, EllipsisVerticalIcon, EyeIcon, LogOutIcon, SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 import Create from './create';
+import CreateForMember from './create-for-member';
 
 interface Props {
     users: IUserResponse;
     superiors: User[];
+    members: User[];
+    department: Department[];
+    roles: Role[];
 }
-export default function UserManagement({ users, superiors }: Props) {
+export default function UserManagement({ users, superiors, department, roles, members }: Props) {
     const [page, setPage] = useState(1);
-    console.log('USER', superiors);
-
-    // useEffect(()=>{
-    //     getData()
-    // },[page])
+    const [open, setOpen] = useState(false);
+    const [openMember, setOpenMember] = useState(false);
+    const [dataEdit, setDataEdit] = useState<User | undefined>();
 
     function getData(pageData: number) {
         router.get(
@@ -52,12 +56,41 @@ export default function UserManagement({ users, superiors }: Props) {
     }
     return (
         <Card>
+            <CreateForMember
+                superiors={superiors}
+                department={department}
+                roles={roles}
+                isOpen={openMember}
+                setOpen={(val: boolean) => {
+                    setOpenMember(val);
+                    if (!val) {
+                        setDataEdit(undefined);
+                    }
+                }}
+                user={dataEdit}
+                members={members}
+            />
+            <Create
+                superiors={superiors}
+                department={department}
+                roles={roles}
+                isOpen={open}
+                setOpen={(val: boolean) => {
+                    setOpen(val);
+                    if (!val) {
+                        setDataEdit(undefined);
+                    }
+                }}
+                user={dataEdit}
+            />
             <CardHeader className="flex justify-between">
                 <div className="flex gap-2">
-                    <Button className="bg-info" variant="shadow" size="sm">
+                    <Button className="bg-info" variant="shadow" size="sm" onPress={() => setOpenMember(true)}>
                         Tambah User Dari Member
                     </Button>
-                    <Create superiors={superiors} />
+                    <Button color="primary" variant="shadow" size="sm" onPress={() => setOpen(true)}>
+                        Tambah User
+                    </Button>
                 </div>
                 <div className="w-[300px]">
                     <CustomInput size="sm" placeholder="Search" endContent={<SearchIcon size={20} className="text-gray-400" />} />
@@ -69,10 +102,10 @@ export default function UserManagement({ users, superiors }: Props) {
                         <TableColumn>Nama</TableColumn>
                         <TableColumn>Email</TableColumn>
                         <TableColumn>Atasan</TableColumn>
-                        <TableColumn>Status</TableColumn>
+                        <TableColumn className="text-center">Status</TableColumn>
                         <TableColumn>Department</TableColumn>
                         <TableColumn>Role</TableColumn>
-                        <TableColumn>Anggota Organisasi</TableColumn>
+                        <TableColumn className="text-center">Deskripsi Pekerjaan</TableColumn>
                         <TableColumn> </TableColumn>
                     </TableHeader>
                     <TableBody emptyContent="Tidak Ada Data">
@@ -81,14 +114,10 @@ export default function UserManagement({ users, superiors }: Props) {
                                 <TableCell>{user.name}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>{user.superior?.name}</TableCell>
-                                <TableCell>
-                                    {user.is_active ? (
-                                        <CheckCircle size={20} className="text-success" />
-                                    ) : (
-                                        <CircleXIcon size={20} className="text-danger" />
-                                    )}
+                                <TableCell className="flex justify-center">
+                                    <ToggleCheck isActive={user.is_active} />
                                 </TableCell>
-                                <TableCell>{user.sort}</TableCell>
+                                <TableCell>{user.department?.name}</TableCell>
                                 <TableCell>
                                     {user?.roles?.map((item) => (
                                         <Chip key={item.id} size="sm" color="warning" variant="dot">
@@ -96,9 +125,7 @@ export default function UserManagement({ users, superiors }: Props) {
                                         </Chip>
                                     ))}
                                 </TableCell>
-                                <TableCell>
-                                    <Switch isSelected={user.is_organization} />
-                                </TableCell>
+                                <TableCell className="flex justify-center">{user.job_title}</TableCell>
                                 <TableCell>
                                     <Dropdown>
                                         <DropdownTrigger>
@@ -110,7 +137,14 @@ export default function UserManagement({ users, superiors }: Props) {
                                             <DropdownItem key="detail" startContent={<EyeIcon size={20} />}>
                                                 Detail
                                             </DropdownItem>
-                                            <DropdownItem key="edit" startContent={<EditIcon size={20} />}>
+                                            <DropdownItem
+                                                key="edit"
+                                                startContent={<EditIcon size={20} />}
+                                                onClick={() => {
+                                                    setDataEdit(user);
+                                                    setOpen(true);
+                                                }}
+                                            >
                                                 edit
                                             </DropdownItem>
                                             <DropdownItem key="out" startContent={<LogOutIcon size={20} />}>
@@ -127,10 +161,17 @@ export default function UserManagement({ users, superiors }: Props) {
             <CardFooter>
                 {users?.data.length > 0 && (
                     <CardFooter className="flex justify-center">
-                        <Pagination radius="full" initialPage={users?.from} total={users?.last_page} isCompact showControls onChange={(val)=>{
-                            setPage(val)
-                            getData(val)
-                        }} />
+                        <Pagination
+                            radius="full"
+                            initialPage={users?.from}
+                            total={users?.last_page}
+                            isCompact
+                            showControls
+                            onChange={(val) => {
+                                setPage(val);
+                                getData(val);
+                            }}
+                        />
                     </CardFooter>
                 )}
             </CardFooter>

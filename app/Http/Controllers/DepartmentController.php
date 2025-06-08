@@ -13,8 +13,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $department = Department::orderBy('id', 'desc')->paginate(10);
         return Inertia::render('settings/department/list', [
-            'layout' => 'admin'
+            'layout' => 'admin',
+            'department' => $department
         ]);
     }
 
@@ -31,7 +33,14 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'name'=> "required|string|min:3",
+            "description" => "nullable|string"
+        ]);
+
+        Department::create($validate);
+
+        return back()->with('success','Department Berhasil DItambahkan');
     }
 
     /**
@@ -55,7 +64,14 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+        $validate = $request->validate([
+            'name' => "required|string|min:3",
+            "description" => "nullable|string"
+        ]);
+
+        $department->update($validate);
+
+        return back()->with('success','Data berhasil di perbaharui');
     }
 
     /**
@@ -63,6 +79,14 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        $count = $department->user()->count();
+
+        if($count > 0) {
+            return back()->with('error','Masih Ada Pengguna Yang memakai dept ini');
+        }
+
+        $department->delete();
+
+        return back()->with('success','Department Berhasil dihapus');
     }
 }

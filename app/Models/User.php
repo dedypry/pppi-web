@@ -25,7 +25,12 @@ class User extends Authenticatable
         'sort',
         'created_by',
         'nia',
-        'join_year'
+        'join_year',
+        "is_organization",
+        "is_active",
+        'parent_id',
+        'job_title',
+        'department_id'
     ];
 
     /**
@@ -51,11 +56,27 @@ class User extends Authenticatable
         ];
     }
 
-    public function profile(){
+    public function profile()
+    {
         return $this->hasOne(Profile::class);
     }
 
-    public function superior(){
-        return $this->belongsTo(User::class,'parent_id');
+    public function superior()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function child(){
+        return $this->hasMany(User::class,'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->child()->with('children.profile');
     }
 }
