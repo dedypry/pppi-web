@@ -34,13 +34,13 @@ export default function Apps({app}:any) {
                 </CardHeader>
                 <CardBody className="flex flex-col gap-4">
                     <CustomInput
-                        value={data.full_name}
+                        value={data?.full_name}
                         onChange={(e) => setData('full_name', e.target.value)}
                         label="Nama Organisasi"
                         placeholder="Masukan Nama Organisasi"
                     />
                     <CustomInput
-                        value={data.short_name}
+                        value={data?.short_name}
                         onChange={(e) => setData('short_name', e.target.value)}
                         label="Singkatan Organisasi"
                         placeholder="Masukan Singkatan Organisasi"
