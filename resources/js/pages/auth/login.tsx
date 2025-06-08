@@ -41,7 +41,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 <Card className="w-full p-5">
                     <CardHeader className="flex justify-center gap-3">
                         <Image src={apps.logo || '/logo1.png'} height={50} width={50} />
-                        <h1 className="text-[30px] font-bold">{apps.short_name}</h1>
+                        <h1 className="text-[30px] font-bold">{apps?.short_name}</h1>
                     </CardHeader>
                     <CardHeader className="flex justify-center">
                         <h1>{apps.full_name} 🇮🇩</h1>

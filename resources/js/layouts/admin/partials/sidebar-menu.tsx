@@ -23,7 +23,7 @@ export default function SidebarMenu() {
         <div>
             <div className="my-5 ml-5 flex items-center gap-2">
                 <img src={apps?.logo || '/logo1.png'} alt="logo" className="h-[60px] object-cover" />
-                <h1 className="text-[35px] font-bold text-white">{apps?.short_name.toUpperCase()}</h1>
+                <h1 className="text-[35px] font-bold text-white">{apps?.short_name?.toUpperCase()}</h1>
             </div>
             <Listbox
                 className="text-white"
