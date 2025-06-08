@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Validation\Rule;
 
 class MemberController extends Controller
 {
@@ -55,17 +56,25 @@ class MemberController extends Controller
     public function store(Request $request)
     {
 
-        $ID = null;
-        $PID = null;
-        if ($request->has('id')) {
+        $ID = "";
+        $PID = "";
+        if ($request->id) {
             $usr = User::find($request->id);
             $ID = $usr->id;
             $PID = $usr->profile->id;
         }
         $validate = $request->validate([
-            'nik' => "required|digits:16|unique:profiles,nik,$PID",
+            'nik' => [
+                'required',
+                'digits:16',
+                Rule::unique('profiles', 'nik')->ignore($PID)
+            ],
             'name' => 'required|string|max:255',
-            'email' => "required|email|unique:users,email,$ID",
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($ID)
+            ],
             'place_birth' => 'required|string|max:255',
             'date_birth' => 'required|date',
             'gender' => 'required|in:male,female',
