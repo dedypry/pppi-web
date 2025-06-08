@@ -70,7 +70,7 @@
         <div class="content">
             <div class="content-profile">
                 <img src="{{public_path($user->profile->photo)}}" alt="" srcset="" style="width: 300px; height:330px; margin-bottom: 10px;object-fit: cover;border-radius: 30px;border: 4px solid #00FF1B;">
-                <p style="font-size: 30px;color:white; padding: 0px; margin:0px; font-weight: bold; color:#00FF1B">{{$user->name}}</p>
+                <p style="font-size: 30px;color:white; padding: 0px; margin:0px; font-weight: bold; color:#00FF1B">{{$user->profile->front_title ? $user->profile->front_title.". ": ''}}{{strtoupper($user->name)}}{{$user->profile->back_title ? ', '.$user->profile->back_title:''}}</p>
                 <p style="font-size: 30px;color:white; padding: 0px; margin:0px; font-weight: bold; color:#00FF1B">{{$user->nia}}</p>
             </div>
         </div>
