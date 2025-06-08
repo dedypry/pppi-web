@@ -23,13 +23,18 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->input('perPage', 10);
+        $search = $request->input('search', '');
         $user = User::role('member')->with([
             'profile.province',
             'profile.city',
             'profile.district'
-        ])->paginate($perPage);
+        ]);
+
+        if ($search) {
+            $user = $user->where('name', 'ilike', "%$search%");
+        }
         return Inertia::render('admin/member/list', [
-            "users" => $user
+            "users" => $user->paginate($perPage)
         ]);
     }
 

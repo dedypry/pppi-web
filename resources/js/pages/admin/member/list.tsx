@@ -2,6 +2,7 @@ import CustomInput from '@/components/custom-input';
 import Gender from '@/components/gender';
 import { confirmSweet } from '@/helpers/confirm';
 import { IUserResponse } from '@/iterfaces/IUser';
+import debounce from '@/utils/helpers/debounce';
 import {
     Avatar,
     Button,
@@ -24,18 +25,43 @@ import {
 } from '@heroui/react';
 import { router } from '@inertiajs/react';
 import { EditIcon, EllipsisVerticalIcon, EyeIcon, PhoneIcon, SearchIcon, Trash2Icon } from 'lucide-react';
+import { useState } from 'react';
 
 interface Props {
     users: IUserResponse;
 }
 export default function MemberList({ users }: Props) {
+    const queryParams = new URLSearchParams(window.location.search);
+    const [search, setSearch] = useState(queryParams.get('search'));
+
+
+    function handleSearch(val: string) {
+        router.get(
+            route('member.index'),
+            { search: val },
+            {
+                preserveState: true,
+                replace: true,
+                preserveScroll: true,
+            },
+        );
+    }
+    const debounceSearch = debounce((val: string) => handleSearch(val), 500);
     return (
         <>
             <Card>
                 <CardHeader className="flex justify-between">
                     <p>List Anggota</p>
                     <div>
-                        <CustomInput placeholder="Search" endContent={<SearchIcon className="text-gray-500" />} />
+                        <CustomInput
+                            placeholder="Search"
+                            defaultValue={search || ''}
+                            endContent={<SearchIcon className="text-gray-500" />}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                debounceSearch(e.target.value);
+                            }}
+                        />
                     </div>
                 </CardHeader>
                 <CardBody>

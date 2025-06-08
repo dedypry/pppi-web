@@ -1,5 +1,6 @@
+import { IApp } from '@/iterfaces/IApps';
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Divider, Form, Image, Input, Link } from '@heroui/react';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Eye, EyeClosed, LockKeyhole, Mail } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
@@ -20,6 +21,8 @@ export default function Login({ status, canResetPassword }: LoginProps) {
         password: '',
         remember: false,
     });
+    const {props} = usePage()
+    const apps:IApp = props.apps as any;
 
     const [isPassword, setIsPassword] = useState(false);
 
@@ -37,11 +40,11 @@ export default function Login({ status, canResetPassword }: LoginProps) {
             <Form onSubmit={submit} className="w-full max-w-md">
                 <Card className="w-full p-5">
                     <CardHeader className="flex justify-center gap-3">
-                        <Image src="/logo1.png" height={50} width={50} />
-                        <h1 className="text-[30px] font-bold">PPPI</h1>
+                        <Image src={apps.logo || '/logo1.png'} height={50} width={50} />
+                        <h1 className="text-[30px] font-bold">{apps.short_name}</h1>
                     </CardHeader>
                     <CardHeader className="flex justify-center">
-                        <h1>Perhimpunan Perawat Indonesia 🇮🇩</h1>
+                        <h1>{apps.full_name} 🇮🇩</h1>
                     </CardHeader>
                     <CardBody className="flex flex-col gap-5">
                         <Input

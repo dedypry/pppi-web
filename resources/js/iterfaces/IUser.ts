@@ -13,6 +13,7 @@ export interface City {
     code: string;
     created_at: string | null;
     updated_at: string | null;
+    province: Province | null;
 }
 
 export interface District {
@@ -22,6 +23,7 @@ export interface District {
     code: string | null;
     created_at: string | null;
     updated_at: string | null;
+    city: City | null;
 }
 
 export interface UserProfile {
@@ -71,6 +73,64 @@ export interface User {
 export interface IUserResponse {
     current_page: number;
     data: User[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}
+
+export interface IResponseProvince {
+    current_page: number;
+    data: Province[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}
+export interface IResponseCity {
+    current_page: number;
+    data: City[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}
+export interface IResponseDistrict {
+    current_page: number;
+    data: District[];
     first_page_url: string;
     from: number;
     last_page: number;

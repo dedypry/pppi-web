@@ -24,6 +24,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     const isMobile = useMediaQuery(responsive.mobile);
     const { props } = usePage();
 
+    console.log("PROPS", props)
+
 
     useEffect(() => {
         const successMessage = (props.flash as any)?.success;

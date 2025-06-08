@@ -9,8 +9,9 @@ import { useQuill } from 'react-quilljs';
 interface Props {
     value: string;
     onContent: (val: any) => void;
+    label?:string
 }
-export default function QuillJS({ value, onContent }: Props) {
+export default function QuillJS({ value, onContent, label }: Props) {
     const { quill, quillRef, Quill } = useQuill({
         modules: {
             resize: {
@@ -68,6 +69,7 @@ export default function QuillJS({ value, onContent }: Props) {
     }, [quill]);
     return (
         <div className="w-full">
+            {label && <p className='text-sm mb-1'>{label}</p>}
             <div ref={quillRef} />
         </div>
     );

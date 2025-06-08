@@ -1,10 +1,15 @@
-import { CassetteTape, ClipboardPlusIcon, Grid2X2CheckIcon, LayoutDashboard, ListChecks, RssIcon, Shield, User, UserPlus2 } from 'lucide-react';
+import { CassetteTape, ClipboardPlusIcon, Grid2X2CheckIcon, LayoutDashboard, ListChecks, OrigamiIcon, RssIcon, Shield, User, UserPlus2 } from 'lucide-react';
 
 export const navigate = [
     {
         title: 'Dashboard',
         icon: LayoutDashboard,
         href: '/dashboard',
+    },
+    {
+        title: 'Struktur Organisasi',
+        icon: OrigamiIcon,
+        href: '/admin/organization',
     },
     {
         header: 'Anggota',
@@ -41,6 +46,7 @@ export const navigate = [
             },
         ],
     },
+
     {
         header: 'Settings',
         children: [
@@ -52,7 +58,7 @@ export const navigate = [
             {
                 title: 'Apps',
                 icon: Grid2X2CheckIcon,
-                href: '',
+                href: '/settings/apps',
             },
             {
                 title: 'Logo',
@@ -63,6 +69,11 @@ export const navigate = [
                 title: 'Banner',
                 icon: CassetteTape,
                 href: '/settings/banners',
+            },
+            {
+                title: 'Regions',
+                icon: CassetteTape,
+                href: '/settings/regions',
             },
         ],
     },

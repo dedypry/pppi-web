@@ -28,7 +28,6 @@ export default function CustomDatePicker({ time = '', setValue, ...props }: Prop
     return (
         <DatePicker
             value={data ?? undefined}
-            label="Schedule"
             variant="bordered"
             labelPlacement="outside"
             onChange={setData}

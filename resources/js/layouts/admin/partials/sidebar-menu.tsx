@@ -1,10 +1,14 @@
+import { IApp } from '@/iterfaces/IApps';
 import { navigate } from '@/navigate/navigations';
 import { Listbox, ListboxItem, ListboxSection } from '@heroui/react';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
 export default function SidebarMenu() {
+    const { props } = usePage();
     const [selected, setSelected] = useState<string>(window.location.pathname);
+    const apps: IApp = props.apps as any;
+
     useEffect(() => {
         const unlisten = router.on('navigate', (event) => {
             setSelected(new URL(event.detail.page.url, window.location.origin).pathname);
@@ -18,8 +22,8 @@ export default function SidebarMenu() {
     return (
         <div>
             <div className="my-5 ml-5 flex items-center gap-2">
-                <img src="/logo1.png" alt="logo" className="h-[60px] object-cover" />
-                <h1 className="text-[35px] font-bold text-white">PPPI</h1>
+                <img src={apps?.logo || '/logo1.png'} alt="logo" className="h-[60px] object-cover" />
+                <h1 className="text-[35px] font-bold text-white">{apps?.short_name.toUpperCase()}</h1>
             </div>
             <Listbox
                 className="text-white"
