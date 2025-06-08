@@ -53,6 +53,8 @@ export interface UserProfile {
     province: Province;
     city: City;
     district: District;
+    front_title: string;
+    back_title: string;
 }
 
 export interface User {

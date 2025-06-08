@@ -93,6 +93,8 @@ class MemberController extends Controller
             'reason_reject' => 'nullable|string|max:1000',
             'sort' => 'required|integer',
             'join_year' => 'required|string',
+            'front_title' => 'string',
+            'back_title' => 'string'
         ]);
         // dd($validate);
 
@@ -133,7 +135,7 @@ class MemberController extends Controller
 
 
             $user = User::updateOrCreate(['id' => $request->id], [
-                "name" => $validate['name'],
+                "name" => strtoupper($validate['name']),
                 "email" => $validate['email'],
                 "password" => bcrypt(Carbon::parse($validate['date_birth'])->format('dmY')),
                 "sort" => $validate['sort'],
@@ -160,7 +162,9 @@ class MemberController extends Controller
                 'hope_in' => $validate['hope_in'],
                 'contribution' => $validate['contribution'],
                 'is_member_payment' => $validate['is_member_payment'],
-                'reason_reject' => $validate['reason_reject']
+                'reason_reject' => $validate['reason_reject'],
+                'front_title' => $validate['front_title'],
+                'back_title' => $validate['back_title'],
             ], $files));
 
             $role = Role::findOrCreate('member', 'web');

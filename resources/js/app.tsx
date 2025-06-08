@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import '../css/app.css';
 
 import { HeroUIProvider, ToastProvider } from '@heroui/react';

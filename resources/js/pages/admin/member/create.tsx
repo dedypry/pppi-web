@@ -23,6 +23,8 @@ export default function CreateMember({ sort, user }: Props) {
         id: undefined as number | undefined,
         join_year: dayjs().format('YY'),
         type: 'redirect',
+        front_title: '',
+        back_title: '',
         sort: sort,
         nik: '',
         name: '',
@@ -51,6 +53,8 @@ export default function CreateMember({ sort, user }: Props) {
         if (user) {
             setData('id', user.id);
             setData('nik', user.profile.nik);
+            setData('front_title', user.profile.front_title);
+            setData('back_title', user.profile.back_title);
             setData('name', user.name);
             setData('email', user.email);
             setData('place_birth', user.profile.place_birth);
@@ -73,7 +77,6 @@ export default function CreateMember({ sort, user }: Props) {
             setData('address', user.profile.address);
             setData('sort', user.sort.toString());
             setData('join_year', user.join_year.toString());
-
         }
     }, [user]);
     const educations = ['D3', 'S1', 'NERS', 'S2', 'SPECIALIS', 'S3'];
@@ -121,13 +124,12 @@ export default function CreateMember({ sort, user }: Props) {
                         </div>
                         <div className="col-span-12 sm:col-span-6 md:col-span-4">
                             <CustomInput
-                                value={data.nik}
-                                onChange={(e) => setData('nik', e.target.value)}
-                                isInvalid={!!errors.nik}
-                                errorMessage={errors.nik}
-                                isRequired
-                                label="Nomor Induk KTP"
-                                placeholder="NIK Anggota"
+                                value={data.front_title}
+                                onChange={(e) => setData('front_title', e.target.value)}
+                                isInvalid={!!errors.front_title}
+                                errorMessage={errors.front_title}
+                                label="Gelar Depan"
+                                placeholder="Ex: Dr, Br, Sr"
                             />
                         </div>
                         <div className="col-span-12 sm:col-span-6 md:col-span-4">
@@ -143,6 +145,28 @@ export default function CreateMember({ sort, user }: Props) {
                             />
                         </div>
                         <div className="col-span-12 sm:col-span-6 md:col-span-4">
+                            <CustomInput
+                                value={data.back_title}
+                                onChange={(e) => setData('back_title', e.target.value)}
+                                isInvalid={!!errors.back_title}
+                                errorMessage={errors.back_title}
+                                label="Gelar Belakang"
+                                placeholder="contoh S.Kep, Ners ..."
+                            />
+                        </div>
+                        <div className="col-span-12 sm:col-span-6 md:col-span-6">
+                            <CustomInput
+                                value={data.nik}
+                                onChange={(e) => setData('nik', e.target.value)}
+                                isInvalid={!!errors.nik}
+                                errorMessage={errors.nik}
+                                isRequired
+                                label="Nomor Induk KTP"
+                                placeholder="NIK Anggota"
+                            />
+                        </div>
+
+                        <div className="col-span-12 sm:col-span-6 md:col-span-6">
                             <CustomInput
                                 isRequired
                                 value={data.phone}
@@ -317,6 +341,7 @@ export default function CreateMember({ sort, user }: Props) {
                                 label="Kontribusi"
                                 placeholder="Tuliskan Kontribusi"
                                 description="Kontribusi yang diharapkan dapat diberikan untuk Organisasi (PPPI/P3I)"
+                                onChange={(e) => setData('contribution', e.target.value)}
                             />
                         </div>
                         <div className="col-span-12">

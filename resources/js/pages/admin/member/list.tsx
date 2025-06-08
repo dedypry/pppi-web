@@ -50,19 +50,19 @@ export default function MemberList({ users }: Props) {
     return (
         <>
             <Card>
-                <CardHeader className="flex justify-between">
-                    <p>List Anggota</p>
-                    <div>
-                        <CustomInput
-                            placeholder="Search"
-                            defaultValue={search || ''}
-                            endContent={<SearchIcon className="text-gray-500" />}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                                debounceSearch(e.target.value);
-                            }}
-                        />
-                    </div>
+                <CardHeader className="flex justify-between gap-2">
+                    <CustomInput
+                        placeholder="Search"
+                        defaultValue={search || ''}
+                        endContent={<SearchIcon className="text-gray-500" />}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            debounceSearch(e.target.value);
+                        }}
+                    />
+                    <Button variant="shadow" color="primary" onPress={() => router.visit(route('member.create'))}>
+                        Tambah Anggota
+                    </Button>
                 </CardHeader>
                 <CardBody>
                     <Table removeWrapper>
@@ -71,10 +71,9 @@ export default function MemberList({ users }: Props) {
                             <TableColumn>User</TableColumn>
                             <TableColumn>Address</TableColumn>
                             <TableColumn>Latar Belakang</TableColumn>
-                            <TableColumn>Pekerjaan</TableColumn>
                             <TableColumn> </TableColumn>
                         </TableHeader>
-                        <TableBody>
+                        <TableBody emptyContent={`Tidak Ada Data`}>
                             {users?.data.map((user) => (
                                 <TableRow
                                     key={user.id}
@@ -90,11 +89,11 @@ export default function MemberList({ users }: Props) {
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="flex gap-2">
+                                        <div className="flex gap-2 flex-nowrap">
                                             <Gender gender={user.profile.gender} />
-                                            <p>{user.name}</p>
+                                            <p className='text-nowrap'>{user.profile.front_title} {user.name} {user.profile.back_title} </p>
                                         </div>
-                                        <p>{user.email}</p>
+                                        <p className='pl-5'>{user.email}</p>
                                         <Button size="sm" color="primary" radius="full" className="mt-1" startContent={<PhoneIcon size={15} />}>
                                             Telp. {user.profile.phone}
                                         </Button>
@@ -109,13 +108,7 @@ export default function MemberList({ users }: Props) {
                                         <p>
                                             {user.profile?.last_education_nursing.toUpperCase()} | {user.profile?.last_education.toUpperCase()}
                                         </p>
-                                        <p>
-                                            {' '}
-                                            {user.profile.citizenship.toUpperCase()} - {user.profile.workplace}{' '}
-                                        </p>
-                                    </TableCell>
-                                    <TableCell>
-                                        <p>
+                                        <p className='text-nowrap'>
                                             {' '}
                                             {user.profile.citizenship.toUpperCase()} - {user.profile.workplace}{' '}
                                         </p>
@@ -160,28 +153,30 @@ export default function MemberList({ users }: Props) {
                         </TableBody>
                     </Table>
                 </CardBody>
-                <CardFooter className="flex justify-center">
-                    <Pagination
-                        radius="full"
-                        initialPage={users?.from}
-                        total={users?.last_page}
-                        isCompact
-                        showControls
-                        onChange={(page) =>
-                            router.get(
-                                route('member.index'),
-                                {
-                                    page,
-                                },
-                                {
-                                    preserveState: true,
-                                    preserveScroll: true,
-                                    replace: true,
-                                },
-                            )
-                        }
-                    />
-                </CardFooter>
+                {users?.data.length > 0 && (
+                    <CardFooter className="flex justify-center">
+                        <Pagination
+                            radius="full"
+                            initialPage={users?.from}
+                            total={users?.last_page}
+                            isCompact
+                            showControls
+                            onChange={(page) =>
+                                router.get(
+                                    route('member.index'),
+                                    {
+                                        page,
+                                    },
+                                    {
+                                        preserveState: true,
+                                        preserveScroll: true,
+                                        replace: true,
+                                    },
+                                )
+                            }
+                        />
+                    </CardFooter>
+                )}
             </Card>
         </>
     );
