@@ -13,6 +13,11 @@ export default defineConfig({
         }),
         react(),
     ],
+    build: {
+        commonjsOptions: {
+            transformMixedEsModules: true,
+        },
+    },
     esbuild: {
         jsx: 'automatic',
     },

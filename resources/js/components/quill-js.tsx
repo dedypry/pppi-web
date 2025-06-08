@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
 import http from '@/helpers/axios';
 import MagicUrl from 'quill-magic-url';
 import QuillResizeImage from 'quill-resize-image';
