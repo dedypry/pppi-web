@@ -1,3 +1,18 @@
+interface IPivot {
+    model_type: string;
+    model_id: number;
+    role_id: number;
+}
+
+export interface IRole {
+    id: number;
+    name: string;
+    guard_name: string;
+    created_at: string; // bisa juga diubah ke Date jika diproses lebih lanjut
+    updated_at: string; // sama seperti di atas
+    pivot: IPivot;
+}
+
 export interface Province {
     id: number;
     name: string;
@@ -70,6 +85,13 @@ export interface User {
     join_year: number;
     created_by: number;
     profile: UserProfile;
+    is_organization: boolean;
+    is_active: boolean;
+    parent_id: number;
+    job_title: string;
+    department_id: number;
+    roles: IRole[];
+    superior:User | null;
 }
 
 export interface IUserResponse {

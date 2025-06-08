@@ -19,7 +19,7 @@ import {
     TableHeader,
     TableRow,
 } from '@heroui/react';
-import { router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { ImageDownIcon, LayoutDashboard, Settings, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import AddBanner from './add-banner';
@@ -56,6 +56,7 @@ export default function SettingBanner({ banners }: Props) {
 
     return (
         <>
+            <Head title='Banner'/>
             <Breadcrumbs className="mb-10">
                 <BreadcrumbItem onClick={() => router.visit(route('dashboard'))} startContent={<LayoutDashboard size={18} />}>
                     Dashboard

@@ -1,8 +1,8 @@
 import { IApp } from '@/iterfaces/IApps';
 import { navigate } from '@/navigate/navigations';
-import { Listbox, ListboxItem, ListboxSection } from '@heroui/react';
-import { router, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import MenuItem from './menu-item';
 
 export default function SidebarMenu() {
     const { props } = usePage();
@@ -20,49 +20,31 @@ export default function SidebarMenu() {
     }, []);
 
     return (
-        <div>
+        <div className="flex max-h-screen flex-col">
             <div className="my-5 ml-5 flex items-center gap-2">
                 <img src={apps?.logo || '/logo1.png'} alt="logo" className="h-[60px] object-cover" />
                 <h1 className="text-[35px] font-bold text-white">{apps?.short_name?.toUpperCase()}</h1>
             </div>
-            <Listbox
-                className="text-white"
-                variant="solid"
-                itemClasses={{
-                    base: 'data-[hover=true]:bg-white data-[hover=true]:text-gray-700',
-                }}
-            >
-                {navigate.map((item, i) => {
-                    if (item.header) {
-                        return (
-                            <ListboxSection title={item.header.toUpperCase()} className={i != 0 ? 'mt-2' : ''}>
-                                {item.children.map(({ title, href, icon: Icon }) => (
-                                    <ListboxItem
-                                        onClick={() => router.visit(href)}
-                                        key={title}
-                                        startContent={<Icon />}
-                                        className={`${selected === href ? 'bg-slate-50 text-gray-800' : ''} pl-3`}
-                                    >
-                                        {title}
-                                    </ListboxItem>
-                                ))}
-                            </ListboxSection>
-                        );
-                    }
 
-                    const Icon = item.icon;
+            <ul className="scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-primary-200 scrollbar-track-transparent flex-1 overflow-y-auto pb-10 pr-1">
+                {navigate.map((item, i) => {
+                    const IconParent: any = item.icon;
                     return (
-                        <ListboxItem
-                            key={item.title}
-                            onClick={() => router.visit(item.href || '/')}
-                            startContent={Icon ? <Icon /> : null}
-                            className={`${selected === item.href ? 'bg-slate-50 text-gray-800' : ''} pl-3`}
-                        >
-                            {item.title}
-                        </ListboxItem>
+                        <div key={i}>
+                            {item.header ? (
+                                <MenuItem item={item as any} selected={selected} />
+                            ) : (
+                                <Link
+                                    href={item.href || ''}
+                                    className={`sidebar-item ${selected === item.href ? 'bg-white text-gray-800' : 'text-white'}`}
+                                >
+                                    <IconParent /> {item.title}
+                                </Link>
+                            )}
+                        </div>
                     );
                 })}
-            </Listbox>
+            </ul>
         </div>
     );
 }

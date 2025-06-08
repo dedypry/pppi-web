@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client';
 import AdminLayout from './layouts/admin/admin-layout';
 import LandingLayout from './layouts/landing/landing-layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'PPPI';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -25,7 +25,7 @@ createInertiaApp({
                 return <AdminLayout children={page} />;
             }
 
-            return <LandingLayout children={page}/>;
+            return <LandingLayout children={page} />;
         };
         return page;
     },

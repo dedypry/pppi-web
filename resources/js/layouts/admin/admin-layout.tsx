@@ -13,7 +13,7 @@ import {
     Navbar,
     NavbarContent,
 } from '@heroui/react';
-import { router, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { Bell, LogOut, Menu, Settings, User } from 'lucide-react';
 import { ReactNode, useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -23,9 +23,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(true);
     const isMobile = useMediaQuery(responsive.mobile);
     const { props } = usePage();
-
-    console.log("PROPS", props)
-
 
     useEffect(() => {
         const successMessage = (props.flash as any)?.success;
@@ -54,8 +51,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     return (
         <main>
+            <Head title="Admin" />
             {isMobile ? (
-                <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} size="xs" className="bg-primary" placement="left">
+                <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} size="xs" className="bg-primary pl-4" placement="left">
                     <DrawerContent>{() => <SidebarMenu />}</DrawerContent>
                 </Drawer>
             ) : (

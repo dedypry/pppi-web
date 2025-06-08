@@ -1,6 +1,6 @@
 import { IApp } from '@/iterfaces/IApps';
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Divider, Form, Image, Input, Link } from '@heroui/react';
-import { useForm, usePage } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { Eye, EyeClosed, LockKeyhole, Mail } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
@@ -37,6 +37,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
     return (
         <div className="flex h-screen w-full items-center justify-center bg-primary-100">
+            <Head title="Login" />
             <Form onSubmit={submit} className="w-full max-w-md">
                 <Card className="w-full p-5">
                     <CardHeader className="flex justify-center gap-3">

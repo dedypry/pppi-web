@@ -14,11 +14,19 @@
     @apply bg-gradient-to-tr from-danger-900 to-danger-400 text-white
 }
 .bg-warning{
-    @apply bg-gradient-to-tr from-warning-900 to-warning-400 text-white
+    @apply bg-gradient-to-tr from-warning-700 to-warning-400 text-white
 }
 .bg-secondary{
     @apply bg-gradient-to-tr from-secondary-900 to-secondary-400 text-white
 }
 .bg-default{
     @apply bg-gradient-to-tr from-secondary-900 to-secondary-500 text-white
+}
+.bg-info{
+    @apply bg-gradient-to-tr from-cyan-800 to-cyan-500 text-white
+}
+
+
+.sidebar-item{
+    @apply flex gap-4 rounded-sm px-2 py-2 hover:bg-gray-100/30 hover:text-white
 }

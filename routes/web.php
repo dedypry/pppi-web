@@ -4,6 +4,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MemberController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingAppController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -36,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('roles', RoleController::class);
         Route::get('apps/visi', [SettingAppController::class, 'visi'])->name('apps.visi');
         Route::resource('apps', SettingAppController::class);
+        Route::resource('department', DepartmentController::class);
 
         Route::group(['prefix' => 'regions'], function () {
             Route::get('', [RegionController::class, 'index'])->name('region.index');
@@ -46,6 +49,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('district', [RegionController::class, 'district'])->name('region.district');
             Route::patch('district/{district}', [RegionController::class, 'updateDistrict'])->name('district.update');
         });
+        Route::group(['prefix' => 'user-management'], function () {
+            Route::get('', [UserManagementController::class, 'index'])->name('user.management.index');
+        });
+
     });
 
     Route::group(["prefix" => "admin"], function () {

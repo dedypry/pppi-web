@@ -1,4 +1,18 @@
-import { CassetteTape, ClipboardPlusIcon, Grid2X2CheckIcon, LayoutDashboard, ListChecks, OrigamiIcon, RssIcon, Shield, User, UserPlus2 } from 'lucide-react';
+import {
+    ClipboardPlusIcon,
+    GalleryThumbnailsIcon,
+    Grid2X2CheckIcon,
+    LayoutDashboard,
+    LayoutListIcon,
+    MapPinHouse,
+    OrigamiIcon,
+    RssIcon,
+    ShieldCheckIcon,
+    ShieldEllipsis,
+    User,
+    UserPlus2,
+    WarehouseIcon,
+} from 'lucide-react';
 
 export const navigate = [
     {
@@ -41,7 +55,7 @@ export const navigate = [
             },
             {
                 title: 'Kategori',
-                icon: ClipboardPlusIcon,
+                icon: LayoutListIcon,
                 href: '/admin/blogs/category',
             },
         ],
@@ -51,8 +65,18 @@ export const navigate = [
         header: 'Settings',
         children: [
             {
+                title: 'Department',
+                icon: WarehouseIcon,
+                href: '/settings/department',
+            },
+            {
+                title: 'Management User',
+                icon: ShieldCheckIcon,
+                href: '/settings/user-management',
+            },
+            {
                 title: 'Role',
-                icon: Shield,
+                icon: ShieldEllipsis,
                 href: '/settings/roles',
             },
             {
@@ -61,18 +85,13 @@ export const navigate = [
                 href: '/settings/apps',
             },
             {
-                title: 'Logo',
-                icon: ListChecks,
-                href: '',
-            },
-            {
                 title: 'Banner',
-                icon: CassetteTape,
+                icon: GalleryThumbnailsIcon,
                 href: '/settings/banners',
             },
             {
                 title: 'Regions',
-                icon: CassetteTape,
+                icon: MapPinHouse,
                 href: '/settings/regions',
             },
         ],
