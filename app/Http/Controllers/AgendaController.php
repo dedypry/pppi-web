@@ -12,7 +12,9 @@ class AgendaController extends Controller
 
     public function index()
     {
-        $agenda = Agenda::all();
+        $agenda = Agenda::with(['update_by.profile' => function($q){
+            $q->select('id','photo');
+        }])->get();
         return Inertia::render('admin/agenda/index', [
             'agenda' => $agenda
         ]);
@@ -44,6 +46,10 @@ class AgendaController extends Controller
             'start_at' => 'required|date|before_or_equal:end_at',
             'end_at' => 'required|date|after_or_equal:start_at',
         ]);
+
+        $validate['update_by'] = Auth::user()->id;
+        $agenda->update($validate);
+        return back();
     }
 
     public function destroy(Agenda $agenda){

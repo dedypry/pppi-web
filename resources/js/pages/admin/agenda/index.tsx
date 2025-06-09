@@ -1,8 +1,9 @@
+import { dateSchedule } from '@/helpers/formater';
 import { IAgenda } from '@/iterfaces/IAgenda';
 import { Scheduler } from '@aldabil/react-scheduler';
-import { Card, CardBody } from '@heroui/react';
-import CustomEditor from './CardEditor';
+import { Avatar, Card, CardBody } from '@heroui/react';
 import { router } from '@inertiajs/react';
+import CustomEditor from './CardEditor';
 interface Props {
     agenda: IAgenda[];
 }
@@ -21,18 +22,14 @@ export default function Agenda({ agenda }: Props) {
                     onDelete={async (val: number) => router.delete(route('agenda.destroy', val))}
                     customEditor={(scheduler) => <CustomEditor scheduler={scheduler} />}
                     onEventDrop={async (_e, droppedOn, updatedEvent, originalEvent) => {
-                        console.log('ID:', originalEvent.event_id);
-                        console.log('Tanggal baru mulai:', updatedEvent.start); // Date object
-                        console.log('Tanggal baru selesai:', updatedEvent.end); // Date object
-                        console.log('Dropped on cell (optional):', droppedOn);
-
-                        // Contoh kirim ke server:
-                        // await axios.put(`/api/agenda/${originalEvent.event_id}`, {
-                        //   start_at: updatedEvent.start.toISOString(),
-                        //   end_at: updatedEvent.end.toISOString()
-                        // });
-
-                        // Kembalikan updatedEvent agar scheduler memperbarui tampilannya
+                        // console.log('ID:', originalEvent.event_id);
+                        // console.log('Tanggal baru mulai:', dateSchedule(updatedEvent.start)); // Date object
+                        // console.log('Tanggal baru selesai:', dateSchedule(updatedEvent.end)); // Date object
+                        // console.log('Dropped on cell (optional):', droppedOn);
+                        router.patch(route('agenda.update', originalEvent.event_id), {
+                            start_at: dateSchedule(updatedEvent.start),
+                            end_at: dateSchedule(updatedEvent.end),
+                        });
                         return updatedEvent;
                     }}
                     view="month"
@@ -43,7 +40,7 @@ export default function Agenda({ agenda }: Props) {
                         start: new Date(item.start_at),
                         end: new Date(item.end_at),
                         draggable: true,
-                        agendaAvatar: 'http://127.0.0.1:8000/logo.png',
+                        agendaAvatar: <Avatar src="/logo.png" />,
                     }))}
                     fields={[
                         {

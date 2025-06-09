@@ -72,6 +72,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('', [AgendaController::class, 'index'])->name('agenda.index');
             Route::post('', [AgendaController::class, 'store'])->name('agenda.store');
             Route::delete('{agenda}', [AgendaController::class, 'destroy'])->name('agenda.destroy');
+            Route::patch('{agenda}', [AgendaController::class, 'update'])->name('agenda.update');
         });
     });
 });
