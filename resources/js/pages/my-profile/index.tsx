@@ -75,9 +75,9 @@ export default function MyProfile({ user }: Props) {
                                     <ListProfile Icon={User2Icon} title="Nama" value={user.name} />
                                     <ListProfile Icon={SlackIcon} title="Roles" value={user.roles?.length > 0 ? user.roles?.map((item) => item.name).join(', ') : ''} />
                                     <ListProfile Icon={FlagIcon} title="Kewarganegaraan" value={user.profile?.citizenship} />
-                                    <ListProfile Icon={LandPlotIcon} title="Provinsi" value={user.profile?.province.name} />
-                                    <ListProfile Icon={FlagIcon} title="Kota" value={user.profile?.city.name} />
-                                    <ListProfile Icon={LoaderIcon} title="Kabupaten" value={user.profile?.district.name} />
+                                    <ListProfile Icon={LandPlotIcon} title="Provinsi" value={user.profile?.province?.name} />
+                                    <ListProfile Icon={FlagIcon} title="Kota" value={user.profile?.city?.name} />
+                                    <ListProfile Icon={LoaderIcon} title="Kabupaten" value={user.profile?.district?.name} />
                                     <ListProfile Icon={MapPin} title="Alamat" value={user.profile?.address} />
                                 </div>
                             </ul>
