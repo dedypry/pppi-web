@@ -91,4 +91,12 @@ class UserManagementController extends Controller
 
         return back()->with('success', 'Anggota berhasil diperbarui dan role ditetapkan.');
     }
+
+    public function dropOut(User $user){
+        $user->update([
+            'is_organization' => false,
+        ]);
+
+        return back()->with('success','Anggota dikeluarkan');
+    }
 }

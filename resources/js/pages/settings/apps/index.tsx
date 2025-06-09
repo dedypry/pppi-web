@@ -1,7 +1,8 @@
+import UploadAvatar from '@/components/upload-avatar';
 import { IChild } from '@/iterfaces/IBody';
-import { Avatar, Button, Card, CardBody, CardHeader, Divider, Listbox, ListboxItem, ListboxSection } from '@heroui/react';
+import { Card, CardBody, CardHeader, Divider, Listbox, ListboxItem, ListboxSection } from '@heroui/react';
 import { router, useForm } from '@inertiajs/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 interface Props {
     logo?: string;
 }
@@ -20,14 +21,6 @@ export default function LayoutApps({ children, logo }: IChild & Props) {
         };
     }, []);
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setData('logo', e.target.files[0]);
-        }
-    };
-
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
-
     const navigations = [
         {
             title: 'Apps',
@@ -43,26 +36,8 @@ export default function LayoutApps({ children, logo }: IChild & Props) {
         <div className="grid grid-cols-12 gap-4">
             <div className="col-span-4">
                 <Card>
-                    <CardHeader className="flex justify-center gap-2">
-                        <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-
-                        <Avatar
-                            isBordered
-                            className="h-32 w-32 cursor-pointer"
-                            onClick={() => fileInputRef.current?.click()}
-                            src={data.logo instanceof File ? URL.createObjectURL(data.logo) : (data.logo as string) || ''}
-                        />
-
-                        <div className="flex flex-col gap-1">
-                            <p className="text-xs italic text-gray-400">Logo Organisasi</p>
-                            <Button size="sm" radius="full" className="px-10" onPress={() => setData('logo', logo)}>
-                                Reset
-                            </Button>
-                            <Button size="sm" radius="full" color="primary" className="px-10" onPress={() => post(route('apps.store'))}>
-                                Simpan
-                            </Button>
-                        </div>
-                        {/* <InputPhotoProfile photo={data.logo} setPhoto={(val:any) => setData('logo', val)} /> */}
+                    <CardHeader>
+                        <UploadAvatar file={data.logo} setFile={(file: File) => setData('logo', file)} post={() => post(route('apps.store'))} label='Upload Photo Logo' />
                     </CardHeader>
                     <Divider />
                     <CardBody>

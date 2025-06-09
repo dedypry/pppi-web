@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class BlogCategoryController extends Controller
@@ -35,12 +36,18 @@ class BlogCategoryController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            "name" => 'required|unique:blog_categories,name'
+            "name" => 'required|unique:blog_categories,name',
+            "description" => "string",
         ]);
 
-        $data = BlogCategory::create([
-            "name" => $request->name
-        ]);
+        if($request->hasFile('icon')){
+            $request->validate([
+                "icon" => 'required|image|max:2048'
+            ]);
+            $path = $request->file('icon')->store('blog/category','public');
+            $validate['icon'] = Storage::url($path);
+        }
+        $data = BlogCategory::create($validate);
 
         return response()->json([
             "success" => true,

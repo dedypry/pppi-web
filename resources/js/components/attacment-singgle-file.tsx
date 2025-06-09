@@ -19,21 +19,20 @@ export default function AttachmentSingleFile({ file, setFile, label, emptyText, 
     };
     return (
         <Card>
-            <CardHeader className='flex flex-col justify-start items-start'>
-                {label && <p>{label}</p>} {}{' '}
-                {description && <p className='text-gray-400 text-sm italic'>{description}</p>} {}{' '}
+            <CardHeader className="flex flex-col items-start justify-start">
+                {label && <p>{label}</p>} {} {description && <p className="text-sm italic text-gray-400">{description}</p>} {}{' '}
             </CardHeader>
 
             <CardBody onClick={() => fileInputRef.current?.click()} className="hover:cursor-pointer">
                 {file ? (
                     <>
                         <Image
-                            src={typeof file == 'string' ? file : URL.createObjectURL(file)}
+                            src={file instanceof File ? URL.createObjectURL(file) : (file as string) || ''}
                             alt="Preview"
                             className="max-h-100 w-full rounded-md object-cover"
                         />
-                        <div className="absolute right-3 top-0">
-                            <Button color="danger" radius="full" isIconOnly size="sm" startContent={<TrashIcon size={20} />}></Button>
+                        <div className="absolute right-3 top-0 z-10">
+                            <Button className='bg-danger-500 text-white' variant='shadow' radius="full" isIconOnly size="sm" startContent={<TrashIcon size={20} />} onPress={()=> setFile("")}></Button>
                         </div>
                     </>
                 ) : (
@@ -44,7 +43,9 @@ export default function AttachmentSingleFile({ file, setFile, label, emptyText, 
                 )}
                 <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
             </CardBody>
-            <CardFooter><p className='text-gray-400 italic'>Max Upload File 2MB</p></CardFooter>
+            <CardFooter>
+                <p className="italic text-gray-400 text-xs">Max Upload File 2MB</p>
+            </CardFooter>
         </Card>
     );
 }

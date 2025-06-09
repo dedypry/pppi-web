@@ -1,3 +1,4 @@
+import { confirmSweet } from '@/helpers/confirm';
 import { dateFormat } from '@/helpers/formater';
 import { Blog, BlogResponse } from '@/iterfaces/IBlogs';
 import {
@@ -6,6 +7,7 @@ import {
     CardBody,
     CardFooter,
     CardHeader,
+    Chip,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -21,7 +23,7 @@ import {
     TableRow,
 } from '@heroui/react';
 import { router } from '@inertiajs/react';
-import { BookCheck, BookPlusIcon, EditIcon, EllipsisVerticalIcon, SearchIcon, Trash2Icon } from 'lucide-react';
+import { BookCheck, BookPlusIcon, EditIcon, EllipsisVerticalIcon, LogOutIcon, SearchIcon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import BlogDetail from './detail';
 interface Props {
@@ -30,6 +32,31 @@ interface Props {
 export default function Blogs({ blogs }: Props) {
     const [isOpen, setOpen] = useState(false);
     const [data, setData] = useState<Blog>();
+
+    function handleUpdateStatus(id: number, status: 'publish' | 'draft' | 'reject' | 'submission') {
+        router.patch(route('blogs.update', id), { status });
+    }
+
+    function colorChip(status: string) {
+        let color = '';
+        switch (status) {
+            case 'publish':
+                color = 'success';
+                break;
+            case 'draft':
+                color = 'secondary';
+                break;
+            case 'reject':
+                color = 'danger';
+                break;
+
+            default:
+                color = 'submission';
+                break;
+        }
+
+        return color;
+    }
     return (
         <>
             {data && <BlogDetail isOpen={isOpen} setOpen={setOpen} blog={data} />}
@@ -65,7 +92,7 @@ export default function Blogs({ blogs }: Props) {
                             <TableColumn>Di Terbitkan</TableColumn>
                             <TableColumn> </TableColumn>
                         </TableHeader>
-                        <TableBody>
+                        <TableBody emptyContent="Tidak Ada Data Blogs">
                             {blogs?.data.map((item) => (
                                 <TableRow
                                     key={item.id}
@@ -83,7 +110,11 @@ export default function Blogs({ blogs }: Props) {
                                         <p className="text-xs italic text-gray-600">{item.subtitle}</p>
                                     </TableCell>
                                     <TableCell>{item.category.name}</TableCell>
-                                    <TableCell>{item.status}</TableCell>
+                                    <TableCell>
+                                        <Chip variant="dot" color={colorChip(item.status) as any}>
+                                            {item.status}
+                                        </Chip>
+                                    </TableCell>
                                     <TableCell>{item.view_count}</TableCell>
                                     <TableCell>{item.writer.name}</TableCell>
                                     <TableCell>{dateFormat(item.created_at)}</TableCell>
@@ -96,14 +127,37 @@ export default function Blogs({ blogs }: Props) {
                                                 </Button>
                                             </DropdownTrigger>
                                             <DropdownMenu>
-                                                <DropdownItem key="reject" startContent={<Trash2Icon size={18} />} color="danger">
-                                                    Reject
+                                                <DropdownItem
+                                                    key="reject"
+                                                    startContent={<LogOutIcon size={18} />}
+                                                    color="danger"
+                                                    onPress={() => confirmSweet(() => handleUpdateStatus(item.id, 'reject'))}
+                                                >
+                                                    Tolak
                                                 </DropdownItem>
-                                                <DropdownItem key="publish" startContent={<BookCheck size={18} />} color="success">
-                                                    Publish
+                                                <DropdownItem
+                                                    key="publish"
+                                                    startContent={<BookCheck size={18} />}
+                                                    color="success"
+                                                    onPress={() => handleUpdateStatus(item.id, 'publish')}
+                                                >
+                                                    Terbitkan
                                                 </DropdownItem>
-                                                <DropdownItem key="edit" startContent={<EditIcon size={18} />} color="warning" onClick={()=> router.visit(route('blogs.edit', item.id))}>
+                                                <DropdownItem
+                                                    key="edit"
+                                                    startContent={<EditIcon size={18} />}
+                                                    color="warning"
+                                                    onClick={() => router.visit(route('blogs.edit', item.id))}
+                                                >
                                                     Edit
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    key="delete"
+                                                    startContent={<Trash2Icon size={18} />}
+                                                    color="danger"
+                                                    onPress={() => confirmSweet(() => router.delete(route('blogs.destroy', item.id)))}
+                                                >
+                                                    Hapus
                                                 </DropdownItem>
                                             </DropdownMenu>
                                         </Dropdown>
@@ -113,28 +167,30 @@ export default function Blogs({ blogs }: Props) {
                         </TableBody>
                     </Table>
                 </CardBody>
-                <CardFooter className="flex justify-center">
-                    <Pagination
-                        radius="full"
-                        initialPage={blogs?.from}
-                        total={blogs?.last_page}
-                        isCompact
-                        showControls
-                        onChange={(page) =>
-                            router.get(
-                                route('blogs.index'),
-                                {
-                                    page,
-                                },
-                                {
-                                    preserveState: true,
-                                    preserveScroll: true,
-                                    replace: true,
-                                },
-                            )
-                        }
-                    />
-                </CardFooter>
+                {blogs && (
+                    <CardFooter className="flex justify-center">
+                        <Pagination
+                            radius="full"
+                            initialPage={blogs?.from}
+                            total={blogs?.last_page}
+                            isCompact
+                            showControls
+                            onChange={(page) =>
+                                router.get(
+                                    route('blogs.index'),
+                                    {
+                                        page,
+                                    },
+                                    {
+                                        preserveState: true,
+                                        preserveScroll: true,
+                                        replace: true,
+                                    },
+                                )
+                            }
+                        />
+                    </CardFooter>
+                )}
             </Card>
         </>
     );

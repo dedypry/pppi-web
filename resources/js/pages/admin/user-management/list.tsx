@@ -1,5 +1,6 @@
 import CustomInput from '@/components/custom-input';
 import ToggleCheck from '@/components/toggle-check';
+import { confirmSweet } from '@/helpers/confirm';
 import { Department } from '@/iterfaces/IDepartment';
 import { Role } from '@/iterfaces/IRoles';
 import { IUserResponse, User } from '@/iterfaces/IUser';
@@ -147,7 +148,15 @@ export default function UserManagement({ users, superiors, department, roles, me
                                             >
                                                 edit
                                             </DropdownItem>
-                                            <DropdownItem key="out" startContent={<LogOutIcon size={20} />}>
+                                            <DropdownItem
+                                                key="out"
+                                                startContent={<LogOutIcon size={20} />}
+                                                onPress={() =>
+                                                    confirmSweet(() => router.patch(route('user.management.dropout', user.id)), {
+                                                        confirmButtonText: 'Ya, Keluarkan',
+                                                    })
+                                                }
+                                            >
                                                 Keluarkan
                                             </DropdownItem>
                                         </DropdownMenu>

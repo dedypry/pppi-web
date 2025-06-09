@@ -60,7 +60,7 @@ export default function CreateForMember({ superiors, department, roles, isOpen, 
                         }}
                     >
                         {members.map((item) => (
-                            <SelectItem key={item.id} startContent={<Avatar src={item.profile.photo} />}>
+                            <SelectItem key={item.id} startContent={<Avatar src={item?.profile?.photo} />}>
                                 {`${item.name} - ${item.nia}`}
                             </SelectItem>
                         ))}

@@ -53,6 +53,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('', [UserManagementController::class, 'index'])->name('user.management.index');
             Route::post('', [UserManagementController::class, 'store'])->name('user.management.store');
             Route::post('member', [UserManagementController::class, 'member'])->name('user.management.member');
+            Route::patch('{user}', [UserManagementController::class, 'dropOut'])->name('user.management.dropout');
         });
 
     });

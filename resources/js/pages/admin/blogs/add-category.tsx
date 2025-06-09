@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import CustomInput from '@/components/custom-input';
 import http from '@/helpers/axios';
 import { notifyError } from '@/utils/helpers/notify';
-import { Autocomplete, AutocompleteItem, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react';
+import { Autocomplete, AutocompleteItem } from '@heroui/react';
 import { useEffect, useState } from 'react';
+import ModalCategory from './category/modal-category';
 
 interface Props {
     value: any;
@@ -13,22 +13,12 @@ interface Props {
 }
 export default function AddCategory({ value, setValue, isInvalid, errorMessage }: Props) {
     const [open, setOpen] = useState(false);
-    const [name, setName] = useState('');
     const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
     useEffect(() => {
         getCategories();
     }, []);
 
-    function handleSubmit() {
-        http.post(route('category.store'), { name })
-            .then(({ data }) => {
-                setValue(data.data.id);
-                setOpen(false);
-                getCategories();
-            })
-            .catch((err) => notifyError(err));
-    }
 
     function getCategories() {
         http.get(route('category.create'))
@@ -43,21 +33,19 @@ export default function AddCategory({ value, setValue, isInvalid, errorMessage }
             })
             .catch((err) => notifyError(err));
     }
+
+    console.log("VAL", value)
     return (
         <>
-            <Modal isOpen={open} onOpenChange={() => setOpen(!open)}>
-                <ModalContent>
-                    <ModalHeader>Tambah Kategori Baru</ModalHeader>
-                    <ModalBody>
-                        <CustomInput label="Nama Kategori" placeholder="Masukan Nama Kategori" onChange={(e) => setName(e.target.value)} />
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button variant="shadow" color="primary" onPress={handleSubmit}>
-                            Simpan
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+            <ModalCategory
+                isOpen={open}
+                setOpen={setOpen}
+                onSuccess={(data: any) => {
+                    setValue(data.data.id);
+                    setOpen(false);
+                    getCategories();
+                }}
+            />
             <Autocomplete
                 isRequired
                 label="Kategori"
@@ -66,6 +54,7 @@ export default function AddCategory({ value, setValue, isInvalid, errorMessage }
                 variant="bordered"
                 placeholder="Pilih Kategori"
                 selectedKey={value}
+                inputValue={(categories.find((e:any)=> e.id == value) as any)?.name}
                 onSelectionChange={(key) => {
                     if (key === 'new') {
                         setOpen(true);

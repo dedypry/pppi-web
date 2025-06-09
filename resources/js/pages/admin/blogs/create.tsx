@@ -1,3 +1,4 @@
+import AttachmentSingleFile from '@/components/attacment-singgle-file';
 import CustomDatePicker from '@/components/custom-date-picker';
 import CustomInput from '@/components/custom-input';
 import InputTags from '@/components/input-tags';
@@ -6,7 +7,7 @@ import { Blog } from '@/iterfaces/IBlogs';
 import { Button, Card, CardBody, CardFooter, CardHeader, Switch } from '@heroui/react';
 import { useForm } from '@inertiajs/react';
 import { getLocalTimeZone, today } from '@internationalized/date';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import AddCategory from './add-category';
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
 }
 export default function Create({ blog }: Props) {
     const { data, setData, post, errors, processing } = useForm({
-        id: null as number | null,
+        id: undefined as number | undefined,
         cover: '' as any,
         title: '',
         subtitle: '',
@@ -29,28 +30,16 @@ export default function Create({ blog }: Props) {
     useEffect(() => {
         if (blog) {
             setData('id', blog.id);
-            setData('title', blog.title)
-            setData('subtitle', blog.subtitle)
-            setData('content', blog.content)
+            setData('title', blog.title);
+            setData('cover', blog.cover);
+            setData('subtitle', blog.subtitle);
+            setData('content', blog.content);
             setData('tags', JSON.parse(blog.tags));
-            setData('status', blog.status)
-            setData('isDraft', blog.status==='draft')
-            setData('categoryId', blog.category_id)
+            setData('status', blog.status);
+            setData('isDraft', blog.status === 'draft');
+            setData('categoryId', blog.category_id);
         }
     }, [blog]);
-
-    const [file, setFile] = useState<File>();
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-    useEffect(() => {
-        setData('cover', file || blog?.cover);
-    }, [file]);
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
-        }
-    };
 
     function handleSubmit() {
         post(route('blogs.store'), {
@@ -61,24 +50,7 @@ export default function Create({ blog }: Props) {
     return (
         <div className="grid grid-cols-12">
             <div className="col-span-8 space-y-5">
-                <Card>
-                    <CardHeader>Cover</CardHeader>
-                    <CardBody onClick={() => fileInputRef.current?.click()} className="hover:cursor-pointer">
-                        {(file || blog?.cover) ? (
-                            <>
-                                <img src={file ? URL.createObjectURL(file) : blog?.cover} alt="Preview" className="max-h-64 w-full rounded-md object-cover" />
-                                <div className="absolute right-3 top-0">
-                                    <Button color="danger" size="sm">
-                                        Hapus Cover
-                                    </Button>
-                                </div>
-                            </>
-                        ) : (
-                            <p className="text-center text-sm text-gray-400">Klik untuk upload cover</p>
-                        )}
-                        <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-                    </CardBody>
-                </Card>
+                <AttachmentSingleFile file={data.cover} setFile={(val: any) => setData('cover', val)} label="Cover" />
 
                 <Card>
                     <CardHeader>Blog</CardHeader>
@@ -122,7 +94,6 @@ export default function Create({ blog }: Props) {
                         />
                         <InputTags
                             label="Tags"
-                            isRequired
                             placeholder="Input Tags"
                             items={data.tags}
                             onTags={(val: string[]) => setData('tags', val)}
@@ -130,7 +101,7 @@ export default function Create({ blog }: Props) {
                             errorMessage={errors.tags}
                         />
 
-                        <CustomDatePicker time={data.schedule} setValue={(val: string) => setData('schedule', val)} />
+                        <CustomDatePicker label="Atur Jadwal Rilis" time={data.schedule} setValue={(val: string) => setData('schedule', val)} />
                     </CardBody>
                     <CardFooter>
                         <Button isLoading={processing} disabled={processing} color="primary" fullWidth onPress={handleSubmit}>

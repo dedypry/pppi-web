@@ -2,15 +2,17 @@ import http from '@/helpers/axios';
 import { confirmSweet } from '@/helpers/confirm';
 import { Category } from '@/iterfaces/IBlogs';
 import { notify, notifyError } from '@/utils/helpers/notify';
-import { Button, Card, CardBody, CardHeader, Switch, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react';
+import { Avatar, Button, Card, CardBody, CardHeader, Switch, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react';
 import { router } from '@inertiajs/react';
 import { Trash2Icon } from 'lucide-react';
+import { useState } from 'react';
 import Edit from './edit';
-import CreateCategory from './create';
+import ModalCategory from './modal-category';
 interface Props {
     categories: Category[];
 }
 export default function CategoryList({ categories }: Props) {
+    const [isOpen, setOpen] = useState(false);
     function handleUpdate(cat: Category, isActive: boolean) {
         http.patch(route('category.update', cat.id), { isActive, name: cat.name })
             .then(({ data }) => {
@@ -30,24 +32,32 @@ export default function CategoryList({ categories }: Props) {
     }
     return (
         <>
+            <ModalCategory isOpen={isOpen} setOpen={setOpen} />
             <Card>
-                <CardHeader className='flex justify-between'>
+                <CardHeader className="flex justify-between">
                     <p>List Kategori</p>
-                    <CreateCategory/>
+                    <Button variant="shadow" size="sm" color="primary" onPress={() => setOpen(true)}>
+                        Tambah Kategori
+                    </Button>
                 </CardHeader>
                 <CardBody>
                     <Table>
                         <TableHeader>
-                            <TableColumn>Nama</TableColumn>
                             <TableColumn>Icon</TableColumn>
+                            <TableColumn>Nama</TableColumn>
                             <TableColumn>Status</TableColumn>
                             <TableColumn> </TableColumn>
                         </TableHeader>
                         <TableBody>
                             {categories.map((item) => (
                                 <TableRow key={item.id}>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell>{item.icon}</TableCell>
+                                    <TableCell>
+                                        <Avatar size="lg" src={item.icon!} />
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{item.name}</p>
+                                        <p className='text-xs text-gray-500 italic'>{item.description!}</p>
+                                    </TableCell>
                                     <TableCell>
                                         <Switch isSelected={item.is_active} onValueChange={(val) => handleUpdate(item, val)} />
                                     </TableCell>

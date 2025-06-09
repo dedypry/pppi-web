@@ -18,7 +18,7 @@ class BlogController extends Controller
         $page = $request->input('page', 1);
         $perPage = $request->input('size', 10);
         return Inertia::render('admin/blogs/list', [
-            'blogs' => Inertia::defer(fn() => Blog::with(['category', 'writer'])->paginate($perPage, page: $page))->deepMerge(),
+            'blogs' => Inertia::defer(fn() => Blog::with(['category', 'writer'])->orderBy('id','asc')->paginate($perPage, page: $page))->deepMerge(),
         ]);
     }
 
@@ -58,7 +58,7 @@ class BlogController extends Controller
             $validated['cover'] = $request->cover;
         }
 
-        Blog::updateOrCreate(['id' => $request->id], [
+        $payload = [
             'cover' => $validated['cover'] ?? null,
             'title' => $validated['title'],
             'subtitle' => $validated['subtitle'],
@@ -66,9 +66,15 @@ class BlogController extends Controller
             'status' => $validated['isDraft'] ? "draft" : "submission",
             'category_id' => $validated['categoryId'],
             'schedule' => $validated['schedule'],
-            'tags' => json_encode($validated['tags']),
+            'tags' => isset($validated['tags']) ? json_encode($validated['tags']) : null,
             'writer_id' => Auth::user()->id
-        ]);
+        ];
+
+        if($request->id){
+            Blog::where('id', $request->id)->update($payload);
+        }else{
+            Blog::create($payload);
+        }
 
         return redirect()->route('blogs.index')->with('success', 'data berhasil disimpan');
     }
@@ -96,7 +102,17 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+
+        $validated = $request->validate([
+            "status" => "required|in:publish,draft,reject,submission"
+        ]);
+
+        if($validated['status'] == 'publish'){
+            $validated['publish_at'] = now();
+        }
+
+        $blog->update($validated);
+        return back()->with('success', 'Blog berhasil diupdate');
     }
 
     /**
@@ -104,6 +120,12 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        if ($blog->cover) {
+            if (Storage::disk('public')->exists($blog->cover)) {
+                Storage::disk('public')->delete($blog->cover);
+            }
+        }
+        $blog->delete();
+        return back()->with('success', 'Blog berhasil dihapus.');
     }
 }
