@@ -1,5 +1,4 @@
-import UserCircle from '@/assets/images/user.jpg';
-import { Button, Image } from '@heroui/react';
+import { Avatar, Button } from '@heroui/react';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -29,19 +28,20 @@ export default function InputPhotoProfile({ photo, setPhoto, isInvalid, errorMes
         setPhoto(undefined);
     }
     return (
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-5">
             <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-            <Image src={(file && URL.createObjectURL(file)) || photo || UserCircle} width={200} height={200} className="object-cover" />
-            <div className="flex flex-col gap-5">
+            {/* <Image src={(file && URL.createObjectURL(file)) || photo || UserCircle} width={200} height={200} className="object-cover" /> */}
+            <Avatar src={(file && URL.createObjectURL(file)) || photo}  isBordered className='w-32 h-32' />
+            <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
-                    <Button variant="shadow" onPress={handleReset}>
+                    <Button size='sm' radius='full' variant="shadow" onPress={handleReset}>
                         Reset
                     </Button>
-                    <Button color="primary" variant="shadow" onPress={() => fileInputRef.current?.click()}>
+                    <Button size='sm' radius='full' color="primary" variant="shadow" onPress={() => fileInputRef.current?.click()}>
                         Upload Photo
                     </Button>
                 </div>
-                <p className={isInvalid && errorMessage ? 'text-danger' : ''}>
+                <p className={`${isInvalid && errorMessage ? 'text-danger' : 'text-gray-500'} text-xs italic`}>
                     Foto Terbaru Ukuran 4x6 dengan background warna merah (472 x 709 px) <span className="text-danger">*</span>
                     <br />
                     {isInvalid && errorMessage && <span className="italic">{errorMessage}</span>}

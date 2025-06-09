@@ -30,9 +30,14 @@
         "typescript-eslint": "^8.23.0"
     },
     "dependencies": {
+        "@aldabil/react-scheduler": "^3.1.2",
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
         "@heroui/react": "^2.7.9",
         "@inertiajs/react": "^2.0.0",
         "@internationalized/date": "^3.8.1",
+        "@mui/styled-engine": "^7.1.1",
+        "@mui/styled-engine-sc": "^7.1.1",
         "@react-stately/data": "^3.13.1",
         "@tailwindcss/vite": "^4.0.6",
         "@types/react": "^19.0.3",

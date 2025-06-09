@@ -5,6 +5,7 @@ import CityList from '@/components/city';
 import CustomDatePicker from '@/components/custom-date-picker';
 import CustomInput from '@/components/custom-input';
 import CustomSelect from '@/components/custom-select';
+import CustomTextArea from '@/components/custom-textarea';
 import DistrictList from '@/components/district';
 import InputPhotoProfile from '@/components/input-photo-profile';
 import ProvinceList from '@/components/province';
@@ -114,13 +115,15 @@ export default function CreateMember({ sort, user }: Props) {
                 <CardBody className="flex flex-col gap-5">
                     <div className="grid grid-cols-12 gap-5">
                         <div className="col-span-12">
-                            <InputPhotoProfile
-                                photo={data.photo}
-                                setPhoto={(val) => setData('photo', val)}
-                                isInvalid={!!errors.photo}
-                                errorMessage={errors.photo}
-                            />
-                            <Divider className="my-2" />
+                            <div className="flex justify-center">
+                                <InputPhotoProfile
+                                    photo={data.photo}
+                                    setPhoto={(val) => setData('photo', val)}
+                                    isInvalid={!!errors.photo}
+                                    errorMessage={errors.photo}
+                                />
+                            </div>
+                            <Divider className="my-10" />
                         </div>
                         <div className="col-span-12 sm:col-span-6 md:col-span-4">
                             <CustomInput
@@ -130,6 +133,7 @@ export default function CreateMember({ sort, user }: Props) {
                                 errorMessage={errors.front_title}
                                 label="Gelar Depan"
                                 placeholder="Ex: Dr, Br, Sr"
+                                description="Gelar Depan akan tampil di Kartu anggota"
                             />
                         </div>
                         <div className="col-span-12 sm:col-span-6 md:col-span-4">
@@ -152,6 +156,7 @@ export default function CreateMember({ sort, user }: Props) {
                                 errorMessage={errors.back_title}
                                 label="Gelar Belakang"
                                 placeholder="contoh S.Kep, Ners ..."
+                                description="Gelar Belakang akan tampil di Kartu anggota"
                             />
                         </div>
                         <div className="col-span-12 sm:col-span-6 md:col-span-6">
@@ -163,6 +168,7 @@ export default function CreateMember({ sort, user }: Props) {
                                 isRequired
                                 label="Nomor Induk KTP"
                                 placeholder="NIK Anggota"
+                                description="NIK terdiri dari 16 digit angka"
                             />
                         </div>
 
@@ -345,13 +351,11 @@ export default function CreateMember({ sort, user }: Props) {
                             />
                         </div>
                         <div className="col-span-12">
-                            <Textarea
+                            <CustomTextArea
                                 value={data.hope_in}
                                 isInvalid={!!errors.hope_in}
                                 errorMessage={errors.hope_in}
                                 onChange={(e) => setData('hope_in', e.target.value)}
-                                variant="bordered"
-                                labelPlacement="outside"
                                 label="Apa yang di Harapkan"
                                 placeholder="Tuliskan Harapkan"
                                 description="Kontribusi yang diharapkan dapat diberikan untuk Organisasi (PPPI/P3I)"
@@ -385,13 +389,11 @@ export default function CreateMember({ sort, user }: Props) {
             ) : (
                 <Card>
                     <CardBody>
-                        <Textarea
+                        <CustomTextArea
                             isRequired
                             isInvalid={!!errors.reason_reject}
                             errorMessage={errors.reason_reject}
                             label="Alasan Tidak Bersedia"
-                            variant="bordered"
-                            labelPlacement="outside"
                             placeholder="Masukan Alasan"
                             onChange={(e) => setData('reason_reject', e.target.value)}
                         />

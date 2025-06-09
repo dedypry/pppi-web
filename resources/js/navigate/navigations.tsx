@@ -1,4 +1,5 @@
 import {
+    CalendarRangeIcon,
     ClipboardPlusIcon,
     GalleryThumbnailsIcon,
     Grid2X2CheckIcon,
@@ -24,6 +25,11 @@ export const navigate = [
         title: 'Struktur Organisasi',
         icon: OrigamiIcon,
         href: '/admin/organization',
+    },
+    {
+        title: 'Agenda',
+        icon: CalendarRangeIcon,
+        href: '/admin/agenda',
     },
     {
         header: 'Anggota',

@@ -1,3 +1,5 @@
+import { IApp } from '@/iterfaces/IApps';
+import { User } from '@/iterfaces/IUser';
 import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 
@@ -26,18 +28,9 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    apps:IApp;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
+    sidebarOpen: boolean;
     [key: string]: unknown;
-}
-
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
 }

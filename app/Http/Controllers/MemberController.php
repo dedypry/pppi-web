@@ -94,7 +94,7 @@ class MemberController extends Controller
             'sort' => 'required|integer',
             'join_year' => 'required|string',
             'front_title' => 'string',
-            'back_title' => 'string'
+            'back_title' => 'string',
         ]);
         // dd($validate);
 
@@ -216,9 +216,23 @@ class MemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $member)
     {
-        //
+        $validate = $request->validate([
+            "status" => "required|in:submission,approved,reject"
+        ]);
+
+        if ($validate['status'] === 'approved') {
+            $validate['approved_at'] = now();
+            $validate['approved_by'] = Auth::user()->id;
+        }else if($validate['status'] === 'reject'){
+            $validate['rejected_at'] = now();
+            $validate['rejected_by'] = Auth::user()->id;
+        }
+
+        $member->update($validate);
+
+        return back()->with('success', 'Data berhasil di ubah');
     }
 
     /**

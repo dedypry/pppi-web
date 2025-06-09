@@ -84,13 +84,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                     <Avatar size="sm" src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
                                 </DropdownTrigger>
                                 <DropdownMenu>
-                                    <DropdownItem key={1} startContent={<User />}>
+                                    <DropdownItem key={1} startContent={<User />} onClick={() => router.visit(route('profile.index'))}>
                                         My Profile
                                     </DropdownItem>
-                                    <DropdownItem key={1} startContent={<Settings />} onClick={() => router.visit(route('profile.edit'))}>
+                                    <DropdownItem key={2} startContent={<Settings />} onClick={() => router.visit(route('profile.edit'))}>
                                         Settings
                                     </DropdownItem>
-                                    <DropdownItem onClick={() => router.post(route('logout'))} key={1} startContent={<LogOut />}>
+                                    <DropdownItem onClick={() => router.post(route('logout'))} key={3} startContent={<LogOut />}>
                                         Logout
                                     </DropdownItem>
                                 </DropdownMenu>

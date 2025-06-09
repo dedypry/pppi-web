@@ -30,7 +30,13 @@ class User extends Authenticatable
         "is_active",
         'parent_id',
         'job_title',
-        'department_id'
+        'department_id',
+        'status',
+        'approved_at',
+        'approved_by',
+        'rejected_at',
+        'rejected_by',
+        'rejected_note',
     ];
 
     /**
@@ -71,8 +77,9 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
-    public function child(){
-        return $this->hasMany(User::class,'parent_id');
+    public function child()
+    {
+        return $this->hasMany(User::class, 'parent_id');
     }
 
     public function children()

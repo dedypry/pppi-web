@@ -24,6 +24,7 @@ export default defineConfig({
     resolve: {
         alias: {
             'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
+            '@mui/styled-engine': '@mui/styled-engine-sc',
         },
     },
 });

@@ -8,6 +8,7 @@ export default function CustomTextArea({...props}:TextAreaProps){
             color="primary"
             classNames={{
                 label: 'text-gray-800',
+                description: 'text-gray-400 italic text-xs',
             }}
             {...props}
         />

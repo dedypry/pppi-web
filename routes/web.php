@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrganizedController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
@@ -24,13 +27,11 @@ Route::get('/city/{id}', [ProvinceController::class, 'getCity'])->name('city');
 Route::get('/district/{id}', [ProvinceController::class, 'getDistrict'])->name('district');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard', [
-            "layout" => 'admin'
-        ]);
-    })->name('dashboard');
+    Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
 
     Route::post('upload-file', [FileController::class, 'store'])->name('file.store');
+
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
 
     Route::group(["prefix" => "settings", "middleware" => ["role:super_admin|admin"]], function () {
         Route::delete('banners/bulk', [BannerController::class, 'bulkDelete'])->name('banner.bulk.delete');
@@ -55,10 +56,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('member', [UserManagementController::class, 'member'])->name('user.management.member');
             Route::patch('{user}', [UserManagementController::class, 'dropOut'])->name('user.management.dropout');
         });
-
     });
 
-    Route::group(["prefix" => "admin"], function () {
+    Route::group(["prefix" => "admin", "middleware" => ["role:super_admin|admin"]], function () {
         Route::get('member/kta/{user}', [MemberController::class, 'generateKta'])->name('member.kta');
         Route::resource('member', MemberController::class);
 
@@ -67,6 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('blogs', BlogController::class);
         Route::group(['prefix' => 'organization'], function () {
             Route::get('', [OrganizedController::class, 'index'])->name('organization.index');
+        });
+        Route::group(['prefix' => 'agenda'], function () {
+            Route::get('', [AgendaController::class, 'index'])->name('agenda.index');
         });
     });
 });

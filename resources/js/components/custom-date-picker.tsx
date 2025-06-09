@@ -34,6 +34,7 @@ export default function CustomDatePicker({ time = '', setValue, ...props }: Prop
             color="primary"
             classNames={{
                 label: 'text-gray-800',
+                description: 'text-gray-400 italic text-xs',
             }}
             {...props}
         />

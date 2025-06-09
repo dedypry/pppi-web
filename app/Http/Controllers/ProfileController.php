@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
@@ -12,7 +15,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::with(['profile.province', 'profile.city', 'profile.district','roles'])->find(Auth::user()->id);
+        return Inertia::render('my-profile/index', [
+            "layout" => 'admin',
+            'user' => $user,
+        ]);
     }
 
     /**

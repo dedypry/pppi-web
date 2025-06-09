@@ -8,7 +8,6 @@ export default function CustomAutoComplete({ ...props }: AutocompleteProps) {
             color="primary"
             classNames={{
                 base: 'text-gray-800',
-
             }}
             {...props}
         />
