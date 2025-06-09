@@ -30,3 +30,11 @@
 .sidebar-item{
     @apply flex gap-4 rounded-sm px-2 py-2 hover:bg-gray-100/30 hover:text-white
 }
+
+.MuiAvatar-root{
+    @apply bg-primary-100
+}
+
+.gjxMoC{
+    @apply text-primary-300
+}
