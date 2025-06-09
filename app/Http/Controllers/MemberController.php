@@ -93,8 +93,8 @@ class MemberController extends Controller
             'reason_reject' => 'nullable|string|max:1000',
             'sort' => 'required|integer',
             'join_year' => 'required|string',
-            'front_title' => 'string',
-            'back_title' => 'string',
+            'front_title' => 'nullable|string',
+            'back_title' => 'nullable|string',
         ]);
         // dd($validate);
 
