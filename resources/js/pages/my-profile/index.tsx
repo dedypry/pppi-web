@@ -73,7 +73,7 @@ export default function MyProfile({ user }: Props) {
                             <ul className="text-md mt-2 flex flex-col gap-2 text-gray-500">
                                 <div className="flex flex-col gap-2">
                                     <ListProfile Icon={User2Icon} title="Nama" value={user.name} />
-                                    <ListProfile Icon={SlackIcon} title="Roles" value={user.roles?.map((item) => item.name).join(', ')} />
+                                    <ListProfile Icon={SlackIcon} title="Roles" value={user.roles?.length > 0 ? user.roles?.map((item) => item.name).join(', ') : ''} />
                                     <ListProfile Icon={FlagIcon} title="Kewarganegaraan" value={user.profile?.citizenship} />
                                     <ListProfile Icon={LandPlotIcon} title="Provinsi" value={user.profile?.province.name} />
                                     <ListProfile Icon={FlagIcon} title="Kota" value={user.profile?.city.name} />
