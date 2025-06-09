@@ -35,4 +35,10 @@ class AgendaController extends Controller
 
         return back()->with('success', 'Agenda Berhasil Ditambahkan');
     }
+
+    public function destroy(Agenda $agenda){
+        $agenda->delete();
+
+        return back()->with('success','data berhasil di hapus');
+    }
 }

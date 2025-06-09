@@ -10,12 +10,12 @@ type LoginForm = {
     remember: boolean;
 };
 
-interface LoginProps {
-    status?: string;
-    canResetPassword: boolean;
-}
+// interface LoginProps {
+//     status?: string;
+//     canResetPassword: boolean;
+// }
 
-export default function Login({ status, canResetPassword }: LoginProps) {
+export default function Login() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',
@@ -25,8 +25,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     const apps:IApp = props.apps as any;
 
     const [isPassword, setIsPassword] = useState(false);
-
-    console.log('ERROR', status, canResetPassword);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();

@@ -2,6 +2,7 @@ import { IAgenda } from '@/iterfaces/IAgenda';
 import { Scheduler } from '@aldabil/react-scheduler';
 import { Card, CardBody } from '@heroui/react';
 import CustomEditor from './CardEditor';
+import { router } from '@inertiajs/react';
 interface Props {
     agenda: IAgenda[];
 }
@@ -17,6 +18,7 @@ export default function Agenda({ agenda }: Props) {
         <Card>
             <CardBody>
                 <Scheduler
+                    onDelete={async (val: number) => router.delete(route('agenda.destroy', val))}
                     customEditor={(scheduler) => <CustomEditor scheduler={scheduler} />}
                     view="month"
                     events={agenda?.map((item) => ({

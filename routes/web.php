@@ -71,6 +71,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['prefix' => 'agenda'], function () {
             Route::get('', [AgendaController::class, 'index'])->name('agenda.index');
             Route::post('', [AgendaController::class, 'store'])->name('agenda.store');
+            Route::delete('{agenda}', [AgendaController::class, 'destroy'])->name('agenda.destroy');
         });
     });
 });
