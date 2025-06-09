@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
@@ -30,7 +31,11 @@ class UserManagementController extends Controller
     {
         $validate = [
             'name' => 'required|string|max:255',
-            'email' => "required|email|unique:users,email,$request->id",
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($request->id),
+            ],
             'job_title' => 'nullable|string|max:255',
             'parent_id' => 'nullable|exists:users,id',
             'role_id' => 'required',

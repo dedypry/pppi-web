@@ -20,6 +20,21 @@ export default function Agenda({ agenda }: Props) {
                 <Scheduler
                     onDelete={async (val: number) => router.delete(route('agenda.destroy', val))}
                     customEditor={(scheduler) => <CustomEditor scheduler={scheduler} />}
+                    onEventDrop={async (_e, droppedOn, updatedEvent, originalEvent) => {
+                        console.log('ID:', originalEvent.event_id);
+                        console.log('Tanggal baru mulai:', updatedEvent.start); // Date object
+                        console.log('Tanggal baru selesai:', updatedEvent.end); // Date object
+                        console.log('Dropped on cell (optional):', droppedOn);
+
+                        // Contoh kirim ke server:
+                        // await axios.put(`/api/agenda/${originalEvent.event_id}`, {
+                        //   start_at: updatedEvent.start.toISOString(),
+                        //   end_at: updatedEvent.end.toISOString()
+                        // });
+
+                        // Kembalikan updatedEvent agar scheduler memperbarui tampilannya
+                        return updatedEvent;
+                    }}
                     view="month"
                     events={agenda?.map((item) => ({
                         event_id: item.id,
@@ -27,6 +42,8 @@ export default function Agenda({ agenda }: Props) {
                         subtitle: item.subtitle,
                         start: new Date(item.start_at),
                         end: new Date(item.end_at),
+                        draggable: true,
+                        agendaAvatar: 'http://127.0.0.1:8000/logo.png',
                     }))}
                     fields={[
                         {

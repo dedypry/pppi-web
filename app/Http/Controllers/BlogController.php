@@ -58,25 +58,30 @@ class BlogController extends Controller
             $validated['cover'] = $request->cover;
         }
 
-        $payload = [
-            'cover' => $validated['cover'] ?? null,
-            'title' => $validated['title'],
-            'subtitle' => $validated['subtitle'],
-            'content' => $validated['content'],
-            'status' => $validated['isDraft'] ? "draft" : "submission",
-            'category_id' => $validated['categoryId'],
-            'schedule' => $validated['schedule'],
-            'tags' => isset($validated['tags']) ? json_encode($validated['tags']) : null,
-            'writer_id' => Auth::user()->id
-        ];
+        try {
+            $payload = [
+                'cover' => $validated['cover'] ?? null,
+                'title' => $validated['title'],
+                'subtitle' => $validated['subtitle'],
+                'content' => $validated['content'],
+                'status' => $validated['isDraft'] ? "draft" : "submission",
+                'category_id' => $validated['categoryId'],
+                'schedule' => $validated['schedule'],
+                'tags' => isset($validated['tags']) ? json_encode($validated['tags']) : null,
+                'writer_id' => Auth::user()->id
+            ];
 
-        if($request->id){
-            Blog::where('id', $request->id)->update($payload);
-        }else{
-            Blog::create($payload);
+            if ($request->id) {
+                Blog::where('id', $request->id)->update($payload);
+            } else {
+                Blog::create($payload);
+            }
+
+            return redirect()->route('blogs.index')->with('success', 'data berhasil disimpan');
+        } catch (\Throwable $th) {
+            return redirect()->route('blogs.index')->with('error', $th->getMessage());
         }
 
-        return redirect()->route('blogs.index')->with('success', 'data berhasil disimpan');
     }
 
     /**
