@@ -239,7 +239,7 @@ export default {
                 },
             },
             layout: {
-                disabledOpacity: '0.5',
+                disabledOpacity: '0.8',
                 radius: {
                     small: '2px', // rounded-small
                     medium: '4px', // rounded-medium
