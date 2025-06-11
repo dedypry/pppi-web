@@ -17,7 +17,7 @@ export default function Organization({ users }: Props) {
                 title="Organisasi PPPI"
                 subtitle="Struktur dan peran organisasi dalam mendukung profesionalisme dan solidaritas perawat Indonesia."
             />
-            <div className="container mx-auto flex flex-col gap-5">
+            <div className="container mx-auto flex flex-col gap-5 px-10">
                 <Card className="p-10">
                     <CardHeader>Struktur Organisasi</CardHeader>
                     <CardBody>
