@@ -6,4 +6,7 @@ export interface IApp {
     logo: string;
     visi: string;
     misi: string;
+    address: string;
+    phone: string;
+    email: string;
 }

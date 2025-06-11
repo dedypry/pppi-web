@@ -1,14 +1,37 @@
 import { IChild } from '@/iterfaces/IBody';
 import { SharedData } from '@/types';
-import { Avatar, Divider,  Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react';
+import { addToast, Avatar, Divider,  Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { LayoutDashboard, LogInIcon } from 'lucide-react';
 import AboutButton from './about-button';
 import Footer from './footer';
 import InformationButton from './information-button';
+import { useEffect } from 'react';
 
 export default function LandingLayout({ children }: IChild) {
-    const { auth, apps } = usePage<SharedData>().props;
+    const { auth, apps, flash } = usePage<SharedData>().props;
+
+
+    useEffect(() => {
+        const successMessage = (flash as any)?.success;
+        const errorMessage = (flash as any)?.error;
+
+        if (successMessage) {
+            addToast({
+                title: 'Success',
+                description: successMessage,
+                color: 'success',
+            });
+        }
+
+        if (errorMessage) {
+            addToast({
+                title: 'Error',
+                description: errorMessage,
+                color: 'danger',
+            });
+        }
+    }, [flash]);
     return (
         <div>
             <div className="bg-black pt-2">
@@ -57,7 +80,7 @@ export default function LandingLayout({ children }: IChild) {
                 </NavbarContent>
             </Navbar>
 
-            <div className="pb-10">{children}</div>
+            <div className="pb-10 z-0">{children}</div>
             <Footer />
         </div>
     );

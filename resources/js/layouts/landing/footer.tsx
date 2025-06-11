@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 export default function Footer() {
     const { apps } = usePage<SharedData>().props;
     return (
-        <footer className="min-h-[300px] w-full bg-gradient-to-b from-primary-900 to-primary-700">
+        <footer className="min-h-[300px] w-full bg-gradient-to-b from-primary-900 to-primary-700 z-50">
             <div className="container mx-auto py-10 px-10">
                 <div className="grid grid-cols-12">
                     <div className="col-span-4">

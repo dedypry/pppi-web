@@ -1,3 +1,5 @@
+import { User } from "./IUser";
+
 // Interface untuk kategori blog
 export interface Category {
     id: number;
@@ -7,28 +9,32 @@ export interface Category {
     is_active: boolean;
     created_at: string;
     updated_at: string;
+    blogs_count: number;
 }
-interface Writer {
+export interface IComment {
     id: number;
-    name: string;
-    email: string;
-    email_verified_at: string;
+    parent_id: number | null;
+    blog_id: number;
+    user_id: number;
+    content: string;
     created_at: string;
     updated_at: string;
+    name: string;
+    email: string;
+    website: string | null;
+    user: User | null
 }
 
-
-// Interface untuk data blog
 export interface Blog {
     id: number;
     category_id: number;
     writer_id: number;
-    writer: Writer;
+    writer: User;
     cover: string;
     title: string;
     subtitle: string;
     content: string;
-    tags: string; // Jika ingin sebagai array: string[]
+    tags: string[]; // Jika ingin sebagai array: string[]
     status: string;
     view_count: number;
     share_count: number;
@@ -37,6 +43,7 @@ export interface Blog {
     publish_at: string;
     schedule: string;
     category: Category;
+    comments: IComment[];
 }
 
 // Interface untuk pagination link

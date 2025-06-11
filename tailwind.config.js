@@ -1,5 +1,6 @@
 import { heroui } from '@heroui/react';
 import tailwindScrollbar from "tailwind-scrollbar"
+import lineClamp from '@tailwindcss/line-clamp';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ['./resources/views/**/*.php', './resources/js/**/*.{js,ts,jsx,tsx}', './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}'],
@@ -15,6 +16,7 @@ export default {
     },
     darkMode: 'class',
     plugins: [
+        lineClamp,
         tailwindScrollbar(),
         heroui({
             prefix: 'heroui', // prefix for themes variables

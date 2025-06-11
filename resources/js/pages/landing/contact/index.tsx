@@ -21,22 +21,22 @@ export default function Contact() {
                     <div className="col-span-4">
                         <Card>
                             <CardBody className="flex flex-col gap-10 p-10">
-                                <ListSidebar Icon={Building2} title="Alamat Kantor" subtitle={apps.full_name} />
-                                <ListSidebar Icon={PhoneCall} title="Telp" subtitle={apps.full_name} />
-                                <ListSidebar Icon={MailCheckIcon} title="Email" subtitle={apps.full_name} />
+                                <ListSidebar Icon={Building2} title="Alamat Kantor" subtitle={apps?.address} />
+                                <ListSidebar Icon={PhoneCall} title="Telp" subtitle={apps?.phone} />
+                                <ListSidebar Icon={MailCheckIcon} title="Email" subtitle={apps?.email} />
                             </CardBody>
                         </Card>
                     </div>
                     <div className="col-span-8">
-                        <Card className="p-6">
-                            <CardHeader className="text-[30px] font-bold text-primary">Kirim Pesan</CardHeader>
+                        <Card className="p-3">
+                            <CardHeader className="text-[20px] font-bold text-primary">Kirim Pesan</CardHeader>
                             <CardBody className="flex flex-col gap-5">
                                 <CustomInput label="Nama" placeholder="Masukan Nama" />
                                 <CustomInput label="Email" placeholder="Masukan Email" />
                                 <CustomInput label="Subject" placeholder="Masukan Subject" />
                                 <CustomTextArea label="Pesan" placeholder="Masukan Pesan" />
                             </CardBody>
-                            <CardFooter className="flex justify-end py-5">
+                            <CardFooter className="flex justify-end">
                                 <Button color="primary">Kirim Pesan</Button>
                             </CardFooter>
                         </Card>

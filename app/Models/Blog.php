@@ -8,6 +8,13 @@ class Blog extends Model
 {
     protected $guarded = [];
 
+    protected function casts(): array
+    {
+        return [
+            'tags' => 'array',
+        ];
+    }
+
     public function category()
     {
         return $this->belongsTo(BlogCategory::class);
@@ -16,5 +23,10 @@ class Blog extends Model
     public function writer()
     {
         return $this->belongsTo(User::class, 'writer_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(BlogComment::class);
     }
 }

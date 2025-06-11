@@ -39,6 +39,7 @@
         "@mui/styled-engine": "^7.1.1",
         "@mui/styled-engine-sc": "^7.1.1",
         "@react-stately/data": "^3.13.1",
+        "@tailwindcss/line-clamp": "^0.4.4",
         "@tailwindcss/vite": "^4.0.6",
         "@types/react": "^19.0.3",
         "@types/react-dom": "^19.0.2",

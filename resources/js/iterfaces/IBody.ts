@@ -12,3 +12,4 @@ export interface Banners {
     type: string;
     is_active: boolean;
 }
+
