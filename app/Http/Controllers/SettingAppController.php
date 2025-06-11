@@ -28,6 +28,14 @@ class SettingAppController extends Controller
             'app' => $app
         ]);
     }
+    public function contact()
+    {
+        $app = SettingApp::pluck('value', 'key',)->toArray();
+        return Inertia::render('settings/apps/pages/contact', [
+            'layout' => 'admin',
+            'app' => $app
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.

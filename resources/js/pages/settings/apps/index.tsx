@@ -27,6 +27,10 @@ export default function LayoutApps({ children, logo }: IChild & Props) {
             href: '/settings/apps',
         },
         {
+            title: 'contact',
+            href: '/settings/apps/contact',
+        },
+        {
             title: 'Visi dan Misi',
             href: '/settings/apps/visi',
         },

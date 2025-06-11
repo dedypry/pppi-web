@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('banners', BannerController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::resource('roles', RoleController::class);
         Route::get('apps/visi', [SettingAppController::class, 'visi'])->name('apps.visi');
+        Route::get('apps/contact', [SettingAppController::class, 'contact'])->name('apps.contact');
         Route::resource('apps', SettingAppController::class);
         Route::resource('department', DepartmentController::class);
 
