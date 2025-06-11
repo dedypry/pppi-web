@@ -23,32 +23,32 @@ export default function Blogs({ blog, categories, tags }: Props) {
     }
     return (
         <>
-            <Head title={blog.title} />
-            <HeaderContent title={blog.category?.name} subtitle={blog.category?.description || ''} />
+            <Head title={blog?.title} />
+            <HeaderContent title={blog?.category?.name} subtitle={blog?.category?.description || ''} />
             <div className="container mx-auto flex flex-col gap-5 px-10">
                 <div className="grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-9">
                         <Card className='p-3'>
                             <CardHeader>
-                                <Image src={blog.cover} className="w-full object-cover" />
+                                <Image src={blog?.cover} className="w-full object-cover" />
                             </CardHeader>
                             <CardBody>
-                                {blog.tags.map((e) => (
+                                {blog?.tags.map((e) => (
                                     <Chip className="bg-danger-300 text-white" size="sm">
                                         {e}
                                     </Chip>
                                 ))}
-                                <p className="my-2 text-[36px] font-bold">{blog.title}</p>
+                                <p className="my-2 text-[36px] font-bold">{blog?.title}</p>
                                 <div className="flex items-center gap-2">
-                                    <Avatar src={blog.writer?.profile?.photo || '/avatar.PNG'} size="sm" isBordered />
+                                    <Avatar src={blog?.writer?.profile?.photo || '/avatar.PNG'} size="sm" isBordered />
                                     <p className="text-xs text-gray-800">
-                                        {blog.writer.name} - {dayjs(blog.created_at).format('MMMM DD, YYYY')} - {dayjs(blog.created_at).fromNow()}
+                                        {blog?.writer.name} - {dayjs(blog?.created_at).format('MMMM DD, YYYY')} - {dayjs(blog?.created_at).fromNow()}
                                     </p>
                                 </div>
                             </CardBody>
                             <CardBody>
-                                <p className="mb-5 text-sm italic text-gray-400">{blog.subtitle}</p>
-                                <div dangerouslySetInnerHTML={{ __html: decodeHtml(blog.content) }}></div>
+                                <p className="mb-5 text-sm italic text-gray-400">{blog?.subtitle}</p>
+                                <div dangerouslySetInnerHTML={{ __html: decodeHtml(blog?.content) }}></div>
                             </CardBody>
                             <CardFooter>
                                 <div className="flex gap-2">

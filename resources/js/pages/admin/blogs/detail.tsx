@@ -9,27 +9,27 @@ interface Props {
     setOpen: CallableFunction;
 }
 export default function BlogDetail({ blog, isOpen, setOpen }: Props) {
-    function getColorStatus(status){
-        let color = "warning"
+    function getColorStatus(status:string) {
+        let color = 'warning';
 
         switch (status) {
             case 'publish':
-                color = 'success'
+                color = 'success';
                 break;
 
             case 'draft':
-                color = 'default'
+                color = 'default';
                 break;
 
             case 'reject':
-                color = 'danger'
+                color = 'danger';
                 break;
 
             default:
                 color = 'warning';
                 break;
         }
-        return color
+        return color;
     }
     return (
         <Modal isOpen={isOpen} onOpenChange={() => setOpen(!isOpen)} size="5xl" placement="bottom-center" backdrop="blur" scrollBehavior="inside">
@@ -37,21 +37,21 @@ export default function BlogDetail({ blog, isOpen, setOpen }: Props) {
                 <ModalHeader>Blog Detail</ModalHeader>
 
                 <ModalBody>
-                    <div className="flex flex-col text-center mb-5">
-                        <p className="text-center text-3xl">{blog.title}</p>
-                        <p className="font-normal">{blog.subtitle}</p>
+                    <div className="mb-5 flex flex-col text-center">
+                        <p className="text-center text-3xl">{blog?.title}</p>
+                        <p className="font-normal">{blog?.subtitle}</p>
                     </div>
                     <Image src={blog.cover} />
-                    <div dangerouslySetInnerHTML={{ __html: blog.content }} className="mb-10" />
-                    <p className="italic">Di Tulis pada tanggal : {dateFormat(blog.created_at)} </p>
+                    <div dangerouslySetInnerHTML={{ __html: blog?.content }} className="mb-10" />
+                    <p className="italic">Di Tulis pada tanggal : {dateFormat(blog?.created_at)} </p>
                     <div className="flex items-center gap-5">
                         <p className="italic">Status :</p>
-                        <Chip color={getColorStatus(blog.status) as any}>{blog.status.toUpperCase()}</Chip>{' '}
+                        <Chip color={getColorStatus(blog?.status) as any}>{blog?.status?.toUpperCase()}</Chip>{' '}
                     </div>
                 </ModalBody>
                 <ModalFooter className="flex justify-between">
                     <div>
-                        <p className="italic">Penulis : {blog.writer.name} </p>
+                        <p className="italic">Penulis : {blog?.writer?.name} </p>
                     </div>
                     <div className="flex gap-5">
                         <div className="flex gap-2">
