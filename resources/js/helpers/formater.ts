@@ -16,7 +16,7 @@ export function dateFormat(date = '', format = 'DD MMMM YYYY') {
     return dayjs(date).format(format);
 }
 
-export function dateSchedule(date?: Date) {
+export function dateSchedule(date?: string) {
     const formater = 'YYYY-MM-DD HH:mm';
     if (!date) return dayjs().format(formater);
 

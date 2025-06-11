@@ -1,36 +1,43 @@
 import Carousel from '@/components/Carousel';
+import { IAgenda } from '@/iterfaces/IAgenda';
+import { Blog } from '@/iterfaces/IBlogs';
 import { Banners } from '@/iterfaces/IBody';
-import { Card, CardBody, CardHeader, Image } from '@heroui/react';
-import { BookUserIcon, Edit, Handshake, HandshakeIcon, NewspaperIcon, SquarePenIcon } from 'lucide-react';
+import { IPaginationResponse } from '@/iterfaces/IPagination';
+import { Card, CardBody, Image } from '@heroui/react';
+import { BookUserIcon, HandshakeIcon, NewspaperIcon, SquarePenIcon } from 'lucide-react';
+import ListAgenda from './list-agenda';
+import ListBlogs from './list-blogs';
 
 interface Props {
     banners: Banners[];
+    blogs: IPaginationResponse<Blog>;
+    agendas: IPaginationResponse<IAgenda>;
 }
-export default function LandingHome({ banners }: Props) {
+export default function LandingHome({ banners, blogs, agendas }: Props) {
     const categories = [
         {
             title: 'E-konsultasi',
             icon: HandshakeIcon,
-            href:""
+            href: '',
         },
         {
             title: 'E-Jurnal',
             icon: NewspaperIcon,
-            href:""
+            href: '',
         },
         {
             title: 'Registrasi',
             icon: SquarePenIcon,
-            href:""
+            href: '',
         },
         {
             title: 'Member',
             icon: BookUserIcon,
-            href:""
+            href: '',
         },
     ];
     return (
-        <>
+        <div className="pb-10">
             <Carousel
                 autoPlay={true}
                 className="-mt-[60px]"
@@ -54,15 +61,22 @@ export default function LandingHome({ banners }: Props) {
                 ))}
             </Carousel>
 
-            <div className="container mx-auto mt-5 grid grid-cols-12 px-10">
+            <div className="container mx-auto mt-5 grid grid-cols-12 gap-10 px-10">
                 <div className="col-span-8">
-                    <p className="text-[25px] font-semibold">Berita Terbaru</p>
-                    <p>Berita Terbaru Perkumpulan Perawat Pembaharuan Indonesia</p>
+                    <section id="title" className="mb-10">
+                        <p className="text-[25px] font-semibold">Berita Terbaru</p>
+                        <p className="text-sm italic text-gray-500">Berita Terbaru Perkumpulan Perawat Pembaharuan Indonesia</p>
+                    </section>
+                    <ListBlogs blogs={blogs} />
                 </div>
                 <div className="col-span-4">
-                    <p className="text-[25px] font-semibold">Agenda</p>
+                    <section id="agenda" className="mb-10">
+                        <p className="text-[25px] font-semibold">Agenda</p>
+                        <p className="text-sm italic text-gray-500">Agenda PPPI</p>
+                    </section>
+                    <ListAgenda agendas={agendas} />
                 </div>
             </div>
-        </>
+        </div>
     );
 }

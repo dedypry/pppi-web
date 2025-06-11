@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { responsive } from '@/utils/helpers/responsive';
 import {
     addToast,

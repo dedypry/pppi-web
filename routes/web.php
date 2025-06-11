@@ -8,26 +8,23 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrganizedController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingAppController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', [LandingController::class, 'index'])->name('home');
+require __DIR__ . '/landing.php';
 
 Route::get('/province', [ProvinceController::class, 'index'])->name('province');
 Route::get('/city/{id}', [ProvinceController::class, 'getCity'])->name('city');
 Route::get('/district/{id}', [ProvinceController::class, 'getDistrict'])->name('district');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('upload-file', [FileController::class, 'store'])->name('file.store');
 

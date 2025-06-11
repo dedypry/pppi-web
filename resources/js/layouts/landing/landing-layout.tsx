@@ -1,38 +1,49 @@
 import { IChild } from '@/iterfaces/IBody';
-import { Divider, Image, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react';
-import { LogInIcon } from 'lucide-react';
+import { SharedData } from '@/types';
+import { Avatar, Divider,  Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react';
+import { Link, usePage } from '@inertiajs/react';
+import { LayoutDashboard, LogInIcon } from 'lucide-react';
+import AboutButton from './about-button';
+import Footer from './footer';
 
 export default function LandingLayout({ children }: IChild) {
+    const { auth, apps } = usePage<SharedData>().props;
     return (
-        <>
+        <div>
             <div className="bg-black pt-2">
                 <div className="container mx-auto flex justify-between px-8 text-sm text-white">
-                    <p>Perkumpulan Perawat Pembaharuan Indonesia</p>
-                    <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-2 hover:cursor-pointer">
-                            <LogInIcon size={14} /> <p>Register</p>
+                    <p>{apps.full_name}</p>
+                    {auth.user ? (
+                        <div>
+                            <Link href="/dashboard" className="flex items-center gap-2 text-white">
+                                <LayoutDashboard size={14} /> <p>Dashboard</p>
+                            </Link>
                         </div>
-                        <Divider orientation="vertical" className="h-1/2 bg-white" />
-                        <div className="flex items-center gap-2 hover:cursor-pointer">
-                            <LogInIcon size={14} /> <p>Login</p>
+                    ) : (
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 hover:cursor-pointer">
+                                <LogInIcon size={14} /> <p>Register</p>
+                            </div>
+                            <Divider orientation="vertical" className="h-1/2 bg-white" />
+                            <Link href="/login" className="flex items-center gap-2 text-white">
+                                <LogInIcon size={14} /> <p>Login</p>
+                            </Link>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
             <Navbar maxWidth="2xl" className="bg-transparent bg-gradient-to-b from-black to-transparent" isBlurred={false} isBordered={false}>
                 <NavbarBrand>
-                    <Image src="/logo1.png" height={40} />
+                    <Avatar src={apps.logo || '/logo1.png'} size="md" />
                 </NavbarBrand>
                 <NavbarContent className="hidden sm:flex" justify="end">
                     <NavbarItem>
-                        <Link className="link-anim" href="#">
+                        <Link className="link-anim" href="/">
                             Beranda
                         </Link>
                     </NavbarItem>
                     <NavbarItem>
-                        <Link className="link-anim" href="#">
-                            Tentang Kami
-                        </Link>
+                        <AboutButton />
                     </NavbarItem>
                     <NavbarItem>
                         <Link className="link-anim" aria-current="page" href="#">
@@ -47,7 +58,8 @@ export default function LandingLayout({ children }: IChild) {
                 </NavbarContent>
             </Navbar>
 
-            {children}
-        </>
+            <div className="pb-10">{children}</div>
+            <Footer />
+        </div>
     );
 }
