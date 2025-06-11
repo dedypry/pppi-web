@@ -18,7 +18,7 @@ export default function Comment({ blog }: Props) {
     return (
         <Card className="mt-5 p-3">
             <CardHeader>
-                <p className="text-[20px] font-bold">Comment</p>
+                <p className="text-[20px] font-bold"> {blog?.comments.length} Comment</p>
             </CardHeader>
             <CardBody>
                 {blog?.comments?.map((comment) => (

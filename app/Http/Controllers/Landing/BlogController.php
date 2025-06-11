@@ -14,11 +14,11 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        $pageSize = $request->input($request->pageSize, 10);
-        $blogs = Blog::with('writer');
+        $pageSize = $request->input('pageSize', 10); // Default 10
+        $blogs = Blog::with('writer')->paginate($pageSize);
         $categories = BlogCategory::withCount('blogs')->get();
         return Inertia::render('landing/blogs/index', [
-            "blogs" => $blogs->paginate($pageSize),
+            "blogs" => $blogs,
             "categories" => $categories
         ]);
     }
