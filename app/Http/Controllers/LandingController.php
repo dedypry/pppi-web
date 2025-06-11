@@ -25,6 +25,7 @@ class LandingController extends Controller
     public function visiMisi(){
         return Inertia::render('landing/visi-misi/index');
     }
+
     public function organization(){
         $user = User::where('is_organization', true)
             ->where('is_active', true)
@@ -34,5 +35,18 @@ class LandingController extends Controller
         return Inertia::render('landing/organization/index',[
             "users" => $user
         ]);
+    }
+
+    public function blogs()
+    {
+        return Inertia::render('landing/blogs/index');
+    }
+    public function gallery()
+    {
+        return Inertia::render('landing/gallery/index');
+    }
+    public function contact()
+    {
+        return Inertia::render('landing/contact/index');
     }
 }

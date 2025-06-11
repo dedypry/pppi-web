@@ -5,6 +5,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { LayoutDashboard, LogInIcon } from 'lucide-react';
 import AboutButton from './about-button';
 import Footer from './footer';
+import InformationButton from './information-button';
 
 export default function LandingLayout({ children }: IChild) {
     const { auth, apps } = usePage<SharedData>().props;
@@ -46,12 +47,10 @@ export default function LandingLayout({ children }: IChild) {
                         <AboutButton />
                     </NavbarItem>
                     <NavbarItem>
-                        <Link className="link-anim" aria-current="page" href="#">
-                            Informasi
-                        </Link>
+                        <InformationButton />
                     </NavbarItem>
                     <NavbarItem>
-                        <Link className="link-anim" href="#">
+                        <Link className="link-anim" href={route('contact')}>
                             Kontak
                         </Link>
                     </NavbarItem>

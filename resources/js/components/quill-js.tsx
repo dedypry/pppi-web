@@ -66,7 +66,7 @@ export default function QuillJS({ value, onContent, label }: Props) {
         }
     }, [quill]);
     return (
-        <div className="w-full">
+        <div className="w-full min-h-[400px]">
             {label && <p className='text-sm mb-1'>{label}</p>}
             <div ref={quillRef} />
         </div>
