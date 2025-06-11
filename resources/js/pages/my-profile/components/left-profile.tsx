@@ -1,8 +1,7 @@
 import Gender from '@/components/gender';
 import { User } from '@/iterfaces/IUser';
-import { Button, Card, CardBody, Tooltip } from '@heroui/react';
+import { Card, CardBody } from '@heroui/react';
 import {
-    EditIcon,
     FacebookIcon,
     FlagIcon,
     InstagramIcon,
@@ -24,17 +23,10 @@ export default function LeftProfile({ user }: Props) {
     return (
         <Card>
             <CardBody>
-                <div className="flex relative">
+                <div className="relative flex">
                     <div className="flex gap-2">
                         <p className="text-gray-500">Tentang</p>
                         <Gender gender={user.profile?.gender} />
-                    </div>
-                    <div className='absolute top-0 right-0'>
-                        <Tooltip content="Ubah Data">
-                            <Button size="sm" isIconOnly radius="full" variant="light">
-                                <EditIcon />
-                            </Button>
-                        </Tooltip>
                     </div>
                 </div>
                 <ul className="text-md mt-2 flex flex-col gap-2 text-gray-500">

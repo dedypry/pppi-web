@@ -25,7 +25,6 @@ interface Props {
 export default function List({ department }: Props) {
     const [open, setOpen] = useState(false);
 
-    console.log(department);
     return (
         <>
             <Create open={open} setOpen={setOpen} />

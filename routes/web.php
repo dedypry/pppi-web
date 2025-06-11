@@ -31,8 +31,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('upload-file', [FileController::class, 'store'])->name('file.store');
 
-    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
-
     Route::group(["prefix" => "settings", "middleware" => ["role:super_admin|admin"]], function () {
         Route::delete('banners/bulk', [BannerController::class, 'bulkDelete'])->name('banner.bulk.delete');
         Route::resource('banners', BannerController::class)->only(['index', 'store', 'update', 'destroy']);

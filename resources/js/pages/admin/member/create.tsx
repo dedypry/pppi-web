@@ -10,7 +10,7 @@ import DistrictList from '@/components/district';
 import InputPhotoProfile from '@/components/input-photo-profile';
 import ProvinceList from '@/components/province';
 import { User } from '@/iterfaces/IUser';
-import { Button, Card, CardBody, CardHeader, Divider, Image, Radio, RadioGroup, SelectItem, Textarea } from '@heroui/react';
+import { Avatar, Button, Card, CardBody, CardHeader, Divider, Radio, RadioGroup, SelectItem, Textarea } from '@heroui/react';
 import { useForm } from '@inertiajs/react';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
@@ -227,10 +227,10 @@ export default function CreateMember({ sort, user }: Props) {
                                 label="Jenis Kelamin"
                                 placeholder="Masukan Jenis Kelamin"
                             >
-                                <SelectItem key="male" startContent={<Image src={Man} width={30} />}>
+                                <SelectItem key="male" startContent={<Avatar src={Man} isBordered size="sm" />}>
                                     Laki-laki
                                 </SelectItem>
-                                <SelectItem key="female" startContent={<Image src={Woman} width={30} />}>
+                                <SelectItem key="female" startContent={<Avatar src={Woman} isBordered size="sm" />}>
                                     Perempuan
                                 </SelectItem>
                             </CustomSelect>
