@@ -36,8 +36,8 @@ export default function Login() {
     return (
         <div className="flex h-screen w-full items-center justify-center bg-primary-100">
             <Head title="Login" />
-            <Form onSubmit={submit} className="w-full max-w-md">
-                <Card className="w-full p-5">
+            <Form onSubmit={submit} className="w-full max-w-md px-5">
+                <Card className="w-full md:p-5 p-2">
                     <CardHeader className="flex justify-center gap-3">
                         <Image src={apps.logo || '/logo1.png'} height={50} width={50} />
                         <h1 className="text-[30px] font-bold">{apps?.short_name}</h1>

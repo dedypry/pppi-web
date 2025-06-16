@@ -25,10 +25,10 @@ export default function Blogs({ blog, categories, tags }: Props) {
         <>
             <Head title={blog?.title} />
             <HeaderContent title={blog?.category?.name} subtitle={blog?.category?.description || ''} />
-            <div className="container mx-auto flex flex-col gap-5 px-10">
+            <div className="container mx-auto flex flex-col gap-5 md:px-10 px-5">
                 <div className="grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-9">
-                        <Card className='p-3'>
+                        <Card className='md:p-3 p-2'>
                             <CardHeader>
                                 <Image src={blog?.cover} className="w-full object-cover" />
                             </CardHeader>

@@ -60,12 +60,14 @@ export default function LandingLayout({ children }: IChild) {
                 </div>
             </div>
             <Navbar maxWidth="2xl" className="bg-transparent bg-gradient-to-b from-black to-transparent" isBlurred={false} isBordered={false}>
-                <NavbarBrand className='flex gap-5'>
-                    <Avatar src={apps.logo || '/logo1.png'} size="md" />
-                    <div className="text-white flex md:hidden flex-col">
-                        <p className='font-bold p-0 m-0'>{apps.short_name}</p>
-                        <p className='text-[10px] p-0 m-0'>{apps.full_name}</p>
-                    </div>
+                <NavbarBrand>
+                    <Link href="/" className="flex gap-2">
+                        <Avatar src={apps.logo || '/logo1.png'} size="md" />
+                        <div className="flex flex-col text-white md:hidden">
+                            <p className="m-0 p-0 font-bold">{apps.short_name}</p>
+                            <p className="m-0 p-0 text-[10px]">{apps.full_name}</p>
+                        </div>
+                    </Link>
                 </NavbarBrand>
                 <NavbarContent className="hidden md:flex" justify="end">
                     <NavbarItem>

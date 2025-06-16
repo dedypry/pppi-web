@@ -1,12 +1,12 @@
 import { SharedData } from '@/types';
-import { Avatar, Button, Divider, Drawer, DrawerBody, DrawerContent, DrawerHeader } from '@heroui/react';
+import { Avatar, Button, Divider, Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@heroui/react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { AlignStartVerticalIcon, Atom, Backpack, ContactIcon, GalleryThumbnails, History, LayoutDashboard, MenuIcon, Rss } from 'lucide-react';
 import { useState } from 'react';
 
 export default function LandingDrawer() {
     const [isOpen, setOpen] = useState(false);
-    const { apps } = usePage<SharedData>().props;
+    const { apps, auth } = usePage<SharedData>().props;
     const url = window.location.pathname;
 
     console.log('URL', url);
@@ -102,13 +102,26 @@ export default function LandingDrawer() {
                                 }
 
                                 return (
-                                    <Link className={`link-member ${url === item.href ? 'bg-primary-500 text-white shadow-md':""}`} href={item.href}>
+                                    <Link
+                                        className={`link-member ${url === item.href ? 'bg-primary-500 text-white shadow-md' : ''}`}
+                                        href={item.href}
+                                    >
                                         {ParentIcon && <ParentIcon size={18} />} {item.title}
                                     </Link>
                                 );
                             })}
                         </div>
                     </DrawerBody>
+                    {!auth.user && (
+                        <DrawerFooter>
+                            <Button fullWidth color="primary" onPress={() => router.visit(route('login'))}>
+                                Login
+                            </Button>
+                            <Button fullWidth color="danger" onPress={() => router.visit(route('register'))}>
+                                Daftar Anggota
+                            </Button>
+                        </DrawerFooter>
+                    )}
                 </DrawerContent>
             </Drawer>
             <Button isIconOnly size="sm" radius="full" variant="light" onPress={() => setOpen(true)}>
