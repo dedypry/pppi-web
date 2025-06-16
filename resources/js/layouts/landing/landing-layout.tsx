@@ -5,13 +5,14 @@ import { Link, usePage } from '@inertiajs/react';
 import { LayoutDashboard, LogInIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import AboutButton from './about-button';
+import LandingDrawer from './drawer';
 import Footer from './footer';
 import InformationButton from './information-button';
 
 export default function LandingLayout({ children }: IChild) {
     const { auth, apps, flash } = usePage<SharedData>().props;
 
-    const redirect = auth?.roles?.includes('admin') ?'/dashboard' : '/member/dashboard' ;
+    const redirect = auth?.roles?.includes('admin') ? '/dashboard' : '/member/dashboard';
 
     useEffect(() => {
         const successMessage = (flash as any)?.success;
@@ -34,10 +35,11 @@ export default function LandingLayout({ children }: IChild) {
         }
     }, [flash]);
     return (
-        <div className='w-screen'>
-            <div className="bg-black pt-2 w-full">
+        <div className="w-screen">
+            <div className="hidden w-full bg-black pt-2 md:block">
                 <div className="container mx-auto flex justify-between px-8 text-sm text-white">
                     <p>{apps.full_name}</p>
+
                     {auth.user ? (
                         <div>
                             <Link href={redirect} className="flex items-center gap-2 text-white">
@@ -61,7 +63,7 @@ export default function LandingLayout({ children }: IChild) {
                 <NavbarBrand>
                     <Avatar src={apps.logo || '/logo1.png'} size="md" />
                 </NavbarBrand>
-                <NavbarContent className="hidden sm:flex" justify="end">
+                <NavbarContent className="hidden md:flex" justify="end">
                     <NavbarItem>
                         <Link className="link-anim" href="/">
                             Beranda
@@ -78,6 +80,9 @@ export default function LandingLayout({ children }: IChild) {
                             Kontak
                         </Link>
                     </NavbarItem>
+                </NavbarContent>
+                <NavbarContent justify="end" className="md:hidden">
+                    <LandingDrawer />
                 </NavbarContent>
             </Navbar>
 
