@@ -16,8 +16,8 @@ class RegionController extends Controller
         $provinces = Province::orderBy('name', 'asc');
 
         if ($request->search) {
-            $provinces = $provinces->where('name', 'ilike', "%$request->search%")
-                ->orWhere('code', 'ilike', "%$request->search%");
+            $provinces = $provinces->where('name', 'like', "%$request->search%")
+                ->orWhere('code', 'like', "%$request->search%");
         }
         return Inertia::render('settings/regions/tabs/province', [
             "layout" => 'admin',
@@ -30,8 +30,8 @@ class RegionController extends Controller
         $pageSize = $request->input('pageSize', 10);
         $city = City::orderBy('name', 'asc');
         if ($request->search) {
-            $city = $city->where('name', 'ilike', "%$request->search%")
-                ->orWhere('code', 'ilike', "%$request->search%");
+            $city = $city->where('name', 'like', "%$request->search%")
+                ->orWhere('code', 'like', "%$request->search%");
         }
         return Inertia::render('settings/regions/tabs/city', [
             "layout" => 'admin',
@@ -45,11 +45,11 @@ class RegionController extends Controller
         $search = $request->search;
 
         $district = $district->where(function ($query) use ($search) {
-            $query->where('name', 'ilike', "%{$search}%")
+            $query->where('name', 'like', "%{$search}%")
                 ->orWhereHas('city', function ($q) use ($search) {
-                    $q->where('name', 'ilike', "%{$search}%")
+                    $q->where('name', 'like', "%{$search}%")
                         ->orWhereHas('province', function ($qq) use ($search) {
-                            $qq->where('name', 'ilike', "%{$search}%");
+                            $qq->where('name', 'like', "%{$search}%");
                         });
                 });
         });

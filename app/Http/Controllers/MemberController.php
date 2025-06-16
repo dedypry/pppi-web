@@ -32,7 +32,7 @@ class MemberController extends Controller
         ]);
 
         if ($search) {
-            $user = $user->where('name', 'ilike', "%$search%");
+            $user = $user->where('name', 'like', "%$search%");
         }
         return Inertia::render('admin/member/list', [
             "users" => $user->paginate($perPage)

@@ -17,7 +17,7 @@ return new class extends Migration
         });
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->nullOnDelete('cascade');
+            $table->integer('user_id');
             $table->string('nik')->nullable();
             $table->string('place_birth')->nullable();
             $table->date('date_birth')->nullable();
