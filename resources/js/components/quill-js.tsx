@@ -4,6 +4,8 @@ import QuillResizeImage from 'quill-resize-image';
 import 'quill/dist/quill.snow.css';
 import { useEffect } from 'react';
 import { useQuill } from 'react-quilljs';
+import QuillTableUI from 'quill-table-ui';
+import 'quill-table-ui/dist/index.css';
 interface Props {
     value: string;
     onContent: (val: any) => void;
@@ -12,16 +14,50 @@ interface Props {
 export default function QuillJS({ value, onContent, label }: Props) {
     const { quill, quillRef, Quill } = useQuill({
         modules: {
+            table: true,
+            tableUI: true,
+            toolbar: [
+                [{ header: [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ align: [] }],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                [{ indent: '-1' }, { indent: '+1' }],
+                ['link', 'image','video'],
+                ['clean'],
+                ['blockquote', 'code-block'],
+                [{ color: [] }, { background: [] }],
+                ['table'],
+            ],
             resize: {
                 locale: {},
             },
             magicUrl: true,
         },
-        formats: ['image'],
+        formats: [
+            'header',
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'align',
+            'list',
+            'bullet',
+            'indent',
+            'link',
+            'image',
+            'video',
+            'clean',
+            'blockquote',
+            'color',
+            'background',
+            'table',
+            'code-block',
+        ],
     });
     if (Quill) {
         Quill.register('modules/resize', QuillResizeImage);
         Quill.register('modules/magicUrl', MagicUrl);
+        Quill.register('modules/tableUI', QuillTableUI);
     }
 
     const insertToEditor = (url: string) => {
