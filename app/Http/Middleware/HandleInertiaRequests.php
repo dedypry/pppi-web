@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
-                'user' => User::with('profile')->find($request->user()->id),
+                'user' => empty($request->user()) ? $request->user() : User::with('profile')->find($request->user()->id),
                 'role' => $request->user()?->getRoleNames()
             ],
             'flash' => [

@@ -1,10 +1,11 @@
 import { IChild } from '@/iterfaces/IBody';
 import { SharedData } from '@/types';
 import { Card, CardBody, CardHeader, Divider, User } from '@heroui/react';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { BookIcon, LayoutDashboardIcon, LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import HeaderContent from '../landing/header-content';
 import LandingLayout from '../landing/landing-layout';
+import { confirmSweet } from '@/helpers/confirm';
 
 export default function LayoutMember({ children }: IChild) {
     const { auth } = usePage<SharedData>().props;
@@ -56,11 +57,31 @@ export default function LayoutMember({ children }: IChild) {
                             <Divider />
                             <CardBody>
                                 <div className="flex flex-col">
-                                    {navigation.map(({ title, Icon, href }) => (
-                                        <Link href={href} className="link-member" key={title}>
-                                            <Icon size={20} /> {title}
-                                        </Link>
-                                    ))}
+                                    {navigation.map(({ title, Icon, href }) => {
+                                        if(title === 'Keluar'){
+                                            return (
+                                                <Link
+                                                    href="#"
+                                                    onClick={() =>
+                                                        confirmSweet(() => router.post(route('logout')), {
+                                                            text: 'Kamu Akan keluar dari halaman ini ?',
+                                                            confirmButtonText: "Ya, Keluar",
+                                                        })
+                                                    }
+                                                    className="link-member"
+                                                    key={title}
+                                                >
+                                                    <Icon size={20} /> {title}
+                                                </Link>
+                                            );
+                                        }else {
+                                            return (
+                                                <Link href={href} className="link-member" key={title}>
+                                                    <Icon size={20} /> {title}
+                                                </Link>
+                                            )
+                                        }
+                                    })}
                                 </div>
                             </CardBody>
                         </Card>
