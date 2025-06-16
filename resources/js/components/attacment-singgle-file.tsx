@@ -18,7 +18,7 @@ export default function AttachmentSingleFile({ file, setFile, label, emptyText, 
         }
     };
     return (
-        <Card>
+        <Card className='p-5'>
             <CardHeader className="flex flex-col items-start justify-start">
                 {label && <p>{label}</p>} {} {description && <p className="text-sm italic text-gray-400">{description}</p>} {}{' '}
             </CardHeader>
