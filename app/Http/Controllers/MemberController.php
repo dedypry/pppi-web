@@ -58,6 +58,7 @@ class MemberController extends Controller
 
         $ID = "";
         $PID = "";
+        $usr = null;
         if ($request->id) {
             $usr = User::find($request->id);
             $ID = $usr->id;
@@ -133,17 +134,20 @@ class MemberController extends Controller
                 $files['member_payment_file'] = Storage::url($paymentPath);
             }
 
-
-            $user = User::updateOrCreate(['id' => $request->id], [
+            $userPayload = [
                 "name" => strtoupper($validate['name']),
                 "email" => $validate['email'],
-                "password" => bcrypt(Carbon::parse($validate['date_birth'])->format('dmY')),
-                "sort" => $validate['sort'],
                 "created_by" => Auth::user()->id,
-                'nia' => $NIA,
-                'status' => 'submission',
-                'join_year' => $validate['join_year'],
-            ]);
+                "nia" => $NIA,
+                "join_year" =>  $validate['join_year'],
+            ];
+
+            if (empty($usr)) {
+                $userPayload['password'] =  bcrypt(Carbon::parse($validate['date_birth'])->format('dmY'));
+                $userPayload['status'] =  'submission';
+            }
+
+            $user = User::updateOrCreate(['id' => $request->id], $userPayload);
 
             Profile::updateOrCreate(['user_id' => $user->id], array_merge([
                 'nik' => $validate['nik'],
@@ -225,7 +229,7 @@ class MemberController extends Controller
         if ($validate['status'] === 'approved') {
             $validate['approved_at'] = now();
             $validate['approved_by'] = Auth::user()->id;
-        }else if($validate['status'] === 'reject'){
+        } else if ($validate['status'] === 'reject') {
             $validate['rejected_at'] = now();
             $validate['rejected_by'] = Auth::user()->id;
         }

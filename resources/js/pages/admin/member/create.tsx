@@ -10,6 +10,7 @@ import DistrictList from '@/components/district';
 import InputPhotoProfile from '@/components/input-photo-profile';
 import ProvinceList from '@/components/province';
 import { User } from '@/iterfaces/IUser';
+import { educations } from '@/utils/helpers/constanta/global';
 import { Avatar, Button, Card, CardBody, CardHeader, Divider, Radio, RadioGroup, SelectItem, Textarea } from '@heroui/react';
 import { useForm } from '@inertiajs/react';
 import dayjs from 'dayjs';
@@ -80,7 +81,6 @@ export default function CreateMember({ sort, user }: Props) {
             setData('join_year', user.join_year.toString());
         }
     }, [user]);
-    const educations = ['D3', 'S1', 'NERS', 'S2', 'SPECIALIS', 'S3'];
 
     function handleSubmit(type = 'redirect') {
         setData('type', type);

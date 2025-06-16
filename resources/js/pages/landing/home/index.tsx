@@ -4,7 +4,8 @@ import { Blog } from '@/iterfaces/IBlogs';
 import { Banners } from '@/iterfaces/IBody';
 import { IPaginationResponse } from '@/iterfaces/IPagination';
 import { Card, CardBody, Image } from '@heroui/react';
-import { BookUserIcon, HandshakeIcon, NewspaperIcon, SquarePenIcon } from 'lucide-react';
+import { router } from '@inertiajs/react';
+import { BookUserIcon, SquarePenIcon } from 'lucide-react';
 import ListAgenda from './list-agenda';
 import ListBlogs from './list-blogs';
 
@@ -15,25 +16,25 @@ interface Props {
 }
 export default function LandingHome({ banners, blogs, agendas }: Props) {
     const categories = [
-        {
-            title: 'E-konsultasi',
-            icon: HandshakeIcon,
-            href: '',
-        },
-        {
-            title: 'E-Jurnal',
-            icon: NewspaperIcon,
-            href: '',
-        },
+        // {
+        //     title: 'E-konsultasi',
+        //     icon: HandshakeIcon,
+        //     href: '',
+        // },
+        // {
+        //     title: 'E-Jurnal',
+        //     icon: NewspaperIcon,
+        //     href: '',
+        // },
         {
             title: 'Registrasi',
             icon: SquarePenIcon,
-            href: '',
+            href: 'register',
         },
         {
             title: 'Member',
             icon: BookUserIcon,
-            href: '',
+            href: 'login',
         },
     ];
     return (
@@ -42,12 +43,14 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
                 autoPlay={true}
                 className="-mt-[60px]"
                 contentRight={categories.map(({ title, icon: Icon, href }) => (
-                    <Card className="max-w-md border border-white/50 bg-black/20 px-10 text-white hover:cursor-pointer hover:bg-black/50 hover:text-white hover:shadow-lg hover:shadow-white">
-                        <CardBody className="flex flex-row items-center gap-5">
-                            <Icon size={25} />
-                            <h1 className="text-[20px] font-semibold">{title}</h1>
-                        </CardBody>
-                    </Card>
+                    <div onClick={() => router.visit(route(href))}>
+                        <Card className="max-w-md border border-white/50 bg-black/20 px-10 text-white hover:cursor-pointer hover:bg-black/50 hover:text-white hover:shadow-lg hover:shadow-white">
+                            <CardBody className="flex flex-row items-center gap-5">
+                                <Icon size={25} />
+                                <h1 className="text-[20px] font-semibold">{title}</h1>
+                            </CardBody>
+                        </Card>
+                    </div>
                 ))}
             >
                 {banners.map((item) => (
