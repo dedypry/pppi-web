@@ -27,6 +27,7 @@ export default function CustomDatePicker({ time = '', setValue, ...props }: Prop
 
     return (
         <DatePicker
+            showMonthAndYearPickers
             value={data ?? undefined}
             variant="bordered"
             labelPlacement="outside"
