@@ -8,14 +8,14 @@ export default function VisiMisi() {
     return (
         <>
             <HeaderContent title="Visi dan Misi" subtitle="Landasan arah dan komitmen PPPI dalam membangun masa depan keperawatan Indonesia." />
-            <div className="container mx-auto flex flex-col gap-5 px-10">
-                <Card className="p-10">
+            <div className="container mx-auto flex flex-col gap-5 md:px-10 px-5">
+                <Card className="p-3 md:p-10">
                     <CardHeader>Visi</CardHeader>
                     <CardBody>
                         <div dangerouslySetInnerHTML={{ __html: apps.visi }} />
                     </CardBody>
                 </Card>
-                <Card className="p-10">
+                <Card className="p-3 md:p-10">
                     <CardHeader>Visi</CardHeader>
                     <CardBody>
                         <div dangerouslySetInnerHTML={{ __html: apps.misi }} />

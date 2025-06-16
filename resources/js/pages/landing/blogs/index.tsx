@@ -18,7 +18,7 @@ export default function Blogs({ blogs, categories }: Props) {
         <>
             <Head title="Blogs" />
             <HeaderContent title="Blogs PPPI" subtitle="Landasan arah dan komitmen PPPI dalam membangun masa depan keperawatan Indonesia." />
-            <div className="container mx-auto flex flex-col gap-5 px-10">
+            <div className="container mx-auto flex flex-col gap-5 md:px-10 px-5">
                 <div className="grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-9">
                         <div className="flex flex-col gap-4">

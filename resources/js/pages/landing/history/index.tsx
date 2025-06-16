@@ -13,8 +13,8 @@ export default function History() {
                 subtitle="Menelusuri perjalanan dan dedikasi PPPI dalam memajukan profesi keperawatan di Indonesia."
             />
 
-            <div className="container mx-auto px-10">
-                <Card className="px-10">
+            <div className="container mx-auto md:px-10 px-5">
+                <Card className="md:px-10 p-2">
                     <CardBody>
                         <div dangerouslySetInnerHTML={{ __html: apps.history }} />
                     </CardBody>

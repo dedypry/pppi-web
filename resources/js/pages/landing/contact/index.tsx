@@ -16,9 +16,9 @@ export default function Contact() {
                 title="Kontak PPPI"
                 subtitle="Hubungi kami untuk informasi lebih lanjut, kerja sama, atau pertanyaan seputar keanggotaan dan kegiatan PPPI."
             />
-            <div className="container mx-auto px-10">
-                <div className="grid grid-cols-12 gap-5">
-                    <div className="col-span-4">
+            <div className="container mx-auto md:px-10 px-5">
+                <div className="grid md:grid-cols-12 grid-cols-1 gap-5">
+                    <div className="md:col-span-4">
                         <Card>
                             <CardBody className="flex flex-col gap-10 p-10">
                                 <ListSidebar Icon={Building2} title="Alamat Kantor" subtitle={apps?.address} />
@@ -27,7 +27,7 @@ export default function Contact() {
                             </CardBody>
                         </Card>
                     </div>
-                    <div className="col-span-8">
+                    <div className="md:col-span-8">
                         <Card className="p-3">
                             <CardHeader className="text-[20px] font-bold text-primary">Kirim Pesan</CardHeader>
                             <CardBody className="flex flex-col gap-5">
