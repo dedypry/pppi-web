@@ -43,6 +43,8 @@ class UserManagementController extends Controller
 
         ];
 
+
+
         if (!$request->id || $request->password) {
             $validate['password'] = 'required|string|min:6';
         }
@@ -58,6 +60,7 @@ class UserManagementController extends Controller
 
         $user = User::UpdateOrCreate(["id" => $request->id], $validate);
 
+        $user->roles()->detach();
         if (count($validate['role_id']) > 0) {
             foreach ($validate['role_id'] as $roleId) {
                 $user->assignRole(Role::find($roleId));

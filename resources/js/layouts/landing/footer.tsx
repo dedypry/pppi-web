@@ -40,7 +40,7 @@ export default function Footer() {
                             </div>
                             <div>
                                 <p className="text-lg font-semibold">Kunjungi Sosial Media Kami</p>
-                                <Divider className="mb-3 max-w-[200px] bg-white/60" />
+                                <Divider className="mb-3 bg-white/60" />
                                 <div className="flex flex-col gap-2">
                                     <Link href="#">Sejarah PPPI</Link>
                                     <Link href="#">Visi dan Misi</Link>

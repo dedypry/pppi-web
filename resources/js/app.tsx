@@ -5,6 +5,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';
 import AdminLayout from './layouts/admin/admin-layout';
 import LandingLayout from './layouts/landing/landing-layout';
+import LayoutMember from './layouts/member/layout-member';
 
 const appName = import.meta.env.VITE_APP_NAME || 'PPPI';
 
@@ -21,8 +22,13 @@ createInertiaApp({
                 return <>{page}</>;
             }
 
+
             if (name.startsWith('admin') || layout === 'admin') {
                 return <AdminLayout children={page} />;
+            }
+
+            if (name.startsWith('member') || layout === 'member') {
+                return <LayoutMember children={page} />;
             }
 
             return <LandingLayout children={page} />;

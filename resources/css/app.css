@@ -7,6 +7,10 @@
     @apply relative inline-block text-white before:absolute before:bottom-0 before:left-1/2 before:h-[2px] before:w-0 before:-translate-x-1/2 before:bg-white before:transition-all before:duration-300 hover:before:w-full;
 }
 
+.link-member{
+    @apply py-2 hover:bg-primary-50 px-3 flex gap-2 items-center
+}
+
 .bg-primary {
     @apply bg-gradient-to-tr from-primary-700 to-primary-400 text-white;
 }

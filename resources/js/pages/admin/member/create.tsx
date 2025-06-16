@@ -10,7 +10,7 @@ import DistrictList from '@/components/district';
 import InputPhotoProfile from '@/components/input-photo-profile';
 import ProvinceList from '@/components/province';
 import { User } from '@/iterfaces/IUser';
-import { educations } from '@/utils/helpers/constanta/global';
+import { educations } from '@/utils/constanta/global';
 import { Avatar, Button, Card, CardBody, CardHeader, Divider, Radio, RadioGroup, SelectItem, Textarea } from '@heroui/react';
 import { useForm } from '@inertiajs/react';
 import dayjs from 'dayjs';

@@ -18,6 +18,7 @@ use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/landing.php';
+require __DIR__ . '/member.php';
 
 Route::get('/province', [ProvinceController::class, 'index'])->name('province');
 Route::get('/city/{id}', [ProvinceController::class, 'getCity'])->name('city');
