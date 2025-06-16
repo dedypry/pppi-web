@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $admin = $request->user()->hasRole('admin');
+        $admin = $request->user()->hasRole('admin') || $request->user()->hasRole('super_admin');
 
         // dd($admin);
 
