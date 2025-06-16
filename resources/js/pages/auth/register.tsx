@@ -36,7 +36,7 @@ export default function Register() {
         workplace: '',
         hope_in: '',
         contribution: '',
-        is_member_payment: '',
+        is_member_payment: 'yes',
         reason_reject: '',
         photo: '' as any,
         member_payment_file: '' as any,
