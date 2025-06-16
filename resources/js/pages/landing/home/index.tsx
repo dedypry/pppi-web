@@ -4,7 +4,7 @@ import { Blog } from '@/iterfaces/IBlogs';
 import { Banners } from '@/iterfaces/IBody';
 import { IPaginationResponse } from '@/iterfaces/IPagination';
 import { Card, CardBody, Image } from '@heroui/react';
-import { router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { BookUserIcon, SquarePenIcon } from 'lucide-react';
 import ListAgenda from './list-agenda';
 import ListBlogs from './list-blogs';
@@ -39,6 +39,7 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
     ];
     return (
         <div className="pb-10">
+            <Head title="Beranda" />
             <Carousel
                 autoPlay={true}
                 className="-mt-[60px]"
@@ -64,15 +65,15 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
                 ))}
             </Carousel>
 
-            <div className="container mx-auto mt-5 grid grid-cols-12 gap-10 px-10">
-                <div className="col-span-8">
-                    <section id="title" className="mb-10">
+            <div className="container mx-auto mt-5 grid grid-cols-1 md:grid-cols-12 gap-10 md:px-10 px-5">
+                <div className="md:col-span-8">
+                    <section id="title" className="mb-10 mx-1">
                         <p className="text-[25px] font-semibold">Berita Terbaru</p>
-                        <p className="text-sm italic text-gray-500">Berita Terbaru Perkumpulan Perawat Pembaharuan Indonesia</p>
+                        <p className="text-sm italic text-gray-500">Berita Terbaru Perkumpulan Perawat Pembaharuan Indonesia asdfasdf</p>
                     </section>
                     <ListBlogs blogs={blogs} />
                 </div>
-                <div className="col-span-4">
+                <div className="md:col-span-4">
                     <section id="agenda" className="mb-10">
                         <p className="text-[25px] font-semibold">Agenda</p>
                         <p className="text-sm italic text-gray-500">Agenda PPPI</p>

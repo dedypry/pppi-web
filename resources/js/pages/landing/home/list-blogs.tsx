@@ -9,11 +9,11 @@ interface Props {
 }
 export default function ListBlogs({ blogs }: Props) {
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col md:gap-2 gap-5">
             {blogs?.data?.map((blog) => (
-                <div onClick={()=> router.visit(route('blogs.detail', blog.id))}>
-                    <Card key={blog.id} className="flex flex-row hover:bg-primary-50 cursor-pointer">
-                        <Image src={blog.cover} className="h-[150px] w-[200px] object-cover" />
+                <div onClick={()=> router.visit(route('blogs.detail', blog.id))} >
+                    <Card key={blog.id} className="flex md:flex-row flex-col hover:bg-primary-50 cursor-pointer">
+                        <Image src={blog.cover} className="md:h-[150px] h-[200px] w-auto md:w-[200px] object-cover" />
                         <div className="flex flex-1 flex-col justify-between px-5 py-5">
                             <div className="">
                                 <p className="text-[20px] font-semibold">{blog.title}</p>

@@ -34,8 +34,8 @@ export default function LandingLayout({ children }: IChild) {
         }
     }, [flash]);
     return (
-        <div>
-            <div className="bg-black pt-2">
+        <div className='w-screen'>
+            <div className="bg-black pt-2 w-full">
                 <div className="container mx-auto flex justify-between px-8 text-sm text-white">
                     <p>{apps.full_name}</p>
                     {auth.user ? (

@@ -9,15 +9,15 @@ interface Props {
 }
 export default function ListAgenda({ agendas }: Props) {
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 w-full">
             {agendas?.data?.map((item) => (
-                <Card key={item.id}>
+                <Card key={item.id} className='w-full'>
                     <CardHeader className="flex flex-col items-start">
                         <p className="text-[20px] font-semibold">{item.title}</p>
                         <p className="text-sm italic text-gray-500">{item.subtitle}</p>
                     </CardHeader>
                     <CardBody>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
                             <CalendarCheckIcon />
                             <p>{dateSchedule(item.start_at)}</p>-<p>{dateSchedule(item.end_at)}</p>
                         </div>
@@ -36,9 +36,7 @@ export default function ListAgenda({ agendas }: Props) {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
-                    style={{
-                        height: 210,
-                    }}
+                    className='h-[220px] w-full'
                 ></iframe>
                 <CardBody>
                     <p className="text-[16px] font-semibold">NURSING ZOOMINAR #292 FOOTCARE & P</p>
