@@ -4,36 +4,38 @@ import { Avatar, Card, CardBody, CardFooter, CardHeader, Chip, Image } from '@he
 import { Head } from '@inertiajs/react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import ContentRight from './content-right';
 import Comment from './comments';
+import ContentRight from './content-right';
 
 dayjs.extend(relativeTime);
 
 interface Props {
     blog: Blog;
     categories: Category[];
-    tags: string[];
+    tags: string;
 }
 export default function Blogs({ blog, categories, tags }: Props) {
-    console.log("BLOG", blog)
+    console.log('BLOG', JSON.parse(blog.tags));
     function decodeHtml(html: string) {
         const txt = document.createElement('textarea');
         txt.innerHTML = html;
         return txt.value;
     }
+
+    const blogTags = JSON.parse(blog.tags);
     return (
         <>
             <Head title={blog?.title} />
             <HeaderContent title={blog?.category?.name} subtitle={blog?.category?.description || ''} />
-            <div className="container mx-auto flex flex-col gap-5 md:px-10 px-5">
+            <div className="container mx-auto flex flex-col gap-5 px-5 md:px-10">
                 <div className="grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-9">
-                        <Card className='md:p-3 p-2'>
+                        <Card className="p-2 md:p-3">
                             <CardHeader>
                                 <Image src={blog?.cover} className="w-full object-cover" />
                             </CardHeader>
                             <CardBody>
-                                {blog?.tags.map((e) => (
+                                {blogTags.map((e: string) => (
                                     <Chip className="bg-danger-300 text-white" size="sm">
                                         {e}
                                     </Chip>
@@ -52,14 +54,16 @@ export default function Blogs({ blog, categories, tags }: Props) {
                             </CardBody>
                             <CardFooter>
                                 <div className="flex gap-2">
-                                    {tags.map((tag) => (
-                                        <Chip className="bg-primary-500 text-white" size='sm'>{tag}</Chip>
+                                    {JSON.parse(tags).map((tag: string) => (
+                                        <Chip className="bg-primary-500 text-white" size="sm">
+                                            {tag}
+                                        </Chip>
                                     ))}
                                 </div>
                             </CardFooter>
                         </Card>
 
-                        <Comment blog={blog}/>
+                        <Comment blog={blog} />
                     </div>
                     <div className="col-span-12 md:col-span-3">
                         <ContentRight categories={categories} />

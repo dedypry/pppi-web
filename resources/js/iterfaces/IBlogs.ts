@@ -34,7 +34,7 @@ export interface Blog {
     title: string;
     subtitle: string;
     content: string;
-    tags: string[]; // Jika ingin sebagai array: string[]
+    tags: string; // Jika ingin sebagai array: string[]
     status: string;
     view_count: number;
     share_count: number;
