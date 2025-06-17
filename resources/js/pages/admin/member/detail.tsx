@@ -9,8 +9,6 @@ interface Props {
     user: User;
 }
 export default function Detail({ user }: Props) {
-    console.log('User', user);
-
     return (
         <div className="grid grid-cols-12 gap-5">
             <div className="col-span-12 md:col-span-4">

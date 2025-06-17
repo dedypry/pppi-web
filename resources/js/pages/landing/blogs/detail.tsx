@@ -15,7 +15,6 @@ interface Props {
     tags: string;
 }
 export default function Blogs({ blog, categories, tags }: Props) {
-    console.log('BLOG', JSON.parse(blog.tags));
     function decodeHtml(html: string) {
         const txt = document.createElement('textarea');
         txt.innerHTML = html;
@@ -36,7 +35,7 @@ export default function Blogs({ blog, categories, tags }: Props) {
                             </CardHeader>
                             <CardBody>
                                 {blogTags.map((e: string) => (
-                                    <Chip className="bg-danger-300 text-white" size="sm">
+                                    <Chip className="bg-danger-300 text-white" size="sm" key={e}>
                                         {e}
                                     </Chip>
                                 ))}
@@ -54,8 +53,8 @@ export default function Blogs({ blog, categories, tags }: Props) {
                             </CardBody>
                             <CardFooter>
                                 <div className="flex gap-2">
-                                    {JSON.parse(tags).map((tag: string) => (
-                                        <Chip className="bg-primary-500 text-white" size="sm">
+                                    {JSON.parse(tags).map((tag: string, i: number) => (
+                                        <Chip className="bg-primary-500 text-white" size="sm" key={i}>
                                             {tag}
                                         </Chip>
                                     ))}

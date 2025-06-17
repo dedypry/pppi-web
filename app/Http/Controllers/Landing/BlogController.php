@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Landing;
 
+use App\Events\MessageSent;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogCategory;
@@ -45,8 +46,12 @@ class BlogController extends Controller
             "content" => "required|string",
         ]);
 
+
+
+
+
         try {
-            BlogComment::create([
+           $comment = BlogComment::create([
                 "user_id" => $userId,
                 "name" => $request->name,
                 "email" => $request->email,
@@ -55,6 +60,8 @@ class BlogController extends Controller
                 "blog_id" => $id,
                 "parent_id" => $request->parent_id
             ]);
+
+            event(new MessageSent($comment));
             return back()->with('success', 'Komentar berhasil di kirim');
         } catch (\Throwable $th) {
             return back()->with('error', $th->getMessage());

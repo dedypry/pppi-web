@@ -8,13 +8,6 @@ interface Props {
     agenda: IAgenda[];
 }
 export default function Agenda({ agenda }: Props) {
-    console.log('AGENDA', agenda);
-    // {
-    //     event_id: 1,
-    //     title: 'Event 1',
-    //     start: new Date('2021/5/2 09:30'),
-    //     end: new Date('2021/5/2 10:30'),
-    // }
     return (
         <Card>
             <CardBody>
@@ -27,8 +20,8 @@ export default function Agenda({ agenda }: Props) {
                         // console.log('Tanggal baru selesai:', dateSchedule(updatedEvent.end)); // Date object
                         // console.log('Dropped on cell (optional):', droppedOn);
                         router.patch(route('agenda.update', originalEvent.event_id), {
-                            start_at: dateSchedule(updatedEvent.start),
-                            end_at: dateSchedule(updatedEvent.end),
+                            start_at: dateSchedule(updatedEvent.start as any),
+                            end_at: dateSchedule(updatedEvent.end as any),
                         });
                         return updatedEvent;
                     }}

@@ -2,7 +2,7 @@ import Gender from '@/components/gender';
 import { SharedData } from '@/types';
 import { Avatar, Button, Card } from '@heroui/react';
 import { usePage } from '@inertiajs/react';
-import { DownloadIcon, IdCardIcon, MapPinIcon } from 'lucide-react';
+import { DownloadIcon, MapPinIcon } from 'lucide-react';
 
 export default function MemberProfile() {
     const { auth } = usePage<SharedData>().props;
@@ -19,14 +19,16 @@ export default function MemberProfile() {
                 </div>
                 <Avatar radius="sm" src={auth.user.profile.photo} isBordered color="success" className="absolute -bottom-14 left-5 h-24 w-24" />
             </div>
-            <div className="pl-32 pt-3 flex justify-between pr-5 items-center">
-                <div className='flex gap-1 items-center'>
+            <div className="flex items-center justify-between pl-32 pr-5 pt-3">
+                <div className="flex items-center gap-1">
                     <MapPinIcon size={18} />
                     <p>{auth.user.profile.address}</p>
                 </div>
 
                 <div>
-                    <Button variant='shadow' color='primary' startContent={<DownloadIcon/>} >Download KTA</Button>
+                    <Button variant="shadow" color="primary" startContent={<DownloadIcon />}>
+                        Download KTA
+                    </Button>
                 </div>
             </div>
         </Card>

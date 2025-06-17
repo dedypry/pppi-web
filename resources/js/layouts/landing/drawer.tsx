@@ -9,8 +9,6 @@ export default function LandingDrawer() {
     const { apps, auth } = usePage<SharedData>().props;
     const url = window.location.pathname;
 
-    console.log('URL', url);
-
     router.on('navigate', () => {
         setOpen(false);
     });
@@ -85,13 +83,14 @@ export default function LandingDrawer() {
                                 const ParentIcon = item.icon;
                                 if (item.children) {
                                     return (
-                                        <div className="mt-2">
+                                        <div className="mt-2" key={item.title}>
                                             <p className="mb-1 pl-3 text-sm text-gray-400">{item.title}</p>
                                             <div className="flex flex-col pl-1">
                                                 {item.children.map(({ icon: Icon, title, href }) => (
                                                     <Link
                                                         className={`link-member ${url === href ? 'bg-primary-500 text-white shadow-md' : ''}`}
                                                         href={href}
+                                                        key={title}
                                                     >
                                                         <Icon size={18} /> {title}
                                                     </Link>
@@ -105,6 +104,7 @@ export default function LandingDrawer() {
                                     <Link
                                         className={`link-member ${url === item.href ? 'bg-primary-500 text-white shadow-md' : ''}`}
                                         href={item.href}
+                                        key={item.title}
                                     >
                                         {ParentIcon && <ParentIcon size={18} />} {item.title}
                                     </Link>

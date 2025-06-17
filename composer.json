@@ -14,8 +14,10 @@
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-permission": "^6.19",
-        "tightenco/ziggy": "^2.4"
+        "tightenco/ziggy": "^2.4",
+        "yaza/laravel-google-drive-storage": "^4.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

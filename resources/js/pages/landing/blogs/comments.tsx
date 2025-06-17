@@ -1,13 +1,29 @@
+import { pusher } from '@/helpers/pusher';
 import { Blog } from '@/iterfaces/IBlogs';
 import { Avatar, Button, Card, CardBody, CardHeader, Divider } from '@heroui/react';
 import dayjs from 'dayjs';
 import { ReplyIcon } from 'lucide-react';
+import { useEffect } from 'react';
 import FormComment from './form-comment';
 
 interface Props {
     blog: Blog;
 }
+
 export default function Comment({ blog }: Props) {
+    useEffect(() => {
+        const channel = pusher.subscribe(`chat.${blog.id}`);
+
+        channel.bind('MessageSent', (data: any) => {
+            console.log('Pesan diterima:', data);
+        });
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }, [blog]);
+
     return (
         <Card className="mt-5 p-3">
             <CardHeader>

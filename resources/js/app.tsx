@@ -1,11 +1,15 @@
 import '../css/app.css';
-
 import { HeroUIProvider, ToastProvider } from '@heroui/react';
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';
 import AdminLayout from './layouts/admin/admin-layout';
 import LandingLayout from './layouts/landing/landing-layout';
 import LayoutMember from './layouts/member/layout-member';
+import { configureEcho } from '@laravel/echo-react';
+
+configureEcho({
+    broadcaster: 'pusher',
+});
 
 const appName = import.meta.env.VITE_APP_NAME || 'PPPI';
 

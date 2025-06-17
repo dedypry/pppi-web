@@ -12,8 +12,6 @@ export default function ForgotPassword({ status }: { status?: string }) {
         post(route('password.email'));
     };
 
-    console.log("STATUS", status)
-
     return (
         <div className="flex h-screen flex-1 items-center justify-center bg-primary-100">
             <Card className="w-[400px]">

@@ -35,7 +35,6 @@ export default function City({ cities }: Props) {
     const queryParams = new URLSearchParams(window.location.search);
     const [search, setSearch] = useState(queryParams.get('search'));
 
-    console.log('query', queryParams.get('search'));
     function handleUpdateCode(id: number, code: string) {
         router.patch(
             route('city.update', id),

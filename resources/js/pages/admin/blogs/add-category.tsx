@@ -33,8 +33,6 @@ export default function AddCategory({ value, setValue, isInvalid, errorMessage }
             })
             .catch((err) => notifyError(err));
     }
-
-    console.log("VAL", value)
     return (
         <>
             <ModalCategory

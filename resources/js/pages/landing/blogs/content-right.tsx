@@ -32,7 +32,7 @@ export default function ContentRight({ categories }: Props) {
                 </CardHeader>
                 <CardBody className="flex flex-col gap-2">
                     {categories.map((category) => (
-                        <Card className="bg-gray-100 shadow-none">
+                        <Card className="bg-gray-100 shadow-none" key={category.id}>
                             <CardBody className="flex flex-row items-center justify-between">
                                 <Chip size="sm" className="bg-primary-500 text-white">
                                     {category.name}

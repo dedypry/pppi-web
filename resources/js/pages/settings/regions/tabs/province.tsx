@@ -25,7 +25,6 @@ export default function Province({ provinces }: Props) {
     }
 
     function handleSearch(search:string){
-        console.log(search)
         router.get(route('region.index'), { search }, { preserveState: true, replace: true, preserveScroll: true });
     }
 

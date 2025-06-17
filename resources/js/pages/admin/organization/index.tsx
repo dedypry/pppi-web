@@ -9,7 +9,6 @@ interface Props {
     users: User[];
 }
 export default function Organization({ users }: Props) {
-    // console.log('USER', users);
     return (
         <Card>
             <CardHeader>Struktur Organisasi</CardHeader>
