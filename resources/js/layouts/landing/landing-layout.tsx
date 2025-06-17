@@ -12,7 +12,7 @@ import InformationButton from './information-button';
 export default function LandingLayout({ children }: IChild) {
     const { auth, apps, flash } = usePage<SharedData>().props;
 
-    const redirect = auth?.roles?.includes('admin') ? '/dashboard' : '/member/dashboard';
+    const redirect = ['admin', 'super_admin'].some((role) => auth?.roles?.includes(role)) ? '/dashboard' : '/member/dashboard';
 
     useEffect(() => {
         const successMessage = (flash as any)?.success;

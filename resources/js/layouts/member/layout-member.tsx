@@ -9,26 +9,27 @@ import { confirmSweet } from '@/helpers/confirm';
 
 export default function LayoutMember({ children }: IChild) {
     const { auth } = usePage<SharedData>().props;
+    const active = window.location.pathname
 
     const navigation = [
         {
             title: 'Dashboard',
-            href: '',
+            href: '/member/dashboard',
             Icon: LayoutDashboardIcon,
         },
         {
             title: 'Profil Saya',
-            href: '',
+            href: '/member/profile',
             Icon: UserIcon,
         },
         {
             title: 'Document',
-            href: '',
+            href: '/member/document',
             Icon: BookIcon,
         },
         {
             title: 'Pengaturan',
-            href: '',
+            href: '/member/setting',
             Icon: SettingsIcon,
         },
         {
@@ -44,13 +45,18 @@ export default function LayoutMember({ children }: IChild) {
             <div className="container mx-auto px-10">
                 <div className="grid grid-cols-12 gap-5">
                     <div className="col-span-3">
-                        <Card className="p-5">
-                            <CardHeader>
+                        <Card >
+                            <CardHeader className='p-5'>
                                 <User
                                     name={auth.user.name}
                                     description={auth.user.nia}
                                     avatarProps={{
                                         src: auth.user?.profile?.photo,
+                                        isBordered: true,
+                                        color:"primary"
+                                    }}
+                                    classNames={{
+                                        description:'text-gray-500'
                                     }}
                                 />
                             </CardHeader>
@@ -65,10 +71,10 @@ export default function LayoutMember({ children }: IChild) {
                                                     onClick={() =>
                                                         confirmSweet(() => router.post(route('logout')), {
                                                             text: 'Kamu Akan keluar dari halaman ini ?',
-                                                            confirmButtonText: "Ya, Keluar",
+                                                            confirmButtonText: 'Ya, Keluar',
                                                         })
                                                     }
-                                                    className="link-member"
+                                                    className={`link-member ${active === href ? "bg-primary":""}`}
                                                     key={title}
                                                 >
                                                     <Icon size={20} /> {title}
@@ -76,10 +82,10 @@ export default function LayoutMember({ children }: IChild) {
                                             );
                                         }else {
                                             return (
-                                                <Link href={href} className="link-member" key={title}>
+                                                <Link href={href} className={`link-member ${active === href ? 'bg-primary' : ''}`} key={title}>
                                                     <Icon size={20} /> {title}
                                                 </Link>
-                                            )
+                                            );
                                         }
                                     })}
                                 </div>

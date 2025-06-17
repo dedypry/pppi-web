@@ -24,12 +24,12 @@ Route::get('/province', [ProvinceController::class, 'index'])->name('province');
 Route::get('/city/{id}', [ProvinceController::class, 'getCity'])->name('city');
 Route::get('/district/{id}', [ProvinceController::class, 'getDistrict'])->name('district');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::group(["middleware" => ['ensure.role.admin', "role:super_admin|admin"]], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('upload-file', [FileController::class, 'store'])->name('file.store');
 
-    Route::group(["prefix" => "settings", "middleware" => ["role:super_admin|admin"]], function () {
+    Route::group(["prefix" => "settings"], function () {
         Route::delete('banners/bulk', [BannerController::class, 'bulkDelete'])->name('banner.bulk.delete');
         Route::resource('banners', BannerController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::resource('roles', RoleController::class);
@@ -55,7 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::group(["prefix" => "admin", "middleware" => ["role:super_admin|admin"]], function () {
+    Route::group(["prefix" => "admin"], function () {
         Route::get('member/kta/{user}', [MemberController::class, 'generateKta'])->name('member.kta');
         Route::resource('member', MemberController::class);
 

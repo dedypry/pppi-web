@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\Member\DashboardController;
-use App\Http\Controllers\Settings\PasswordController;
-use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Member\DocumentController;
+use App\Http\Controllers\Member\ProfileController;
+use App\Http\Controllers\Member\SettingController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::middleware('auth')->group(function () {
-    Route::get('/member/dashboard', [DashboardController::class, 'index'])->name('member.dashboard');
+Route::group(["prefix" => "member", "middleware" => ['ensure.role.member', 'verified', "role:member",]], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('member.dashboard');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('member.dashboard');
+    Route::get('/setting', [SettingController::class, 'index'])->name('member.dashboard');
+    Route::get('/document', [DocumentController::class, 'index'])->name('member.dashboard');
 });

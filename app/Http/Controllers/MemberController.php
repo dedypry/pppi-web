@@ -165,7 +165,7 @@ class MemberController extends Controller
                 'workplace' => $validate['workplace'],
                 'hope_in' => $validate['hope_in'],
                 'contribution' => $validate['contribution'],
-                'is_member_payment' => $validate['is_member_payment'],
+                'is_member_payment' => $validate['is_member_payment'] == 'yes' ? true : false,
                 'reason_reject' => $validate['reason_reject'],
                 'front_title' => $validate['front_title'],
                 'back_title' => $validate['back_title'],
