@@ -46,4 +46,12 @@
     @apply container mx-auto mt-10 grid grid-cols-1 items-center gap-10 px-5 md:grid-cols-12 md:px-10
 }
 
+.text-header{
+    @apply text-[20px] md:text-[25px] font-bold text-gray-800
+}
+
+.text-sub{
+    @apply text-[14px] md:text-[16px] text-gray-600
+}
+
 

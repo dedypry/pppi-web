@@ -19,7 +19,7 @@ export default function ListBlogs({ blogs }: Props) {
                                 <p className="text-[20px] font-semibold">{blog.title}</p>
                                 <p>{blog.subtitle}</p>
                             </div>
-                            <div className="flex items-end justify-between">
+                            <div className="flex items-end justify-between pt-10 md:pt-0">
                                 <Button
                                     className="bg-primary-200 text-white shadow-md shadow-cyan-100"
                                     size="sm"
