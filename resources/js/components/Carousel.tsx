@@ -12,8 +12,9 @@ interface Props {
     className?: any;
     onSlideChange?: (index: number) => void;
     contentRight?: ReactNode;
+    contentCenter?: ReactNode;
 }
-export default function Carousel({ children, autoPlay = false, autoPlayInterval = 5000, className, onSlideChange, contentRight }: Props) {
+export default function Carousel({ children, autoPlay = false, autoPlayInterval = 5000, className, onSlideChange, contentRight, contentCenter }: Props) {
     const [currentSlide, setCurrentSlide] = useState<number>(0);
     const ResizePlugin: KeenSliderPlugin = (slider) => {
         const observer = new ResizeObserver(function () {
@@ -65,7 +66,7 @@ export default function Carousel({ children, autoPlay = false, autoPlayInterval 
                 <Button
                     isIconOnly
                     radius="full"
-                    className="group absolute left-2 top-1/2 -translate-y-1/2 transform bg-gray-100 text-gray-500 opacity-0 transition-opacity duration-500 hover:bg-white group-hover:opacity-100"
+                    className="group absolute left-2 top-1/2 -translate-y-1/2 transform bg-gray-100 text-gray-500 opacity-0 transition-opacity duration-500 group-hover:opacity-100 hover:bg-white"
                     size="sm"
                     onPress={() => instanceRef.current?.prev()}
                 >
@@ -76,7 +77,7 @@ export default function Carousel({ children, autoPlay = false, autoPlayInterval 
                 <Button
                     isIconOnly
                     radius="full"
-                    className="group absolute right-2 top-1/2 -translate-y-1/2 transform bg-gray-100 text-gray-500 opacity-0 transition-opacity duration-500 hover:bg-white group-hover:opacity-100"
+                    className="group absolute right-2 top-1/2 -translate-y-1/2 transform bg-gray-100 text-gray-500 opacity-0 transition-opacity duration-500 group-hover:opacity-100 hover:bg-white"
                     size="sm"
                     onPress={() => instanceRef.current?.next()}
                 >
@@ -97,6 +98,7 @@ export default function Carousel({ children, autoPlay = false, autoPlayInterval 
             ) : null}
 
             {contentRight && <div className="absolute right-12 top-1/2 flex -translate-y-1/2 flex-col gap-2">{contentRight}</div>}
+            {contentCenter && <div className="absolute h-full top-0 w-full">{contentCenter}</div>}
         </div>
     );
 }

@@ -3,9 +3,8 @@ import { IAgenda } from '@/iterfaces/IAgenda';
 import { Blog } from '@/iterfaces/IBlogs';
 import { Banners } from '@/iterfaces/IBody';
 import { IPaginationResponse } from '@/iterfaces/IPagination';
-import { Card, CardBody, Image } from '@heroui/react';
-import { Head, router } from '@inertiajs/react';
-import { BookUserIcon, SquarePenIcon } from 'lucide-react';
+import { Button, Card, Image } from '@heroui/react';
+import { Head } from '@inertiajs/react';
 import ListAgenda from './list-agenda';
 import ListBlogs from './list-blogs';
 
@@ -15,44 +14,23 @@ interface Props {
     agendas: IPaginationResponse<IAgenda>;
 }
 export default function LandingHome({ banners, blogs, agendas }: Props) {
-    const categories = [
-        // {
-        //     title: 'E-konsultasi',
-        //     icon: HandshakeIcon,
-        //     href: '',
-        // },
-        // {
-        //     title: 'E-Jurnal',
-        //     icon: NewspaperIcon,
-        //     href: '',
-        // },
-        {
-            title: 'Registrasi',
-            icon: SquarePenIcon,
-            href: 'register',
-        },
-        {
-            title: 'Member',
-            icon: BookUserIcon,
-            href: 'login',
-        },
-    ];
     return (
         <div className="pb-10">
             <Head title="Beranda" />
             <Carousel
                 autoPlay={true}
                 className="-mt-[60px]"
-                contentRight={categories.map(({ title, icon: Icon, href }) => (
-                    <div onClick={() => router.visit(route(href))}>
-                        <Card className="max-w-md border border-white/50 bg-black/20 px-10 text-white hover:cursor-pointer hover:bg-black/50 hover:text-white hover:shadow-lg hover:shadow-white">
-                            <CardBody className="flex flex-row items-center gap-5">
-                                <Icon size={25} />
-                                <h1 className="text-[20px] font-semibold">{title}</h1>
-                            </CardBody>
-                        </Card>
+                contentCenter={
+                    <div className="flex h-full flex-col items-center justify-center">
+                        <p className="text-[50px] font-bold text-white/70">Jadilah Bagian dari Perjalanan Kami</p>
+                        <p className="text-[20px] font-semibold italic text-white/70">
+                            Kami percaya, kemitraan hebat dimulai dari visi yang sama. <br /> Ayo bergabung dan capai lebih banyak bersama
+                        </p>
+                        <Button className="mt-10 text-white" radius="full" variant="bordered">
+                            🚀 Mulai Jadi Partner
+                        </Button>
                     </div>
-                ))}
+                }
             >
                 {banners.map((item) => (
                     <Card key={item.id} className="flex h-[500px] items-center justify-center rounded-none bg-slate-800">
@@ -65,9 +43,9 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
                 ))}
             </Carousel>
 
-            <div className="container mx-auto mt-5 grid grid-cols-1 md:grid-cols-12 gap-10 md:px-10 px-5">
+            <section id="content-left" className="container mx-auto mt-5 grid grid-cols-1 gap-10 px-5 md:grid-cols-12 md:px-10">
                 <div className="md:col-span-8">
-                    <section id="title" className="mb-10 mx-1">
+                    <section id="title" className="mx-1 mb-10">
                         <p className="text-[25px] font-semibold">Berita Terbaru</p>
                         <p className="text-sm italic text-gray-500">Berita Terbaru Perkumpulan Perawat Pembaharuan Indonesia asdfasdf</p>
                     </section>
@@ -80,7 +58,47 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
                     </section>
                     <ListAgenda agendas={agendas} />
                 </div>
+            </section>
+
+            <div className="mt-10 h-[200px] w-full bg-[url('/images/paralax/bg-1.jpg')] bg-cover bg-fixed bg-center bg-no-repeat shadow-lg">
+                <div className="container mx-auto grid h-full grid-cols-1 gap-5 bg-black/50 px-5 py-5 md:grid-cols-12 md:px-10">
+                    <div className="md:col-span-8">
+                        <div className="text-white">
+                            <p className="pb-5 text-[30px] font-bold">💼 Gabung Sebagai Partner</p>
+                            <p className="border-l-2 border-white pl-5 text-[16px]">
+                                Bersama, kita bisa membangun ekosistem bisnis yang saling menguntungkan, memperluas jaringan, dan menciptakan
+                                pertumbuhan yang berkelanjutan dalam jangka panjang.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="md:col-span-4">
+                        <div className="flex h-full items-center justify-center">
+                            <Button variant="bordered" className="text-white shadow-lg" radius="full">
+                                Daftar Kemitraan
+                            </Button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <section className="container mx-auto mt-10 grid grid-cols-1 items-center gap-10 px-5 md:grid-cols-12 md:px-10">
+                {/* Left: Video */}
+                <div className="md:col-span-7">
+                    <Card className="shadow-lg">
+                        <video src="/video/compro.mov" autoPlay muted loop playsInline className="h-auto w-full rounded-xl" />
+                    </Card>
+                </div>
+
+                {/* Right: Text Content */}
+                <div className="flex flex-col justify-center space-y-4 md:col-span-5">
+                    <h2 className="text-3xl font-bold text-gray-800">Company Profile</h2>
+                    <p className="text-lg text-gray-600">Mengenal lebih dekat siapa kami dan apa yang kami lakukan.</p>
+                    <p className="text-sm text-gray-500">
+                        Video company profile ini memberikan gambaran menyeluruh tentang visi, misi, dan nilai-nilai yang kami pegang. Pelajari
+                        bagaimana kami membangun solusi dan berkolaborasi untuk menciptakan dampak nyata di dunia bisnis.
+                    </p>
+                </div>
+            </section>
         </div>
     );
 }
