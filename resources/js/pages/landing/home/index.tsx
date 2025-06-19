@@ -7,6 +7,7 @@ import { Button, Card, Image } from '@heroui/react';
 import { Head } from '@inertiajs/react';
 import ListAgenda from './list-agenda';
 import ListBlogs from './list-blogs';
+import { certificate } from '@/utils/constanta/global';
 
 interface Props {
     banners: Banners[];
@@ -43,7 +44,7 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
                 ))}
             </Carousel>
 
-            <section id="content-left" className="container mx-auto mt-5 grid grid-cols-1 gap-10 px-5 md:grid-cols-12 md:px-10">
+            <section id="content-left" className="section-home">
                 <div className="md:col-span-8">
                     <section id="title" className="mx-1 mb-10">
                         <p className="text-[25px] font-semibold">Berita Terbaru</p>
@@ -81,7 +82,7 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
                 </div>
             </div>
 
-            <section className="container mx-auto mt-10 grid grid-cols-1 items-center gap-10 px-5 md:grid-cols-12 md:px-10">
+            <section id="compro" className="section-home">
                 {/* Left: Video */}
                 <div className="md:col-span-7">
                     <Card className="shadow-lg">
@@ -97,6 +98,31 @@ export default function LandingHome({ banners, blogs, agendas }: Props) {
                         Video company profile ini memberikan gambaran menyeluruh tentang visi, misi, dan nilai-nilai yang kami pegang. Pelajari
                         bagaimana kami membangun solusi dan berkolaborasi untuk menciptakan dampak nyata di dunia bisnis.
                     </p>
+                </div>
+            </section>
+
+            <section id="sertivikasi" className="section-home">
+                <div className="flex flex-col justify-center space-y-4 md:col-span-5">
+                    <h2 className="text-3xl font-bold text-gray-800">Sertifikat Akreditasi</h2>
+                    <p className="text-lg text-gray-600">
+                        Kami bangga telah terakreditasi oleh lembaga resmi yang memperkuat kepercayaan mitra dan pelanggan kami.
+                    </p>
+                    {/* <p className="text-sm text-gray-500">
+                        Video company profile ini memberikan gambaran menyeluruh tentang visi, misi, dan nilai-nilai yang kami pegang. Pelajari
+                        bagaimana kami membangun solusi dan berkolaborasi untuk menciptakan dampak nyata di dunia bisnis.
+                    </p> */}
+                </div>
+                <div className="md:col-span-7">
+                    <Carousel autoPlay={true}>
+                        {certificate.map((item,i) => (
+                            <Card key={i} className="flex items-center justify-center h-[450px]">
+                                <Image src={item} radius="none" className="h-full w-screen object-cover object-center" />
+                            </Card>
+                        ))}
+                        {/* <Card key="image-1">
+                            <Image src="/images/sertifikasi/Sertifikat_Akreditasi_LPKPPPI.jpg" isZoomed className="w-full" />
+                        </Card> */}
+                    </Carousel>
                 </div>
             </section>
         </div>

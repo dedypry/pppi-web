@@ -42,4 +42,8 @@
     @apply text-primary-300;
 }
 
+.section-home{
+    @apply container mx-auto mt-10 grid grid-cols-1 items-center gap-10 px-5 md:grid-cols-12 md:px-10
+}
+
 
