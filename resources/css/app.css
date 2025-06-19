@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 .link-anim {
-    @apply relative inline-block text-white before:absolute before:bottom-0 before:left-1/2 before:h-[2px] before:w-0 before:-translate-x-1/2 before:bg-white before:transition-all before:duration-300 hover:before:w-full;
+    @apply relative inline-block before:absolute before:bottom-0 before:left-1/2 before:h-[2px] before:w-0 before:-translate-x-1/2 before:bg-white before:transition-all before:duration-300 hover:before:w-full;
 }
 
 .link-member{

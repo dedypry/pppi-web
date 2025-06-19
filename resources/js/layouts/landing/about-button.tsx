@@ -2,14 +2,17 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/r
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function AboutButton() {
+interface Props {
+    scrolled: boolean;
+}
+export default function AboutButton({ scrolled }: Props) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
             <Dropdown isOpen={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
                 <DropdownTrigger>
-                    <p className="link-anim cursor-pointer">Tentang Kami</p>
+                    <p className={`link-anim cursor-pointer ${scrolled ? 'text-gray-800':'text-white'}`}>Tentang Kami</p>
                 </DropdownTrigger>
                 <DropdownMenu>
                     <DropdownItem key={'about'} color="primary" onClick={() => router.visit(route('history'))}>

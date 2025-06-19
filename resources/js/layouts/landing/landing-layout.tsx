@@ -3,7 +3,7 @@ import { SharedData } from '@/types';
 import { addToast, Avatar, Divider, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react';
 import { Link, usePage } from '@inertiajs/react';
 import { LayoutDashboard, LogInIcon } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AboutButton from './about-button';
 import LandingDrawer from './drawer';
 import Footer from './footer';
@@ -11,6 +11,23 @@ import InformationButton from './information-button';
 
 export default function LandingLayout({ children }: IChild) {
     const { auth, apps, flash } = usePage<SharedData>().props;
+    const [scrolled, setScrolled] = useState(false);
+    const scrollVal = window.location.pathname === '/' ? 500 : 215;
+
+    useEffect(() => {
+        const onScroll = () => {
+            console.log('WINDOW SCROLL', window.scrollY);
+
+            if (window.scrollY > scrollVal) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     const redirect = ['admin', 'super_admin'].some((role) => auth?.roles?.includes(role)) ? '/dashboard' : '/member/dashboard';
 
@@ -62,15 +79,17 @@ export default function LandingLayout({ children }: IChild) {
             {/* <Navbar maxWidth="2xl" className="bg-transparent bg-gradient-to-b from-black to-primary-600" isBlurred={false} isBordered={false}> */}
             <Navbar
                 maxWidth="2xl"
-                className="bg-primary-600 bg-transparent bg-gradient-to-b from-black to-transparent"
+                className={`transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-primary-600 bg-transparent bg-gradient-to-b from-black to-transparent'}`}
                 isBlurred={false}
                 isBordered={false}
             >
                 <NavbarBrand>
-                    <Link href="/" className="flex gap-2 items-center">
+                    <Link href="/" className="flex items-center gap-2">
                         <Avatar src={apps.logo || '/logo1.png'} size="md" />
-                        <p className="m-0 p-0 font-bold text-white text-[30px] hidden md:flex">{apps.short_name}</p>
-                        <div className="flex flex-col text-white md:hidden">
+                        <p className={`m-0 hidden p-0 text-[30px] font-bold ${scrolled ? 'text-gray-800' : 'text-white'} md:flex`}>
+                            {apps.short_name}
+                        </p>
+                        <div className={`flex flex-col ${scrolled ? 'text-gray-800' : 'text-white'} md:hidden`}>
                             <p className="m-0 p-0 font-bold">{apps.short_name}</p>
                             <p className="m-0 p-0 text-[10px]">{apps.full_name}</p>
                         </div>
@@ -78,18 +97,18 @@ export default function LandingLayout({ children }: IChild) {
                 </NavbarBrand>
                 <NavbarContent className="hidden md:flex" justify="end">
                     <NavbarItem>
-                        <Link className="link-anim" href="/">
+                        <Link className={`link-anim ${scrolled ? 'text-gray-800' : 'text-white'}`} href="/">
                             Beranda
                         </Link>
                     </NavbarItem>
                     <NavbarItem>
-                        <AboutButton />
+                        <AboutButton scrolled={scrolled} />
                     </NavbarItem>
                     <NavbarItem>
-                        <InformationButton />
+                        <InformationButton scrolled={scrolled} />
                     </NavbarItem>
                     <NavbarItem>
-                        <Link className="link-anim" href={route('contact')}>
+                        <Link className={`link-anim ${scrolled ? 'text-gray-800' : 'text-white'}`} href={route('contact')}>
                             Kontak
                         </Link>
                     </NavbarItem>
