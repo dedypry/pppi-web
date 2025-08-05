@@ -1,0 +1,1 @@
+import{b as t}from"./index.esm-ByNbkwyk.js";var e;const s=t.create({baseURL:"/",withCredentials:!0,headers:{"X-Requested-With":"XMLHttpRequest","X-CSRF-TOKEN":((e=document.querySelector('meta[name="csrf-token"]'))==null?void 0:e.getAttribute("content"))||""}});export{s as h};

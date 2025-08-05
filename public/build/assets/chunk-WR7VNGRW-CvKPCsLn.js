@@ -1,0 +1,1 @@
+import{r as n}from"./index-Br2k6vyu.js";var u=(l,a)=>{var e;let t=[];const o=(e=n.Children.map(l,r=>n.isValidElement(r)&&r.type===a?(t.push(r),null):r))==null?void 0:e.filter(Boolean),i=t.length>=0?t:void 0;return[o,i]};export{u as p};

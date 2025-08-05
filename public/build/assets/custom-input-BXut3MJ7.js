@@ -1,0 +1,1 @@
+import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{i as e}from"./chunk-HJTJQZF3-CNhMJ5mL.js";function o(t){return r.jsx(e,{labelPlacement:"outside",variant:"bordered",color:"primary",classNames:{label:"text-gray-800",description:"text-gray-400 italic text-xs"},...t})}export{o as C};

@@ -1,0 +1,1 @@
+import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{m as t}from"./index.esm-ByNbkwyk.js";import"./index-Br2k6vyu.js";function s({token:o,email:e}){return t({token:o,email:e,password:"",password_confirmation:""}),r.jsx("h1",{children:"login"})}const a=Object.freeze(Object.defineProperty({__proto__:null,default:s},Symbol.toStringTag,{value:"Module"}));export{a as _};
