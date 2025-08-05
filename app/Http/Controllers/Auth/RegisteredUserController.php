@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
         $validate = $request->validate([
             'nik' => "required|digits:16",
             'name' => 'required|string|max:255',
-            'email' =>  'required|email',
+            'email' =>  'required|email|unique:users,email',
             'place_birth' => 'required|string|max:255',
             'date_birth' => 'required|date',
             'gender' => 'required|in:male,female',
@@ -110,6 +110,7 @@ class RegisteredUserController extends Controller
                 'join_year' => $joinYear,
             ]);
 
+
             Profile::updateOrCreate(['user_id' => $user->id], array_merge([
                 'nik' => $validate['nik'],
                 'place_birth' => $validate['place_birth'],
@@ -126,7 +127,7 @@ class RegisteredUserController extends Controller
                 'workplace' => $validate['workplace'],
                 'hope_in' => $validate['hope_in'],
                 'contribution' => $validate['contribution'],
-                'is_member_payment' => $validate['is_member_payment'],
+                'is_member_payment' => $validate['is_member_payment']  === 'yes',
                 'reason_reject' => $validate['reason_reject'],
                 'front_title' => $validate['front_title'],
                 'back_title' => $validate['back_title'],

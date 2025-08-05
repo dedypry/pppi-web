@@ -44,7 +44,7 @@ export default function Register() {
 
     const submit = () => {
         post(route('register'), {
-            onFinish: () => reset(),
+            // onSuccess: () => reset(),
         });
     };
 
