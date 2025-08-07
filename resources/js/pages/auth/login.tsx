@@ -1,6 +1,6 @@
 import { IApp } from '@/iterfaces/IApps';
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Divider, Form, Image, Input, Link } from '@heroui/react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Eye, EyeClosed, LockKeyhole, Mail } from 'lucide-react';
 import { FormEventHandler, useState } from 'react';
 
@@ -98,7 +98,7 @@ export default function Login() {
                             <Divider className="flex-1" />
                         </div>
 
-                        <Button fullWidth color="primary" variant="bordered">
+                        <Button fullWidth color="primary" variant="bordered" onPress={() => router.visit(route('register'))}>
                             Daftar
                         </Button>
                     </CardFooter>

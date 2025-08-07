@@ -1,1 +1,0 @@
-import{j as e}from"./jsx-runtime-D_zvdyIk.js";function r({title:s,value:t,Icon:o}){return e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx(o,{size:18})," ",e.jsx("span",{className:"font-semibold",children:s})," : ",t]})}const l=Object.freeze(Object.defineProperty({__proto__:null,default:r},Symbol.toStringTag,{value:"Module"}));export{r as L,l as _};
