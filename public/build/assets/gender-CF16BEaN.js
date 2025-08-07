@@ -1,1 +1,0 @@
-import{j as s}from"./jsx-runtime-D_zvdyIk.js";import{i as t}from"./chunk-3TCFMHK3-BIaPzdUh.js";const m="/build/assets/femenine-CZombl_f.png",a="/build/assets/male-VFLsKjvb.png";function o({gender:e}){return s.jsx(t,{src:e==="male"?a:m,height:20})}export{o as G};

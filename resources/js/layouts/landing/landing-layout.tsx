@@ -1,22 +1,23 @@
 import { IChild } from '@/iterfaces/IBody';
 import { SharedData } from '@/types';
-import { addToast, Avatar, Divider, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react';
-import { Link, usePage } from '@inertiajs/react';
+import { Avatar, Divider, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { LayoutDashboard, LogInIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AboutButton from './about-button';
 import LandingDrawer from './drawer';
 import Footer from './footer';
 import InformationButton from './information-button';
+import { notify } from '@/utils/helpers/notify';
 
 export default function LandingLayout({ children }: IChild) {
     const { auth, apps, flash } = usePage<SharedData>().props;
     const [scrolled, setScrolled] = useState(false);
     const scrollVal = window.location.pathname === '/' ? 500 : 215;
+    const displayed = useRef({ success: false, error: false });
 
     useEffect(() => {
         const onScroll = () => {
-            console.log('WINDOW SCROLL', window.scrollY);
 
             if (window.scrollY > scrollVal) {
                 setScrolled(true);
@@ -35,19 +36,19 @@ export default function LandingLayout({ children }: IChild) {
         const successMessage = (flash as any)?.success;
         const errorMessage = (flash as any)?.error;
 
-        if (successMessage) {
-            addToast({
-                title: 'Success',
-                description: successMessage,
-                color: 'success',
+        if (successMessage && !displayed.current.success) {
+            notify(successMessage)
+            router.get(window.location.pathname, {}, {
+                preserveScroll: true,
+                preserveState: true,
             });
         }
 
-        if (errorMessage) {
-            addToast({
-                title: 'Error',
-                description: errorMessage,
-                color: 'danger',
+        if (errorMessage && !displayed.current.error) {
+            notify(errorMessage, 'error')
+            router.get(window.location.pathname, {}, {
+                preserveScroll: true,
+                preserveState: true,
             });
         }
     }, [flash]);
@@ -83,6 +84,7 @@ export default function LandingLayout({ children }: IChild) {
                 isBlurred={false}
                 isBordered={false}
             >
+
                 <NavbarBrand>
                     <Link href="/" className="flex items-center gap-2">
                         <Avatar src={apps.logo || '/logo1.png'} size="md" />

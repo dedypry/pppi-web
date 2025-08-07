@@ -56,12 +56,12 @@ export default function Register() {
                 <div className="flex flex-col gap-5">
                     <Card className="w-full p-5">
                         <CardHeader className="flex items-center justify-between">
-                            <p>Profile</p>
+                            <p>Photo Profile</p>
                         </CardHeader>
                         <CardBody className="flex flex-col gap-5">
                             <div className="grid grid-cols-12 gap-5">
                                 <div className="col-span-12">
-                                    <div className="flex justify-center">
+                                    <div className="flex justify-center md:justify-start">
                                         <InputPhotoProfile
                                             photo={data.photo}
                                             setPhoto={(val) => setData('photo', val)}
@@ -327,6 +327,8 @@ export default function Register() {
 
                     {data.is_member_payment == 'yes' ? (
                         <AttachmentSingleFile
+                            isInvalid={!!errors.member_payment_file}
+                            errorMessage={errors.member_payment_file}
                             file={data.member_payment_file}
                             setFile={(val) => setData('member_payment_file', val)}
                             label="Bukti Transfer"
@@ -348,7 +350,7 @@ export default function Register() {
                     )}
 
                     <div className="flex justify-end gap-2">
-                        <Button variant="shadow" onPress={()=> router.visit('/')}>Batal</Button>
+                        <Button variant="shadow" onPress={() => router.visit('/')}>Batal</Button>
 
                         <Button isLoading={processing} disabled={processing} className="bg-cyan-600 text-white" variant="shadow" onPress={submit}>
                             Simpan

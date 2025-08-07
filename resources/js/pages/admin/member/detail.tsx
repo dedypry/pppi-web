@@ -3,6 +3,7 @@ import TextHeader from '@/components/text-header';
 import { dateFormat } from '@/helpers/formater';
 import { User } from '@/iterfaces/IUser';
 import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Chip, Image } from '@heroui/react';
+import { router } from '@inertiajs/react';
 import { DownloadIcon } from 'lucide-react';
 
 interface Props {
@@ -37,16 +38,40 @@ export default function Detail({ user }: Props) {
                             <p className="text-[12px] text-gray-500">Created At : {dateFormat(user.created_at)}</p>
                         </CardFooter>
                     </Card>
-                    <Button
-                        startContent={<DownloadIcon />}
-                        fullWidth
-                        className="bg-primary"
-                        variant="shadow"
-                        as="a"
-                        href={route('member.kta', user.id)}
-                    >
-                        Download E-KTA
-                    </Button>
+                    {
+                        user.approved_at ? <Button
+                            startContent={<DownloadIcon />}
+                            fullWidth
+                            className="bg-primary"
+                            variant="shadow"
+                            as="a"
+                            href={route('member.kta', user.id)}
+                        >
+                            Download E-KTA
+                        </Button> : (
+                            <div className="mt-2 flex justify-center gap-1">
+                                <Button
+                                    fullWidth
+                                    size="sm"
+                                    radius="full"
+                                    color="danger"
+                                    onPress={() => router.patch(route('member.update', user.id), { status: 'reject' })}
+                                >
+                                    Tolak
+                                </Button>
+                                <Button
+                                    fullWidth
+                                    size="sm"
+                                    radius="full"
+                                    color="primary"
+                                    onPress={() => router.patch(route('member.update', user.id), { status: 'approved' })}
+                                >
+                                    Setujui
+                                </Button>
+                            </div>
+                        )
+                    }
+
                 </div>
             </div>
             <div className="col-span-12 md:col-span-8">

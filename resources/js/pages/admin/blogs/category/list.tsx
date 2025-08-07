@@ -16,7 +16,6 @@ export default function CategoryList({ categories }: Props) {
     function handleUpdate(cat: Category, isActive: boolean) {
         http.patch(route('category.update', cat.id), { isActive, name: cat.name })
             .then(({ data }) => {
-                notify(data.message);
                 router.reload();
             })
             .catch((err) => notifyError(err));
@@ -25,7 +24,6 @@ export default function CategoryList({ categories }: Props) {
     function handleDelete(id: number) {
         http.delete(route('category.destroy', id))
             .then(({ data }) => {
-                notify(data.message);
                 router.reload();
             })
             .catch((err) => notifyError(err));

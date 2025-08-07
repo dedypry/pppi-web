@@ -67,7 +67,8 @@ class MemberController extends Controller
         $validate = $request->validate([
             'nik' => [
                 'required',
-                'digits:16',
+                'integer',
+                'min:14',
                 Rule::unique('profiles', 'nik')->ignore($PID)
             ],
             'name' => 'required|string|max:255',
@@ -126,7 +127,7 @@ class MemberController extends Controller
                 $files['photo'] = Storage::url($photoPath);
             }
 
-            if ($request->hasFile('member_payment_file')) {
+            if ($validate['is_member_payment'] == 'yes') {
                 $request->validate([
                     'member_payment_file' => 'file|mimes:pdf,jpg,jpeg,png|max:2048',
                 ]);

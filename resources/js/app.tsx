@@ -48,11 +48,14 @@ createInertiaApp({
                     toastProps={{
                         radius: 'md',
                         color: 'primary',
-                        variant: 'flat',
+                        variant: 'solid',
                         timeout: 3000,
                         hideIcon: true,
                         classNames: {
                             closeButton: 'opacity-100 absolute right-4 top-1/2 -translate-y-1/2',
+                            title: 'text-white font-bold text-[20px]',
+                            description:'text-white',
+                            
                         },
                     }}
                 />

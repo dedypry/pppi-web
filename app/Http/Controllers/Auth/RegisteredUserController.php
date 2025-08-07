@@ -37,8 +37,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validate = $request->validate([
-            'nik' => "required|digits:16",
+        
+        $rules = [
+            'nik' => "required|min:14|unique:profiles",
+            'front_title' => 'required|string|max:255',
+            'back_title' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' =>  'required|email|unique:users,email',
             'place_birth' => 'required|string|max:255',
@@ -57,9 +60,16 @@ class RegisteredUserController extends Controller
             'contribution' => 'nullable|string|max:1000',
             'is_member_payment' => 'required|in:yes,no',
             'reason_reject' => 'nullable|string|max:1000',
-            'front_title' => 'nullable|string',
-            'back_title' => 'nullable|string',
-        ]);
+            'photo' => 'required|file|mimes:jpg,jpeg,png|max:2048'
+        ];
+
+        if ($request->is_member_payment == 'yes') {
+            $rules['member_payment_file'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:2048';
+        }else{
+            $rules['reason_reject'] = 'required|string|max:1000';
+        }
+
+        $validate = $request->validate($rules);
         // dd($validate);
 
         //         Kode NIA artinya :
@@ -70,7 +80,7 @@ class RegisteredUserController extends Controller
         // 0007 - urutan cetak KTA ke 7
         $province = Province::find($validate['province_id']);
         $city = City::find($validate['city_id']);
-        $sort = User::max('sort');
+        $sort = User::max('sort') + 1;
         $joinYear =  now()->format('y');
 
         $yearShort = Carbon::parse($validate['date_birth'])->format('y');
@@ -84,17 +94,11 @@ class RegisteredUserController extends Controller
             $files = [];
 
             if ($request->hasFile('photo')) {
-                $request->validate([
-                    'photo' => 'image|max:2048'
-                ]);
                 $photoPath = $request->file('photo')->store('profile', 'public');
                 $files['photo'] = Storage::url($photoPath);
             }
 
             if ($request->hasFile('member_payment_file')) {
-                $request->validate([
-                    'member_payment_file' => 'file|mimes:pdf,jpg,jpeg,png|max:2048',
-                ]);
                 $paymentPath = $request->file('member_payment_file')->store('member/payment', 'public');
                 $files['member_payment_file'] = Storage::url($paymentPath);
             }
