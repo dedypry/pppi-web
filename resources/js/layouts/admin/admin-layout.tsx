@@ -1,6 +1,5 @@
 import { responsive } from '@/utils/helpers/responsive';
 import {
-    addToast,
     Avatar,
     Button,
     Drawer,
@@ -14,34 +13,37 @@ import {
 } from '@heroui/react';
 import { Head, router, usePage } from '@inertiajs/react';
 import { Bell, LogOut, Menu, Settings, User } from 'lucide-react';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import SidebarMenu from './partials/sidebar-menu';
+import { notify } from '@/utils/helpers/notify';
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(true);
     const isMobile = useMediaQuery(responsive.mobile);
     const { props } = usePage();
+    const displayed = useRef({ success: false, error: false });
 
     useEffect(() => {
         const successMessage = (props.flash as any)?.success;
         const errorMessage = (props.flash as any)?.error;
 
-        if (successMessage) {
-            addToast({
-                title: 'Success',
-                description: successMessage,
-                color: 'success',
+        if (successMessage && !displayed.current.success) {
+            notify(successMessage)
+            router.get(window.location.pathname, {}, {
+                preserveScroll: true,
+                preserveState: true,
             });
         }
 
-        if (errorMessage) {
-            addToast({
-                title: 'Error',
-                description: errorMessage,
-                color: 'danger',
+        if (errorMessage && !displayed.current.error) {
+            notify(errorMessage, 'error')
+            router.get(window.location.pathname, {}, {
+                preserveScroll: true,
+                preserveState: true,
             });
         }
+        
     }, [props]);
 
     useEffect(() => {
@@ -57,9 +59,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 </Drawer>
             ) : (
                 <aside
-                    className={`translation-all fixed h-screen w-[266px] transform bg-gradient-to-tr from-primary-900 to-primary-600 pl-3 shadow-lg shadow-primary-200 duration-300 ease-in-out ${
-                        !isOpen ? '-translate-x-full' : 'translate-x-0'
-                    } ${isMobile && '-translate-x-full'} `}
+                    className={`translation-all fixed h-screen w-[266px] transform bg-gradient-to-tr from-primary-900 to-primary-600 pl-3 shadow-lg shadow-primary-200 duration-300 ease-in-out ${!isOpen ? '-translate-x-full' : 'translate-x-0'
+                        } ${isMobile && '-translate-x-full'} `}
                 >
                     <SidebarMenu />
                 </aside>

@@ -28,11 +28,11 @@ export default function InputPhotoProfile({ photo, setPhoto, isInvalid, errorMes
         setPhoto(undefined);
     }
     return (
-        <div className="flex items-center gap-5">
+        <div className="flex flex-col md:flex-row items-center gap-5">
             <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
             {/* <Image src={(file && URL.createObjectURL(file)) || photo || UserCircle} width={200} height={200} className="object-cover" /> */}
-            <Avatar src={(file && URL.createObjectURL(file)) || photo}  isBordered className='w-32 h-32' />
-            <div className="flex flex-col gap-2">
+            <Avatar radius='sm' src={(file && URL.createObjectURL(file)) || photo}  isBordered className='w-32 h-32' color={isInvalid ? "danger" : undefined} />
+            <div className="flex flex-col items-center md:items-start gap-2">
                 <div className="flex gap-2">
                     <Button size='sm' radius='full' variant="shadow" onPress={handleReset}>
                         Reset
